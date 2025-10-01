@@ -7,6 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Quote } from "lucide-react";
+import InstagramEmbed from "@/components/instagram-embed";
 
 const testimonials = [
     "Excelente banca de advocacia. Profissionais competentes e atendimento personalizado que fizeram toda a diferença no meu caso.",
@@ -27,17 +28,17 @@ export default function Testimonials() {
           </p>
         </div>
         
-        <div className="mt-12">
+        <div className="mt-12 grid gap-12 lg:grid-cols-2">
             <Carousel
               opts={{
                 align: "start",
                 loop: true,
               }}
-              className="w-full max-w-4xl mx-auto"
+              className="w-full max-w-xl mx-auto"
             >
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <CarouselItem key={index} className="md:basis-1/2">
                     <div className="p-1 h-full">
                       <Card className="flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-shadow">
                         <CardContent className="p-6 flex-grow">
@@ -52,6 +53,9 @@ export default function Testimonials() {
               <CarouselPrevious className="hidden sm:flex" />
               <CarouselNext className="hidden sm:flex" />
             </Carousel>
+            <div className="flex items-center justify-center">
+                <InstagramEmbed />
+            </div>
         </div>
       </div>
     </section>
