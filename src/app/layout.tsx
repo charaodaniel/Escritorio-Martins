@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'LexPage | Premier Legal Solutions',
-  description: 'LexPage offers expert legal services to navigate your challenges with confidence. Trust our experienced attorneys for professional guidance and representation.',
+  title: 'LexPage | Soluções Jurídicas de Primeira Linha',
+  description: 'A LexPage oferece serviços jurídicos especializados para navegar por seus desafios com confiança. Confie em nossos advogados experientes para orientação e representação profissional.',
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="!scroll-smooth">
+    <html lang="pt-BR" className="!scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

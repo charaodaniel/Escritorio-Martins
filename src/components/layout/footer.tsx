@@ -2,11 +2,11 @@ import Link from "next/link";
 import { Scale, Mail, Phone, MapPin, Twitter, Linkedin, Facebook } from "lucide-react";
 
 const navLinks = [
-  { href: "#practice-areas", label: "Practice Areas" },
-  { href: "#results", label: "Case Results" },
-  { href: "#attorneys", label: "Our Team" },
-  { href: "#blog", label: "Insights" },
-  { href: "#contact", label: "Contact" },
+  { href: "#practice-areas", label: "Áreas de Atuação" },
+  { href: "#results", label: "Resultados" },
+  { href: "#attorneys", label: "Nossa Equipe" },
+  { href: "#blog", label: "Notícias" },
+  { href: "#contact", label: "Contato" },
 ];
 
 const socialLinks = [
@@ -29,11 +29,11 @@ export default function Footer() {
               <span>LexPage</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Your trusted partner in navigating the complexities of the legal world.
+              Seu parceiro de confiança para navegar nas complexidades do mundo jurídico.
             </p>
           </div>
           <div>
-            <h3 className="mb-4 font-headline text-lg font-semibold">Quick Links</h3>
+            <h3 className="mb-4 font-headline text-lg font-semibold">Links Rápidos</h3>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -45,7 +45,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="mb-4 font-headline text-lg font-semibold">Contact Us</h3>
+            <h3 className="mb-4 font-headline text-lg font-semibold">Fale Conosco</h3>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary" />
@@ -57,24 +57,24 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-primary" />
-                <span>Rua Sete de Setembro, 123<br />Manoel Viana, RS, Brazil</span>
+                <span>Rua Sete de Setembro, 123<br />Manoel Viana, RS, Brasil</span>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="mb-4 font-headline text-lg font-semibold">Follow Us</h3>
+            <h3 className="mb-4 font-headline text-lg font-semibold">Siga-nos</h3>
             <div className="flex items-center gap-4">
                 {socialLinks.map((social, index) => (
                     <Link key={index} href={social.href} className="text-muted-foreground hover:text-primary transition-colors">
                         <social.icon className="h-5 w-5" />
-                        <span className="sr-only">Follow us on {social.icon.displayName}</span>
+                        <span className="sr-only">Siga-nos no {social.icon.displayName}</span>
                     </Link>
                 ))}
             </div>
           </div>
         </div>
         <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} LexPage. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} LexPage. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

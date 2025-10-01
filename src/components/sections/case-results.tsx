@@ -5,15 +5,15 @@ import { Award, Target } from "lucide-react";
 
 const caseResults = [
   {
-    title: "Multi-Million Dollar Corporate Merger",
-    description: "Successfully navigated complex negotiations and regulatory hurdles to facilitate a landmark merger for a leading tech firm, resulting in a $250M valuation.",
-    outcome: "$250M Merger",
+    title: "Fusão Corporativa Multimilionária",
+    description: "Navegamos com sucesso por negociações complexas e barreiras regulatórias para facilitar uma fusão histórica para uma empresa de tecnologia líder, resultando em uma avaliação de R$250M.",
+    outcome: "Fusão de R$250M",
     imageId: "case-result-1"
   },
   {
-    title: "Complex Personal Injury Settlement",
-    description: "Secured a seven-figure settlement for a client in a challenging personal injury case, ensuring long-term financial security and covering all medical expenses.",
-    outcome: "$1.2M Settlement",
+    title: "Acordo Complexo de Lesão Corporal",
+    description: "Garantimos um acordo de sete dígitos para um cliente em um caso desafiador de lesão corporal, assegurando segurança financeira a longo prazo e cobrindo todas as despesas médicas.",
+    outcome: "Acordo de R$1.2M",
     imageId: "case-result-2"
   },
 ];
@@ -24,10 +24,10 @@ export default function CaseResults() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            Proven Track Record of Success
+            Histórico Comprovado de Sucesso
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Our results speak for themselves. We are dedicated to achieving favorable outcomes for our clients through strategic and relentless advocacy.
+            Nossos resultados falam por si. Estamos dedicados a alcançar resultados favoráveis para nossos clientes através de uma advocacia estratégica e incansável.
           </p>
         </div>
         <div className="mt-12 space-y-12">

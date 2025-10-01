@@ -14,11 +14,11 @@ import {
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "#practice-areas", label: "Practice Areas" },
-  { href: "#results", label: "Case Results" },
-  { href: "#attorneys", label: "Our Team" },
-  { href: "#blog", label: "Insights" },
-  { href: "#contact", label: "Contact" },
+  { href: "#practice-areas", label: "Áreas de Atuação" },
+  { href: "#results", label: "Resultados" },
+  { href: "#attorneys", label: "Nossa Equipe" },
+  { href: "#blog", label: "Notícias" },
+  { href: "#contact", label: "Contato" },
 ];
 
 export default function Header() {
@@ -63,13 +63,13 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-2">
             <Button asChild className="hidden md:flex" style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}}>
-                <Link href="#contact">Free Consultation</Link>
+                <Link href="#contact">Consulta Gratuita</Link>
             </Button>
             <Sheet>
                 <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="md:hidden">
                     <Menu className="h-6 w-6" />
-                    <span className="sr-only">Toggle navigation menu</span>
+                    <span className="sr-only">Alternar menu de navegação</span>
                 </Button>
                 </SheetTrigger>
                 <SheetContent side="right">
@@ -90,7 +90,7 @@ export default function Header() {
                     </nav>
                     <SheetClose asChild>
                         <Button asChild className="mt-4" style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}}>
-                            <Link href="#contact">Free Consultation</Link>
+                            <Link href="#contact">Consulta Gratuita</Link>
                         </Button>
                     </SheetClose>
                 </div>

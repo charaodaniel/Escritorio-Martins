@@ -19,14 +19,14 @@ import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: "O nome deve ter pelo menos 2 caracteres.",
   }),
   email: z.string().email({
-    message: "Please enter a valid email address.",
+    message: "Por favor, insira um endereço de e-mail válido.",
   }),
   phone: z.string().optional(),
   message: z.string().min(10, {
-    message: "Message must be at least 10 characters.",
+    message: "A mensagem deve ter pelo menos 10 caracteres.",
   }),
 });
 
@@ -44,10 +44,10 @@ export default function ContactForm() {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Form submitted:", values);
+        console.log("Formulário enviado:", values);
         toast({
-            title: "Message Sent!",
-            description: "Thank you for contacting us. We will get back to you shortly.",
+            title: "Mensagem Enviada!",
+            description: "Obrigado por entrar em contato conosco. Retornaremos em breve.",
         });
         form.reset();
     }
@@ -60,9 +60,9 @@ export default function ContactForm() {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Full Name</FormLabel>
+                            <FormLabel>Nome Completo</FormLabel>
                             <FormControl>
-                                <Input placeholder="John Doe" {...field} />
+                                <Input placeholder="João da Silva" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -73,9 +73,9 @@ export default function ContactForm() {
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email Address</FormLabel>
+                            <FormLabel>Endereço de Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="john.doe@example.com" {...field} />
+                                <Input placeholder="joao.silva@exemplo.com" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -86,9 +86,9 @@ export default function ContactForm() {
                     name="phone"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Phone Number (Optional)</FormLabel>
+                            <FormLabel>Telefone (Opcional)</FormLabel>
                             <FormControl>
-                                <Input placeholder="(123) 456-7890" {...field} />
+                                <Input placeholder="(12) 3456-7890" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -99,10 +99,10 @@ export default function ContactForm() {
                     name="message"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Your Message</FormLabel>
+                            <FormLabel>Sua Mensagem</FormLabel>
                             <FormControl>
                                 <Textarea
-                                placeholder="Please describe your legal need..."
+                                placeholder="Por favor, descreva sua necessidade jurídica..."
                                 className="min-h-[120px]"
                                 {...field}
                                 />
@@ -111,7 +111,7 @@ export default function ContactForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full" style={{backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))'}}>Submit Inquiry</Button>
+                <Button type="submit" className="w-full" style={{backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))'}}>Enviar Consulta</Button>
             </form>
         </Form>
     );

@@ -23,14 +23,14 @@ export default function Hero() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="font-headline text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-              Expert Legal Counsel for Your Peace of Mind
+              Assessoria Jurídica Especializada para sua Tranquilidade
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-200">
-              At LexPage, we combine legal expertise with a client-focused approach to deliver results you can trust. Let us champion your cause.
+              Na LexPage, combinamos expertise jurídica com uma abordagem focada no cliente para entregar resultados em que você pode confiar. Deixe-nos defender sua causa.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Button asChild size="lg" style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}} className="shadow-lg transform transition-transform hover:scale-105">
-                <Link href="#contact">Schedule a Free Consultation</Link>
+                <Link href="#contact">Agende uma Consulta Gratuita</Link>
               </Button>
             </div>
           </div>

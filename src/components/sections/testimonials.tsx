@@ -15,9 +15,9 @@ import { getRelevantTestimonials } from "@/app/actions";
 import { Loader2, Quote } from "lucide-react";
 
 const initialTestimonials = [
-    "LexPage was instrumental in our corporate merger. Their attention to detail and legal expertise were second to none.",
-    "After my accident, I was lost. The team at LexPage handled my personal injury case with such care and professionalism.",
-    "As a startup, navigating intellectual property law was daunting. LexPage protected our assets and gave us peace of mind.",
+    "A LexPage foi fundamental em nossa fusão corporativa. A atenção aos detalhes e a expertise jurídica foram inigualáveis.",
+    "Após meu acidente, eu estava perdido. A equipe da LexPage cuidou do meu caso de lesão corporal com tanto cuidado e profissionalismo.",
+    "Como startup, navegar pela lei de propriedade intelectual era assustador. A LexPage protegeu nossos ativos e nos deu tranquilidade.",
 ];
 
 export default function Testimonials() {
@@ -37,23 +37,23 @@ export default function Testimonials() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            What Our Clients Say
+            O Que Nossos Clientes Dizem
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Tell us your legal need, and we'll show you testimonials from clients we've helped in similar situations.
+            Diga-nos sua necessidade jurídica e mostraremos depoimentos de clientes que ajudamos em situações semelhantes.
           </p>
         </div>
         
         <div className="mt-8 max-w-xl mx-auto flex gap-2">
             <Input 
                 type="text"
-                placeholder="e.g., 'personal injury' or 'business contract'"
+                placeholder="ex: 'lesão corporal' ou 'contrato comercial'"
                 value={legalNeed}
                 onChange={(e) => setLegalNeed(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             />
             <Button onClick={handleSearch} disabled={isPending} style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}}>
-                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Find"}
+                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Buscar"}
             </Button>
         </div>
 

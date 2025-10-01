@@ -5,21 +5,21 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 const attorneys = [
   {
-    name: "Jessica Miller",
-    title: "Managing Partner",
-    bio: "With over 20 years of experience in corporate law, Jessica is a recognized leader in high-stakes litigation and mergers.",
+    name: "Jéssica Miller",
+    title: "Sócia-Gerente",
+    bio: "Com mais de 20 anos de experiência em direito societário, Jéssica é uma líder reconhecida em litígios de alto risco e fusões.",
     imageId: "attorney-1"
   },
   {
     name: "David Chen",
-    title: "Senior Partner, Criminal Defense",
-    bio: "David is a fierce advocate for his clients, with a proven track record of success in complex criminal defense cases.",
+    title: "Sócio Sênior, Defesa Criminal",
+    bio: "David é um defensor feroz de seus clientes, com um histórico comprovado de sucesso em casos complexos de defesa criminal.",
     imageId: "attorney-2"
   },
   {
     name: "Michael Rodriguez",
-    title: "Associate, Family Law",
-    bio: "Michael brings empathy and sharp legal acumen to sensitive family law matters, always prioritizing his clients' well-being.",
+    title: "Associado, Direito de Família",
+    bio: "Michael traz empatia e aguçada perspicácia jurídica para questões sensíveis de direito de família, sempre priorizando o bem-estar de seus clientes.",
     imageId: "attorney-3"
   },
 ];
@@ -30,10 +30,10 @@ export default function Attorneys() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            Meet Our Dedicated Team
+            Conheça Nossa Equipe Dedicada
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Our attorneys are accomplished, passionate, and committed to delivering exceptional legal service.
+            Nossos advogados são talentosos, apaixonados e comprometidos em fornecer um serviço jurídico excepcional.
           </p>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

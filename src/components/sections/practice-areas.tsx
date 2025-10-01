@@ -4,33 +4,33 @@ import { Gavel, Users, Briefcase, Landmark, Shield, Scale } from "lucide-react";
 const practiceAreas = [
   {
     icon: Gavel,
-    title: "Corporate Law",
-    description: "Expert guidance on business formation, mergers, acquisitions, and corporate governance.",
+    title: "Direito Societário",
+    description: "Orientação especializada em constituição de empresas, fusões, aquisições e governança corporativa.",
   },
   {
     icon: Shield,
-    title: "Criminal Defense",
-    description: "Vigorous defense for individuals facing criminal charges, protecting your rights at every step.",
+    title: "Defesa Criminal",
+    description: "Defesa vigorosa para indivíduos enfrentando acusações criminais, protegendo seus direitos em cada etapa.",
   },
   {
     icon: Users,
-    title: "Family Law",
-    description: "Compassionate handling of divorce, child custody, and other sensitive family matters.",
+    title: "Direito de Família",
+    description: "Condução compassiva de divórcios, guarda de filhos e outras questões familiares sensíveis.",
   },
   {
     icon: Landmark,
-    title: "Real Estate Law",
-    description: "Comprehensive legal services for residential and commercial real estate transactions.",
+    title: "Direito Imobiliário",
+    description: "Serviços jurídicos abrangentes para transações imobiliárias residenciais e comerciais.",
   },
   {
     icon: Briefcase,
-    title: "Intellectual Property",
-    description: "Protecting your innovations with patent, trademark, and copyright expertise.",
+    title: "Propriedade Intelectual",
+    description: "Protegendo suas inovações com expertise em patentes, marcas registradas e direitos autorais.",
   },
   {
     icon: Scale,
-    title: "Civil Litigation",
-    description: "Strategic representation in civil disputes to achieve the best possible outcomes.",
+    title: "Contencioso Cível",
+    description: "Representação estratégica em disputas cíveis para alcançar os melhores resultados possíveis.",
   },
 ];
 
@@ -40,10 +40,10 @@ export default function PracticeAreas() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            Our Areas of Expertise
+            Nossas Áreas de Especialização
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            We offer specialized legal services across a wide range of practice areas to meet your unique needs.
+            Oferecemos serviços jurídicos especializados em uma ampla gama de áreas de atuação para atender às suas necessidades únicas.
           </p>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
