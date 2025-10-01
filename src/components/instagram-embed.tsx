@@ -18,7 +18,7 @@ export default function InstagramEmbed() {
       <blockquote
         className="instagram-media"
         data-instgrm-captioned
-        data-instgrm-permalink="https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_embed&amp;utm_campaign=loading"
+        data-instgrm-permalink="https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_embed&amp;utm_campaign=loading"
         data-instgrm-version="14"
         style={{
           background: '#FFF',
@@ -34,7 +34,7 @@ export default function InstagramEmbed() {
       >
         <div style={{ padding: '16px' }}>
           <a
-            href="https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_embed&amp;utm_campaign=loading"
+            href="https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_embed&amp;utm_campaign=loading"
             style={{
               background: '#FFFFFF',
               lineHeight: '0',
@@ -126,7 +126,7 @@ export default function InstagramEmbed() {
           </a>
           <p style={{ color: '#c9c8cd', fontFamily: 'Arial,sans-serif', fontSize: '14px', lineHeight: '17px', marginBottom: '0', marginTop: '8px', overflow: 'hidden', padding: '8px 0 7px', textAlign: 'center', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             <a
-              href="https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_embed&amp;utm_campaign=loading"
+              href="https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_embed&amp;utm_campaign=loading"
               style={{ color: '#c9c8cd', fontFamily: 'Arial,sans-serif', fontStyle: 'normal', fontWeight: 'normal', lineHeight: '17px', textDecoration: 'none' }}
               target="_blank"
               rel="noopener noreferrer"
