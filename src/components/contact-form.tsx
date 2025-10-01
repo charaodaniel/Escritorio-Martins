@@ -47,7 +47,7 @@ export default function ContactForm() {
         console.log("Formulário enviado:", values);
         toast({
             title: "Mensagem Enviada!",
-            description: "Obrigado por entrar em contato conosco. Retornaremos em breve.",
+            description: "Obrigado por entrar em contato. Retornaremos em breve.",
         });
         form.reset();
     }
@@ -62,7 +62,7 @@ export default function ContactForm() {
                         <FormItem>
                             <FormLabel>Nome Completo</FormLabel>
                             <FormControl>
-                                <Input placeholder="João da Silva" {...field} />
+                                <Input placeholder="Seu nome completo" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -75,7 +75,7 @@ export default function ContactForm() {
                         <FormItem>
                             <FormLabel>Endereço de Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="joao.silva@exemplo.com" {...field} />
+                                <Input placeholder="seuemail@exemplo.com" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -88,7 +88,7 @@ export default function ContactForm() {
                         <FormItem>
                             <FormLabel>Telefone (Opcional)</FormLabel>
                             <FormControl>
-                                <Input placeholder="(12) 3456-7890" {...field} />
+                                <Input placeholder="(XX) XXXXX-XXXX" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -99,10 +99,10 @@ export default function ContactForm() {
                     name="message"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Sua Mensagem</FormLabel>
+                            <FormLabel>Como podemos ajudar?</FormLabel>
                             <FormControl>
                                 <Textarea
-                                placeholder="Por favor, descreva sua necessidade jurídica..."
+                                placeholder="Descreva brevemente sua necessidade jurídica..."
                                 className="min-h-[120px]"
                                 {...field}
                                 />
@@ -111,7 +111,7 @@ export default function ContactForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full" style={{backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))'}}>Enviar Consulta</Button>
+                <Button type="submit" className="w-full" style={{backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))'}}>Enviar Mensagem</Button>
             </form>
         </Form>
     );

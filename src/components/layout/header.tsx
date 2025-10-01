@@ -15,9 +15,8 @@ import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
-  { href: "#results", label: "Resultados" },
-  { href: "#attorneys", label: "Nossa Equipe" },
-  { href: "#blog", label: "Notícias" },
+  { href: "#why-us", label: "Diferenciais" },
+  { href: "#testimonials", label: "Depoimentos" },
   { href: "#contact", label: "Contato" },
 ];
 
@@ -54,7 +53,7 @@ export default function Header() {
           className="flex items-center gap-2 font-headline text-lg font-bold"
         >
           <Scale className="h-6 w-6 text-primary" />
-          <span>LexPage</span>
+          <span>Vieira & Martins</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
@@ -63,7 +62,7 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-2">
             <Button asChild className="hidden md:flex" style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}}>
-                <Link href="#contact">Consulta Gratuita</Link>
+                <Link href="#contact">Agende sua Consulta</Link>
             </Button>
             <Sheet>
                 <SheetTrigger asChild>
@@ -79,7 +78,7 @@ export default function Header() {
                         className="flex items-center gap-2 font-headline text-lg font-bold"
                     >
                         <Scale className="h-6 w-6 text-primary" />
-                        <span>LexPage</span>
+                        <span>Vieira & Martins</span>
                     </Link>
                     <nav className="flex flex-col gap-4">
                     {navLinks.map((link) => (
@@ -90,7 +89,7 @@ export default function Header() {
                     </nav>
                     <SheetClose asChild>
                         <Button asChild className="mt-4" style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}}>
-                            <Link href="#contact">Consulta Gratuita</Link>
+                            <Link href="#contact">Agende sua Consulta</Link>
                         </Button>
                     </SheetClose>
                 </div>

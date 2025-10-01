@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'LexPage | Soluções Jurídicas de Primeira Linha',
-  description: 'A LexPage oferece serviços jurídicos especializados para navegar por seus desafios com confiança. Confie em nossos advogados experientes para orientação e representação profissional.',
+  title: 'Vieira & Martins Advogados | Segurança Jurídica em Manoel Viana',
+  description: 'Escritório de advocacia em Manoel Viana-RS, dedicado a defender os interesses de pessoas físicas e jurídicas com profissionalismo, ética e transparência.',
 };
 
 export default function RootLayout({

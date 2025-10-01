@@ -2,10 +2,8 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import Hero from "@/components/sections/hero";
 import PracticeAreas from "@/components/sections/practice-areas";
-import CaseResults from "@/components/sections/case-results";
+import WhyUs from "@/components/sections/why-us";
 import Testimonials from "@/components/sections/testimonials";
-import Attorneys from "@/components/sections/attorneys";
-import BlogFeed from "@/components/sections/blog-feed";
 import Contact from "@/components/sections/contact";
 
 export default function Home() {
@@ -15,10 +13,8 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <PracticeAreas />
-        <CaseResults />
+        <WhyUs />
         <Testimonials />
-        <Attorneys />
-        <BlogFeed />
         <Contact />
       </main>
       <Footer />

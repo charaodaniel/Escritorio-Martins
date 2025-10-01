@@ -1,36 +1,36 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Gavel, Users, Briefcase, Landmark, Shield, Scale } from "lucide-react";
+import { FileText, Users, Briefcase, Home, Shield, Scale } from "lucide-react";
 
 const practiceAreas = [
   {
-    icon: Gavel,
-    title: "Direito Societário",
-    description: "Orientação especializada em constituição de empresas, fusões, aquisições e governança corporativa.",
-  },
-  {
-    icon: Shield,
-    title: "Defesa Criminal",
-    description: "Defesa vigorosa para indivíduos enfrentando acusações criminais, protegendo seus direitos em cada etapa.",
+    icon: Scale,
+    title: "Direito Cível",
+    description: "Orientação em contratos, responsabilidade civil, obrigações e outros.",
   },
   {
     icon: Users,
-    title: "Direito de Família",
-    description: "Condução compassiva de divórcios, guarda de filhos e outras questões familiares sensíveis.",
-  },
-  {
-    icon: Landmark,
-    title: "Direito Imobiliário",
-    description: "Serviços jurídicos abrangentes para transações imobiliárias residenciais e comerciais.",
+    title: "Família e Sucessões",
+    description: "Atuação em divórcios, inventários, testamentos, partilha de bens e pensão.",
   },
   {
     icon: Briefcase,
-    title: "Propriedade Intelectual",
-    description: "Protegendo suas inovações com expertise em patentes, marcas registradas e direitos autorais.",
+    title: "Direito Trabalhista",
+    description: "Defesa em reclamações trabalhistas, rescisões, e orientações preventivas.",
   },
   {
-    icon: Scale,
-    title: "Contencioso Cível",
-    description: "Representação estratégica em disputas cíveis para alcançar os melhores resultados possíveis.",
+    icon: Shield,
+    title: "Direito do Consumidor",
+    description: "Proteção dos seus direitos em relações de consumo contra práticas abusivas.",
+  },
+  {
+    icon: Home,
+    title: "Direito Imobiliário",
+    description: "Assessoria em compra e venda, aluguel, usucapião e regularização de imóveis.",
+  },
+  {
+    icon: FileText,
+    title: "Outras Áreas",
+    description: "Consulte-nos para outras demandas jurídicas. Estamos prontos para ajudar.",
   },
 ];
 
@@ -40,10 +40,10 @@ export default function PracticeAreas() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            Nossas Áreas de Especialização
+            Nossas Áreas de Atuação
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Oferecemos serviços jurídicos especializados em uma ampla gama de áreas de atuação para atender às suas necessidades únicas.
+            Oferecemos soluções jurídicas claras, seguras e sob medida para cada cliente em diversas áreas do direito.
           </p>
         </div>
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">

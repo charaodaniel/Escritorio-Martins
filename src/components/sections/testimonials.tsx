@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useTransition } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -9,54 +6,27 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { getRelevantTestimonials } from "@/app/actions";
-import { Loader2, Quote } from "lucide-react";
+import { Quote } from "lucide-react";
 
-const initialTestimonials = [
-    "A LexPage foi fundamental em nossa fusão corporativa. A atenção aos detalhes e a expertise jurídica foram inigualáveis.",
-    "Após meu acidente, eu estava perdido. A equipe da LexPage cuidou do meu caso de lesão corporal com tanto cuidado e profissionalismo.",
-    "Como startup, navegar pela lei de propriedade intelectual era assustador. A LexPage protegeu nossos ativos e nos deu tranquilidade.",
+const testimonials = [
+    "Excelente banca de advocacia. Profissionais competentes e atendimento personalizado que fizeram toda a diferença no meu caso.",
+    "A equipe do Vieira & Martins foi incansável na defesa dos meus direitos. Sou muito grato pela agilidade e transparência.",
+    "Recomendo o escritório a todos em Manoel Viana. Encontrei o suporte jurídico que precisava com um atendimento humano e eficiente.",
 ];
 
 export default function Testimonials() {
-  const [legalNeed, setLegalNeed] = useState("");
-  const [testimonials, setTestimonials] = useState<string[]>(initialTestimonials);
-  const [isPending, startTransition] = useTransition();
-
-  const handleSearch = () => {
-    startTransition(async () => {
-      const result = await getRelevantTestimonials(legalNeed);
-      setTestimonials(result);
-    });
-  };
-
   return (
-    <section id="testimonials" className="py-16 sm:py-24 bg-background">
+    <section id="testimonials" className="py-16 sm:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
             O Que Nossos Clientes Dizem
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Diga-nos sua necessidade jurídica e mostraremos depoimentos de clientes que ajudamos em situações semelhantes.
+            A satisfação de nossos clientes é o nosso maior reconhecimento.
           </p>
         </div>
         
-        <div className="mt-8 max-w-xl mx-auto flex gap-2">
-            <Input 
-                type="text"
-                placeholder="ex: 'lesão corporal' ou 'contrato comercial'"
-                value={legalNeed}
-                onChange={(e) => setLegalNeed(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-            />
-            <Button onClick={handleSearch} disabled={isPending} style={{backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))'}}>
-                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Buscar"}
-            </Button>
-        </div>
-
         <div className="mt-12">
             <Carousel
               opts={{

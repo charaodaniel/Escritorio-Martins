@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { Scale, Mail, Phone, MapPin, Twitter, Linkedin, Facebook } from "lucide-react";
+import { Scale, Mail, Phone, MapPin, Twitter, Linkedin, Facebook, MessageCircle } from "lucide-react";
 
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
-  { href: "#results", label: "Resultados" },
-  { href: "#attorneys", label: "Nossa Equipe" },
-  { href: "#blog", label: "Notícias" },
+  { href: "#why-us", label: "Diferenciais" },
+  { href: "#testimonials", label: "Depoimentos" },
   { href: "#contact", label: "Contato" },
 ];
 
@@ -26,10 +25,10 @@ export default function Footer() {
               className="flex items-center gap-2 font-headline text-xl font-bold"
             >
               <Scale className="h-6 w-6 text-primary" />
-              <span>LexPage</span>
+              <span>Vieira & Martins Advogados</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Seu parceiro de confiança para navegar nas complexidades do mundo jurídico.
+              Segurança jurídica com excelência em Manoel Viana.
             </p>
           </div>
           <div>
@@ -49,15 +48,15 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary" />
-                <a href="mailto:contact@lexpage.com" className="hover:text-primary transition-colors">contact@lexpage.com</a>
+                <a href="mailto:contato@vieramartins.com" className="hover:text-primary transition-colors">contato@vieramartins.com</a>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-primary" />
-                <a href="tel:+5555912345678" className="hover:text-primary transition-colors">+55 (55) 91234-5678</a>
+                <MessageCircle className="h-4 w-4 text-primary" />
+                <a href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">+55 (55) 99916-9181</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-primary" />
-                <span>Rua Sete de Setembro, 123<br />Manoel Viana, RS, Brasil</span>
+                <span>Rua Franklin Bastos de Carvalho, 754<br />Centro, Manoel Viana – RS</span>
               </li>
             </ul>
           </div>
@@ -74,7 +73,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} LexPage. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Vieira & Martins Advogados. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
