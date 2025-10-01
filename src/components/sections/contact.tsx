@@ -25,7 +25,7 @@ export default function Contact() {
               <div className="space-y-3 text-muted-foreground">
                  <div className="flex items-center gap-3">
                     <MapPin className="h-5 w-5 text-primary" />
-                    <span>123 Law Street, Suite 400, Justice City, USA 12345</span>
+                    <span>Rua Sete de Setembro, 123, Manoel Viana, RS, Brazil</span>
                 </div>
                 <div className="flex items-center gap-3">
                     <Mail className="h-5 w-5 text-primary" />
@@ -33,7 +33,7 @@ export default function Contact() {
                 </div>
                 <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-primary" />
-                    <a href="tel:+1234567890" className="hover:text-primary transition-colors">(123) 456-7890</a>
+                    <a href="tel:+5555912345678" className="hover:text-primary transition-colors">+55 (55) 91234-5678</a>
                 </div>
               </div>
             </div>

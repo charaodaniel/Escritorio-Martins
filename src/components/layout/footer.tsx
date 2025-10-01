@@ -53,11 +53,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-primary" />
-                <a href="tel:+1234567890" className="hover:text-primary transition-colors">(123) 456-7890</a>
+                <a href="tel:+5555912345678" className="hover:text-primary transition-colors">+55 (55) 91234-5678</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-primary" />
-                <span>123 Law Street, Suite 400<br />Justice City, USA 12345</span>
+                <span>Rua Sete de Setembro, 123<br />Manoel Viana, RS, Brazil</span>
               </li>
             </ul>
           </div>
