@@ -10,52 +10,66 @@ import { Quote } from "lucide-react";
 import InstagramEmbed from "@/components/instagram-embed";
 
 const testimonials = [
-    "Excelente banca de advocacia. Profissionais competentes e atendimento personalizado que fizeram toda a diferença no meu caso.",
-    "A equipe do Vieira & Martins foi incansável na defesa dos meus direitos. Sou muito grato pela agilidade e transparência.",
-    "Recomendo o escritório a todos em Manoel Viana. Encontrei o suporte jurídico que precisava com um atendimento humano e eficiente.",
+    {
+        quote: "Excelente banca de advocacia. Profissionais competentes e atendimento personalizado que fizeram toda a diferença no meu caso.",
+        author: "Cliente Satisfeito",
+    },
+    {
+        quote: "A equipe do Vieira & Martins foi incansável na defesa dos meus direitos. Sou muito grato pela agilidade e transparência.",
+        author: "Pessoa Física",
+    },
+    {
+        quote: "Recomendo o escritório a todos em Manoel Viana. Encontrei o suporte jurídico que precisava com um atendimento humano e eficiente.",
+        author: "Empresa Local",
+    },
+     {
+        quote: "Profissionalismo exemplar e resultados que superaram minhas expectativas. Confiança total na equipe.",
+        author: "Cliente de Longa Data",
+    },
 ];
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-16 sm:py-24 bg-secondary">
+    <section id="testimonials" className="py-20 sm:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
             O Que Nossos Clientes Dizem
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-6 text-lg text-muted-foreground">
             A satisfação de nossos clientes é o nosso maior reconhecimento.
           </p>
         </div>
         
-        <div className="mt-12 grid gap-12 lg:grid-cols-2">
+        <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="flex items-center justify-center">
+                <InstagramEmbed />
+            </div>
             <Carousel
               opts={{
                 align: "start",
                 loop: true,
               }}
-              className="w-full max-w-xl mx-auto"
+              className="w-full max-w-2xl mx-auto"
             >
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2">
-                    <div className="p-1 h-full">
-                      <Card className="flex flex-col justify-between h-full shadow-sm hover:shadow-md transition-shadow">
-                        <CardContent className="p-6 flex-grow">
-                          <Quote className="h-8 w-8 text-primary/30 mb-4" />
-                          <p className="text-muted-foreground italic">"{testimonial}"</p>
+                  <CarouselItem key={index} className="md:basis-1/1">
+                    <div className="p-4 h-full">
+                      <Card className="flex flex-col justify-center text-center h-full shadow-lg bg-card rounded-xl p-8">
+                        <CardContent className="p-0 flex-grow">
+                          <Quote className="h-10 w-10 text-accent/50 mb-6 mx-auto" />
+                          <p className="text-muted-foreground text-lg italic leading-relaxed">"{testimonial.quote}"</p>
+                           <p className="mt-6 font-bold font-headline text-primary text-lg">- {testimonial.author}</p>
                         </CardContent>
                       </Card>
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="hidden sm:flex" />
-              <CarouselNext className="hidden sm:flex" />
+              <CarouselPrevious className="-left-4 hidden sm:flex" />
+              <CarouselNext className="-right-4 hidden sm:flex" />
             </Carousel>
-            <div className="flex items-center justify-center">
-                <InstagramEmbed />
-            </div>
         </div>
       </div>
     </section>

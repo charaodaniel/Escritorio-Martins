@@ -55,32 +55,34 @@ export default function ContactForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nome Completo</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Seu nome completo" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Endereço de Email</FormLabel>
-                            <FormControl>
-                                <Input placeholder="seuemail@exemplo.com" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nome Completo</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Seu nome completo" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Endereço de Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="seuemail@exemplo.com" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
                  <FormField
                     control={form.control}
                     name="phone"
@@ -103,7 +105,7 @@ export default function ContactForm() {
                             <FormControl>
                                 <Textarea
                                 placeholder="Descreva brevemente sua necessidade jurídica..."
-                                className="min-h-[120px]"
+                                className="min-h-[140px]"
                                 {...field}
                                 />
                             </FormControl>
@@ -111,7 +113,7 @@ export default function ContactForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full" style={{backgroundColor: 'hsl(var(--primary))', color: 'hsl(var(--primary-foreground))'}}>Enviar Mensagem</Button>
+                <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">Enviar Mensagem</Button>
             </form>
         </Form>
     );

@@ -26,27 +26,29 @@ const features = [
 
 export default function WhyUs() {
   return (
-    <section id="why-us" className="py-16 sm:py-24 bg-background">
+    <section id="why-us" className="py-20 sm:py-28 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
             Por que nos escolher?
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-6 text-lg text-muted-foreground">
             Combinamos conhecimento técnico, atendimento dedicado e experiência local para defender seus direitos com excelência.
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
-            <div key={feature.title} className="text-center">
-               <div className="flex justify-center items-center mb-4">
-                <div className="bg-primary/10 rounded-full p-4">
-                  <feature.icon className="h-8 w-8 text-primary" />
+            <Card key={feature.title} className="text-center bg-transparent border-0 shadow-none">
+              <CardHeader className="flex justify-center items-center mb-2">
+                <div className="bg-background rounded-full p-5">
+                  <feature.icon className="h-10 w-10 text-primary" />
                 </div>
-              </div>
-              <h3 className="text-xl font-bold font-headline">{feature.title}</h3>
-              <p className="mt-2 text-muted-foreground">{feature.description}</p>
-            </div>
+              </CardHeader>
+              <CardContent>
+                 <CardTitle className="text-xl font-bold font-headline mb-3">{feature.title}</CardTitle>
+                 <p className="text-muted-foreground">{feature.description}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

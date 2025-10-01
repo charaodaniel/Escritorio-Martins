@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 220 13% 95%;
-    --foreground: 210 4% 12%;
+    --background: 220 13% 97%;
+    --foreground: 224 10% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 210 4% 12%;
+    --card-foreground: 224 10% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 210 4% 12%;
-    --primary: 231 48% 48%;
+    --popover-foreground: 224 10% 10%;
+    --primary: 215 28% 17%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 220 14% 90%;
-    --secondary-foreground: 210 4% 12%;
-    --muted: 220 14% 90%;
+    --secondary: 220 14% 93%;
+    --secondary-foreground: 224 10% 10%;
+    --muted: 220 14% 93%;
     --muted-foreground: 220 9% 46%;
-    --accent: 174 44% 51%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 224 10% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 85%;
-    --input: 220 13% 89%;
-    --ring: 231 48% 48%;
+    --border: 220 13% 88%;
+    --input: 220 13% 91%;
+    --ring: 215 28% 17%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -31,25 +31,25 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 225 10% 9%;
+    --background: 224 10% 10%;
     --foreground: 210 20% 98%;
-    --card: 225 10% 12%;
+    --card: 224 10% 12%;
     --card-foreground: 210 20% 98%;
-    --popover: 225 10% 9%;
+    --popover: 224 10% 10%;
     --popover-foreground: 210 20% 98%;
-    --primary: 231 48% 48%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 38 92% 50%;
+    --primary-foreground: 224 10% 10%;
     --secondary: 225 10% 15%;
     --secondary-foreground: 210 20% 98%;
     --muted: 225 10% 15%;
     --muted-foreground: 210 20% 60%;
-    --accent: 174 44% 51%;
-    --accent-foreground: 0 0% 9%;
+    --accent: 215 28% 17%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 225 10% 20%;
     --input: 225 10% 20%;
-    --ring: 231 48% 48%;
+    --ring: 38 92% 50%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
