@@ -1,27 +1,22 @@
 "use client";
 
-import Image from "next/image";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
-
 export default function Map() {
-  const mapImage = PlaceHolderImages.find((img) => img.id === "map-location");
+  const address = "Rua Sete de Setembro, 123, Manoel Viana, RS, Brazil";
+  const embedUrl = `https://maps.google.com/maps?q=${encodeURI(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
 
   return (
     <div className="h-full min-h-[300px] w-full overflow-hidden rounded-lg shadow-lg">
-      {mapImage ? (
-        <Image
-          src={mapImage.imageUrl}
-          alt={mapImage.description}
-          width={800}
-          height={600}
-          className="w-full h-full object-cover"
-          data-ai-hint={mapImage.imageHint}
-        />
-      ) : (
-        <div className="h-full w-full bg-muted flex items-center justify-center">
-          <p className="text-muted-foreground">Map loading...</p>
-        </div>
-      )}
+      <iframe
+        width="100%"
+        height="100%"
+        src={embedUrl}
+        title="Office Location"
+        aria-label="Office Location"
+        style={{ border: 0, minHeight: '300px' }}
+        allowFullScreen={false}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      ></iframe>
     </div>
   );
 }
