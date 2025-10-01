@@ -1,0 +1,82 @@
+import Link from "next/link";
+import { Scale, Mail, Phone, MapPin, Twitter, Linkedin, Facebook } from "lucide-react";
+
+const navLinks = [
+  { href: "#practice-areas", label: "Practice Areas" },
+  { href: "#results", label: "Case Results" },
+  { href: "#attorneys", label: "Our Team" },
+  { href: "#blog", label: "Insights" },
+  { href: "#contact", label: "Contact" },
+];
+
+const socialLinks = [
+    { icon: Twitter, href: "#" },
+    { icon: Linkedin, href: "#" },
+    { icon: Facebook, href: "#" },
+];
+
+export default function Footer() {
+  return (
+    <footer className="bg-secondary text-secondary-foreground">
+      <div className="container mx-auto px-4 py-12 md:px-6">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+          <div className="flex flex-col gap-4">
+            <Link
+              href="#"
+              className="flex items-center gap-2 font-headline text-xl font-bold"
+            >
+              <Scale className="h-6 w-6 text-primary" />
+              <span>LexPage</span>
+            </Link>
+            <p className="text-sm text-muted-foreground">
+              Your trusted partner in navigating the complexities of the legal world.
+            </p>
+          </div>
+          <div>
+            <h3 className="mb-4 font-headline text-lg font-semibold">Quick Links</h3>
+            <ul className="space-y-2">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm hover:text-primary transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-4 font-headline text-lg font-semibold">Contact Us</h3>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-center gap-3">
+                <Mail className="h-4 w-4 text-primary" />
+                <a href="mailto:contact@lexpage.com" className="hover:text-primary transition-colors">contact@lexpage.com</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 text-primary" />
+                <a href="tel:+1234567890" className="hover:text-primary transition-colors">(123) 456-7890</a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-primary" />
+                <span>123 Law Street, Suite 400<br />Justice City, USA 12345</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-4 font-headline text-lg font-semibold">Follow Us</h3>
+            <div className="flex items-center gap-4">
+                {socialLinks.map((social, index) => (
+                    <Link key={index} href={social.href} className="text-muted-foreground hover:text-primary transition-colors">
+                        <social.icon className="h-5 w-5" />
+                        <span className="sr-only">Follow us on {social.icon.displayName}</span>
+                    </Link>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+          <p>&copy; {new Date().getFullYear()} LexPage. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}

@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "Abstract architectural image for hero background",
+      "imageUrl": "https://images.unsplash.com/photo-1567943183748-3a7542120c90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhcmNoaXRlY3R1cmUlMjBhYnN0cmFjdHxlbnwwfHx8fDE3NTkyNzk0NjR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "architecture abstract"
+    },
+    {
+      "id": "attorney-1",
+      "description": "Portrait of a female attorney",
+      "imageUrl": "https://images.unsplash.com/photo-1610655507808-a59293f4e332?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc1OTI3NTk3MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "attorney-2",
+      "description": "Portrait of a male attorney",
+      "imageUrl": "https://images.unsplash.com/photo-1636377985931-898218afd306?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NTkyNjA1ODZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "attorney-3",
+      "description": "Portrait of another male attorney",
+      "imageUrl": "https://images.unsplash.com/photo-1556157382-97eda2d62296?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBtYW58ZW58MHx8fHwxNzU5Mjc3ODA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional man"
+    },
+    {
+      "id": "blog-1",
+      "description": "Image for a blog post about contract law",
+      "imageUrl": "https://images.unsplash.com/photo-1611079830811-865ff4428d17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N1bWVudCUyMHBlbnxlbnwwfHx8fDE3NTkzMjM5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "document pen"
+    },
+    {
+      "id": "blog-2",
+      "description": "Image for a blog post about litigation",
+      "imageUrl": "https://images.unsplash.com/photo-1590942743406-1879e3189bc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb3VydGhvdXNlJTIwZ2F2ZWx8ZW58MHx8fHwxNzU5MzIzOTcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "courthouse gavel"
+    },
+    {
+      "id": "blog-3",
+      "description": "Image for a blog post about intellectual property",
+      "imageUrl": "https://images.unsplash.com/photo-1507808425661-dec7b2114f15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxsaWdodGJ1bGIlMjBjcmVhdGl2ZXxlbnwwfHx8fDE3NTkzMjM5NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "lightbulb creative"
+    },
+    {
+      "id": "map-location",
+      "description": "A static map image showing the firm's location",
+      "imageUrl": "https://images.unsplash.com/photo-1603466183710-70b84997a93f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxjaXR5JTIwbWFwfGVufDB8fHx8MTc1OTI3ODQ3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city map"
+    },
+    {
+      "id": "case-result-1",
+      "description": "Image representing corporate success",
+      "imageUrl": "https://images.unsplash.com/photo-1493134799591-2c9eed26201a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaXR5JTIwc2t5bGluZXxlbnwwfHx8fDE3NTkyNjU4NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city skyline"
+    },
+    {
+      "id": "case-result-2",
+      "description": "Image representing personal injury victory",
+      "imageUrl": "https://images.unsplash.com/photo-1505455184862-554165e5f6ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxoZWxwaW5nJTIwaGFuZHxlbnwwfHx8fDE3NTkyMjIyMDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "helping hand"
+    }
+  ]
 }
