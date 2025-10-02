@@ -27,7 +27,7 @@ export default function Hero() {
             Escritório Martins Advogados
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-200 sm:text-xl max-w-2xl mx-auto">
-            Seu parceiro jurídico em todas as áreas do direito. Advocacia especializada. Compromisso com a justiça.
+            Seu parceiro jurídico em todas as áreas do direito. ⚖️ Advocacia especializada. 🧑‍⚖️ Compromisso com a justiça.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
             <Button asChild size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg transform transition-transform hover:scale-105">
