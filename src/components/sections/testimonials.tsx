@@ -34,10 +34,10 @@ export default function Testimonials() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
-            O Que Nossos Clientes Dizem
+            Nossas Publicações
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            A satisfação de nossos clientes é o nosso maior reconhecimento.
+            Acompanhe nossas últimas postagens e novidades diretamente do nosso Instagram.
           </p>
         </div>
         
