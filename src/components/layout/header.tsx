@@ -45,7 +45,8 @@ export default function Header() {
     <header
       className={cn(
         "sticky top-0 z-50 w-full border-b transition-all duration-300",
-        isScrolled ? "border-border bg-background/95 backdrop-blur-sm" : "border-transparent bg-transparent text-white"
+        isScrolled ? "border-border bg-background/95 backdrop-blur-sm" : "border-transparent bg-transparent",
+        isScrolled ? "text-foreground" : "text-white"
       )}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
@@ -53,7 +54,7 @@ export default function Header() {
           href="#"
           className="flex items-center gap-2 font-headline text-xl font-bold"
         >
-          <Scale className={cn("h-6 w-6 transition-colors", isScrolled ? "text-primary" : "text-accent")} />
+          <Scale className="h-6 w-6 text-accent" />
           <span className="transition-colors">Vieira & Martins</span>
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
@@ -62,8 +63,8 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-            <Button asChild className="hidden md:flex" variant="ghost">
-                <Link href="#contact" className="border border-accent text-accent hover:bg-accent hover:text-accent-foreground">Agende sua Consulta</Link>
+            <Button asChild className="hidden md:flex bg-accent text-accent-foreground hover:bg-accent/90">
+                <Link href="#contact">Agende sua Consulta</Link>
             </Button>
             <Sheet>
                 <SheetTrigger asChild>
@@ -72,7 +73,7 @@ export default function Header() {
                     <span className="sr-only">Alternar menu de navegação</span>
                 </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="bg-primary text-primary-foreground">
+                <SheetContent side="right" className="bg-background text-foreground">
                 <div className="flex flex-col gap-8 p-6">
                     <Link
                         href="#"

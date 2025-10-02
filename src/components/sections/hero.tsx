@@ -19,7 +19,7 @@ export default function Hero() {
           data-ai-hint={heroImage.imageHint}
         />
       )}
-      <div className="absolute inset-0 bg-primary/80" />
+      <div className="absolute inset-0 bg-background/80" />
       <div className="relative z-10 text-center px-4">
         <div className="max-w-4xl mx-auto">
            <h1 className="font-headline text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">

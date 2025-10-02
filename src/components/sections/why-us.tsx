@@ -26,7 +26,7 @@ const features = [
 
 export default function WhyUs() {
   return (
-    <section id="why-us" className="py-20 sm:py-28 bg-secondary">
+    <section id="why-us" className="py-20 sm:py-28 bg-card">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
@@ -45,7 +45,7 @@ export default function WhyUs() {
                 </div>
               </CardHeader>
               <CardContent>
-                 <CardTitle className="text-xl font-bold font-headline mb-3">{feature.title}</CardTitle>
+                 <CardTitle className="text-xl font-bold font-headline mb-3 text-primary">{feature.title}</CardTitle>
                  <p className="text-muted-foreground">{feature.description}</p>
               </CardContent>
             </Card>

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 sm:py-28 bg-secondary">
+    <section id="contact" className="py-20 sm:py-28 bg-card">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
@@ -17,7 +17,7 @@ export default function Contact() {
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-5 lg:gap-16">
-          <div className="lg:col-span-3 bg-card p-8 sm:p-10 rounded-xl shadow-lg">
+          <div className="lg:col-span-3 bg-background p-8 sm:p-10 rounded-xl shadow-lg">
              <h3 className="font-headline text-2xl sm:text-3xl font-bold mb-6 text-primary">Envie-nos uma Mensagem</h3>
              <ContactForm />
           </div>

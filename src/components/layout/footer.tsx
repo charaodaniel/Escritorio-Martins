@@ -16,7 +16,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-card text-card-foreground">
       <div className="container mx-auto px-4 py-16 md:px-6">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           <div className="lg:col-span-2 flex flex-col gap-4">
@@ -27,7 +27,7 @@ export default function Footer() {
               <Scale className="h-7 w-7 text-accent" />
               <span>Vieira & Martins Advogados</span>
             </Link>
-            <p className="text-sm text-primary-foreground/70 max-w-sm">
+            <p className="text-sm text-muted-foreground max-w-sm">
               Segurança jurídica com excelência e atendimento personalizado em Manoel Viana.
             </p>
           </div>
@@ -36,7 +36,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-primary-foreground/80 hover:text-accent transition-colors">
+                  <Link href={link.href} className="text-sm text-muted-foreground hover:text-accent transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -48,15 +48,15 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:contato@vieramartins.com" className="text-primary-foreground/80 hover:text-accent transition-colors">contato@vieramartins.com</a>
+                <a href="mailto:contato@vieramartins.com" className="text-muted-foreground hover:text-accent transition-colors">contato@vieramartins.com</a>
               </li>
               <li className="flex items-center gap-3">
                 <MessageCircle className="h-4 w-4 text-accent" />
-                <a href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer" className="text-primary-foreground/80 hover:text-accent transition-colors">+55 (55) 99916-9181</a>
+                <a href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">+55 (55) 99916-9181</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-accent" />
-                <span className="text-primary-foreground/80">Rua Franklin Bastos de Carvalho, 754<br />Centro, Manoel Viana – RS</span>
+                <span className="text-muted-foreground">Rua Franklin Bastos de Carvalho, 754<br />Centro, Manoel Viana – RS</span>
               </li>
             </ul>
           </div>
@@ -64,7 +64,7 @@ export default function Footer() {
             <h3 className="mb-4 font-headline text-lg font-semibold text-accent">Siga-nos</h3>
             <div className="flex items-center gap-4">
                 {socialLinks.map((social) => (
-                    <Link key={social.name} href={social.href} className="text-primary-foreground/80 hover:text-accent transition-colors">
+                    <Link key={social.name} href={social.href} className="text-muted-foreground hover:text-accent transition-colors">
                         <social.icon className="h-5 w-5" />
                         <span className="sr-only">Siga-nos no {social.name}</span>
                     </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-12 border-t border-primary-foreground/10 pt-8 text-center text-sm text-primary-foreground/60">
+        <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} Vieira & Martins Advogados. Todos os direitos reservados.</p>
         </div>
       </div>
