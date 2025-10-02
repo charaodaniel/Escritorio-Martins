@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -6,25 +8,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Quote } from "lucide-react";
 import InstagramEmbed from "@/components/instagram-embed";
 
-const testimonials = [
+const instagramPosts = [
     {
-        quote: "Excelente banca de advocacia. Profissionais competentes e atendimento personalizado que fizeram toda a diferença no meu caso.",
-        author: "Cliente Satisfeito",
+        permalink: "https://www.instagram.com/p/C89o-3kRj2C/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
     {
-        quote: "A equipe do Vieira & Martins foi incansável na defesa dos meus direitos. Sou muito grato pela agilidade e transparência.",
-        author: "Pessoa Física",
+        permalink: "https://www.instagram.com/p/C8e5kZzxbpg/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
     {
-        quote: "Recomendo o escritório a todos em Manoel Viana. Encontrei o suporte jurídico que precisava com um atendimento humano e eficiente.",
-        author: "Empresa Local",
+        permalink: "https://www.instagram.com/p/C75g8fARj9Z/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
      {
-        quote: "Profissionalismo exemplar e resultados que superaram minhas expectativas. Confiança total na equipe.",
-        author: "Cliente de Longa Data",
+        permalink: "https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
 ];
 
@@ -33,7 +30,7 @@ export default function Testimonials() {
     <section id="testimonials" className="py-20 sm:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
+          <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
             Nossas Publicações
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
@@ -41,10 +38,7 @@ export default function Testimonials() {
           </p>
         </div>
         
-        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-            <div className="flex items-center justify-center">
-                <InstagramEmbed />
-            </div>
+        <div className="mt-16">
             <Carousel
               opts={{
                 align: "start",
@@ -53,16 +47,10 @@ export default function Testimonials() {
               className="w-full max-w-2xl mx-auto"
             >
               <CarouselContent>
-                {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index}>
-                    <div className="p-1 h-full">
-                      <Card className="flex flex-col justify-center text-center h-full shadow-lg bg-card rounded-xl p-8">
-                        <CardContent className="p-0 flex-grow flex flex-col items-center justify-center">
-                          <Quote className="h-10 w-10 text-accent/50 mb-6" />
-                          <p className="text-muted-foreground text-lg italic leading-relaxed">"{testimonial.quote}"</p>
-                           <p className="mt-6 font-bold font-headline text-primary text-lg">- {testimonial.author}</p>
-                        </CardContent>
-                      </Card>
+                {instagramPosts.map((post, index) => (
+                  <CarouselItem key={index} className="flex justify-center">
+                    <div className="p-1">
+                       <InstagramEmbed permalink={post.permalink} />
                     </div>
                   </CarouselItem>
                 ))}
