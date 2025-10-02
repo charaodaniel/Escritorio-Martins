@@ -12,16 +12,22 @@ import InstagramEmbed from "@/components/instagram-embed";
 
 const instagramPosts = [
     {
-        permalink: "https://www.instagram.com/p/C89o-3kRj2C/?utm_source=ig_embed&amp;utm_campaign=loading",
+        permalink: "https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
     {
-        permalink: "https://www.instagram.com/p/C8e5kZzxbpg/?utm_source=ig_embed&amp;utm_campaign=loading",
+        permalink: "https://www.instagram.com/p/DPFACa0AfH4/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
     {
-        permalink: "https://www.instagram.com/p/C75g8fARj9Z/?utm_source=ig_embed&amp;utm_campaign=loading",
+        permalink: "https://www.instagram.com/p/DO9RaULlRjl/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
      {
-        permalink: "https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_embed&amp;utm_campaign=loading",
+        permalink: "https://www.instagram.com/p/DO6sncHjxHf/?utm_source=ig_embed&amp;utm_campaign=loading",
+    },
+    {
+        permalink: "https://www.instagram.com/p/DOzASrKiHYZ/?utm_source=ig_embed&amp;utm_campaign=loading",
+    },
+    {
+        permalink: "https://www.instagram.com/p/DOwnSx4Dme5/?utm_source=ig_embed&amp;utm_campaign=loading",
     },
 ];
 
