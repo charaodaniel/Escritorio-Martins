@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Scale, Mail, Phone, MapPin, Twitter, Linkedin, Facebook, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
@@ -15,6 +18,12 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
+
   return (
     <footer className="bg-card text-card-foreground">
       <div className="container mx-auto px-4 py-16 md:px-6">
@@ -73,7 +82,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Vieira & Martins Advogados. Todos os direitos reservados.</p>
+          <p>&copy; {currentYear} Vieira & Martins Advogados. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
