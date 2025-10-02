@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -9,6 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import InstagramEmbed from "@/components/instagram-embed";
+import Autoplay from "embla-carousel-autoplay";
 
 const instagramPosts = [
     {
@@ -32,6 +33,10 @@ const instagramPosts = [
 ];
 
 export default function Testimonials() {
+  const plugin = React.useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  )
+
   return (
     <section id="testimonials" className="py-20 sm:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -46,11 +51,14 @@ export default function Testimonials() {
         
         <div className="mt-16">
             <Carousel
+              plugins={[plugin.current]}
               opts={{
                 align: "start",
                 loop: true,
               }}
               className="w-full max-w-2xl mx-auto"
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
             >
               <CarouselContent>
                 {instagramPosts.map((post, index) => (
