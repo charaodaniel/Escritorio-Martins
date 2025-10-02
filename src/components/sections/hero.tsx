@@ -8,7 +8,7 @@ export default function Hero() {
   const heroImage = PlaceHolderImages.find((img) => img.id === "hero-background");
 
   return (
-    <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center">
+    <section className="relative h-screen min-h-[700px] w-full flex flex-col items-center justify-center">
       {heroImage && (
         <Image
           src={heroImage.imageUrl}
@@ -21,19 +21,19 @@ export default function Hero() {
         />
       )}
       <div className="absolute inset-0 bg-background/80" />
-      <div className="relative z-10 text-center px-4">
-        <div className="max-w-4xl mx-auto">
-           <h1 className="font-headline text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full">
+        <div className="max-w-4xl w-full">
+           <h1 className="font-headline text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
             Vieira & Martins Advogados
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-200 sm:text-xl max-w-2xl mx-auto">
             Segurança Jurídica com Excelência em Manoel Viana
           </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg transform transition-transform hover:scale-105">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
+            <Button asChild size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg transform transition-transform hover:scale-105">
               <Link href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer">Fale Conosco no WhatsApp</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-white border-white/50 hover:bg-white/10 hover:text-white transform transition-transform hover:scale-105">
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto text-white border-white/50 hover:bg-white/10 hover:text-white transform transition-transform hover:scale-105">
               <Link href="#practice-areas">Nossas Áreas</Link>
             </Button>
           </div>
