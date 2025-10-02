@@ -27,9 +27,14 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Set initial state
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Only add the event listener on the client-side
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", handleScroll);
+      // Set initial state after mounting
+      handleScroll();
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
   }, []);
 
   const NavLink = ({ href, label, className }: { href: string; label: string, className?: string }) => (
