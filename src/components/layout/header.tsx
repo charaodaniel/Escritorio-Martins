@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
   { href: "#why-us", label: "Diferenciais" },
-  { href: "#testimonials", label: "Depoimentos" },
+  { href: "#testimonials", label: "Publicações" },
   { href: "#contact", label: "Contato" },
 ];
 
@@ -55,7 +55,7 @@ export default function Header() {
           className="flex items-center gap-2 font-headline text-xl font-bold"
         >
           <Scale className="h-6 w-6 text-accent" />
-          <span className="transition-colors">Vieira & Martins</span>
+          <span className="transition-colors">Martins Advogados</span>
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
@@ -80,7 +80,7 @@ export default function Header() {
                         className="flex items-center gap-2 font-headline text-xl font-bold text-accent"
                     >
                         <Scale className="h-6 w-6" />
-                        <span>Vieira & Martins</span>
+                        <span>Martins Advogados</span>
                     </Link>
                     <nav className="flex flex-col gap-4">
                     {navLinks.map((link) => (

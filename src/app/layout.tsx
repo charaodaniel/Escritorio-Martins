@@ -4,8 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Vieira & Martins Advogados | Segurança Jurídica em Manoel Viana',
-  description: 'Escritório de advocacia em Manoel Viana-RS, dedicado a defender os interesses de pessoas físicas e jurídicas com profissionalismo, ética e transparência.',
+  title: 'Martins Advogados | Segurança Jurídica em Manoel Viana',
+  description: 'Seu parceiro jurídico em todas as áreas do direito. Advocacia especializada e compromisso com a justiça.',
 };
 
 export default function RootLayout({
