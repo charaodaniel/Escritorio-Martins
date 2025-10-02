@@ -9,7 +9,7 @@ export default function Contact() {
     <section id="contact" className="py-20 sm:py-28 bg-card">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
+          <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
             Entre em Contato
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">

@@ -39,7 +39,7 @@ export default function PracticeAreas() {
     <section id="practice-areas" className="py-20 sm:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
+          <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
             Nossas Áreas de Atuação
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">

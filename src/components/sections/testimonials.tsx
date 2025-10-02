@@ -33,7 +33,7 @@ export default function Testimonials() {
     <section id="testimonials" className="py-20 sm:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
+          <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
             Nossas Publicações
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
@@ -41,7 +41,7 @@ export default function Testimonials() {
           </p>
         </div>
         
-        <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="flex items-center justify-center">
                 <InstagramEmbed />
             </div>
@@ -54,11 +54,11 @@ export default function Testimonials() {
             >
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
-                  <CarouselItem key={index} className="md:basis-1/1">
-                    <div className="p-4 h-full">
+                  <CarouselItem key={index}>
+                    <div className="p-1 h-full">
                       <Card className="flex flex-col justify-center text-center h-full shadow-lg bg-card rounded-xl p-8">
-                        <CardContent className="p-0 flex-grow">
-                          <Quote className="h-10 w-10 text-accent/50 mb-6 mx-auto" />
+                        <CardContent className="p-0 flex-grow flex flex-col items-center justify-center">
+                          <Quote className="h-10 w-10 text-accent/50 mb-6" />
                           <p className="text-muted-foreground text-lg italic leading-relaxed">"{testimonial.quote}"</p>
                            <p className="mt-6 font-bold font-headline text-primary text-lg">- {testimonial.author}</p>
                         </CardContent>
