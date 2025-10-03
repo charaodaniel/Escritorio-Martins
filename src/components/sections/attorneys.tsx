@@ -5,42 +5,36 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 const attorneys = [
   {
-    name: "Jéssica Miller",
-    title: "Sócia-Gerente",
-    bio: "Com mais de 20 anos de experiência em direito societário, Jéssica é uma líder reconhecida em litígios de alto risco e fusões.",
+    name: "Gilberto Martins",
+    title: "Sócio Fundador",
+    bio: "Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.",
     imageId: "attorney-1"
   },
   {
-    name: "David Chen",
-    title: "Sócio Sênior, Defesa Criminal",
-    bio: "David é um defensor feroz de seus clientes, com um histórico comprovado de sucesso em casos complexos de defesa criminal.",
+    name: "Eduardo Martins",
+    title: "Sócio",
+    bio: "Especialista em direito de família e sucessões, Eduardo combina conhecimento técnico com uma abordagem humana para resolver questões complexas.",
     imageId: "attorney-2"
-  },
-  {
-    name: "Michael Rodriguez",
-    title: "Associado, Direito de Família",
-    bio: "Michael traz empatia e aguçada perspicácia jurídica para questões sensíveis de direito de família, sempre priorizando o bem-estar de seus clientes.",
-    imageId: "attorney-3"
   },
 ];
 
 export default function Attorneys() {
   return (
-    <section id="attorneys" className="py-16 sm:py-24 bg-secondary">
+    <section id="attorneys" className="py-20 sm:py-28 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-            Conheça Nossa Equipe Dedicada
+          <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
+            Conheça Nossa Equipe
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Nossos advogados são talentosos, apaixonados e comprometidos em fornecer um serviço jurídico excepcional.
+          <p className="mt-6 text-lg text-muted-foreground">
+            Profissionais dedicados e apaixonados pelo direito, comprometidos em oferecer a melhor solução jurídica para você.
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12 justify-center">
           {attorneys.map((attorney) => {
             const image = PlaceHolderImages.find(img => img.id === attorney.imageId);
             return (
-              <Card key={attorney.name} className="overflow-hidden text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+              <Card key={attorney.name} className="overflow-hidden text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 max-w-sm mx-auto">
                 <CardHeader className="p-6 items-center bg-background">
                   {image && (
                      <Avatar className="h-32 w-32 border-4 border-white shadow-lg">
@@ -49,11 +43,11 @@ export default function Attorneys() {
                     </Avatar>
                   )}
                   <div className="mt-4">
-                     <CardTitle className="font-headline text-xl">{attorney.name}</CardTitle>
-                     <p className="text-sm text-primary">{attorney.title}</p>
+                     <CardTitle className="font-headline text-2xl">{attorney.name}</CardTitle>
+                     <p className="text-md text-primary">{attorney.title}</p>
                   </div>
                 </CardHeader>
-                <CardContent className="p-6">
+                <CardContent className="p-6 pt-3">
                   <p className="text-muted-foreground">{attorney.bio}</p>
                 </CardContent>
               </Card>
