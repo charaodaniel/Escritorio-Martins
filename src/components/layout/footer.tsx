@@ -66,7 +66,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-accent" />
-                <span className="text-muted-foreground">Rua Franklin Bastos de Carvalho, 754<br />Centro, Manoel Viana – RS</span>
+                <span className="text-muted-foreground">R. José João Saldanha, 815<br />Centro, Manoel Viana - RS</span>
               </li>
             </ul>
           </div>
