@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Scale, Mail, Phone, MapPin, Facebook, MessageCircle } from "lucide-react";
+import { Scale, Mail, Phone, MapPin, Facebook, Instagram, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -15,6 +15,7 @@ const navLinks = [
 
 const socialLinks = [
     { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100090526663540", name: "Facebook" },
+    { icon: Instagram, href: "https://www.instagram.com/vieiraemartinsadv/", name: "Instagram" },
 ];
 
 export default function Footer() {
