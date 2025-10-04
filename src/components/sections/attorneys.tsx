@@ -40,7 +40,7 @@ export default function Attorneys() {
               <Card key={attorney.id} className="overflow-hidden text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 max-w-sm mx-auto">
                 <CardHeader className="p-6 items-center bg-background">
                      <Avatar className="h-32 w-32 border-4 border-white shadow-lg">
-                        <AvatarImage src={image.imageUrl} alt={attorney.name} data-ai-hint={image.imageHint} />
+                        <AvatarImage src={image.imageUrl} alt={attorney.name} data-ai-hint={image.imageHint} className="object-cover" />
                         <AvatarFallback>{attorney.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                   <div className="mt-4">
