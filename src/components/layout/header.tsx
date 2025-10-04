@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
   { href: "#why-us", label: "Diferenciais" },
+  { href: "#our-history", label: "Nossa História" },
   { href: "#attorneys", label: "Equipe" },
   { href: "#testimonials", label: "Publicações" },
   { href: "#contact", label: "Contato" },

@@ -6,6 +6,7 @@ import WhyUs from "@/components/sections/why-us";
 import Testimonials from "@/components/sections/testimonials";
 import Contact from "@/components/sections/contact";
 import Attorneys from "@/components/sections/attorneys";
+import OurHistory from "@/components/sections/our-history";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Hero />
         <PracticeAreas />
         <WhyUs />
+        <OurHistory />
         <Attorneys />
         <Testimonials />
         <Contact />
