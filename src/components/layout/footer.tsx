@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Scale, Mail, Phone, MapPin, Twitter, Linkedin, Facebook, MessageCircle } from "lucide-react";
+import { Scale, Mail, Phone, MapPin, Facebook, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -14,9 +14,7 @@ const navLinks = [
 ];
 
 const socialLinks = [
-    { icon: Twitter, href: "#", name: "Twitter" },
-    { icon: Linkedin, href: "#", name: "LinkedIn" },
-    { icon: Facebook, href: "#", name: "Facebook" },
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100090526663540", name: "Facebook" },
 ];
 
 export default function Footer() {
@@ -75,7 +73,7 @@ export default function Footer() {
             <h3 className="mb-4 font-headline text-lg font-semibold text-accent">Siga-nos</h3>
             <div className="flex items-center gap-4">
                 {socialLinks.map((social) => (
-                    <Link key={social.name} href={social.href} className="text-muted-foreground hover:text-accent transition-colors">
+                    <Link key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">
                         <social.icon className="h-5 w-5" />
                         <span className="sr-only">Siga-nos no {social.name}</span>
                     </Link>
