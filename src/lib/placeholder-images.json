@@ -7,6 +7,12 @@
       "imageHint": "architecture abstract"
     },
     {
+      "id": "logo",
+      "description": "Logo for Vieira & Martins Advogados",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKggMEr-ggfzdBR9AA934uMmfiGXN1GVgRfw&s",
+      "imageHint": "logo scale"
+    },
+    {
       "id": "attorney-1",
       "description": "Portrait of a male attorney",
       "imageUrl": "https://www.alegretetudo.com.br/wp-content/uploads/2023/11/alegretetudo-vieira-e-martins-um-legado-de-comprometimento-e-credibildade-no-direito-da-fronteira-oeste-e.jpg",

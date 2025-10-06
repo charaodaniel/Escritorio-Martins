@@ -45,7 +45,7 @@ const links = [
 ];
 
 export default function LinksPage() {
-    const gilbertoImage = PlaceHolderImages.find(img => img.id === 'attorney-1');
+    const logoImage = PlaceHolderImages.find(img => img.id === 'logo');
     const heroImage = PlaceHolderImages.find((img) => img.id === "hero-background");
 
     return (
@@ -64,11 +64,11 @@ export default function LinksPage() {
             <div className="absolute inset-0 bg-background/90" />
             <div className="relative z-10 w-full max-w-md">
                 <div className="flex flex-col items-center">
-                    <Avatar className="h-28 w-28 border-4 border-accent shadow-lg mb-4">
-                        {gilbertoImage && (
-                            <AvatarImage src={gilbertoImage.imageUrl} alt="Gilberto Martins" className="object-cover" data-ai-hint={gilbertoImage.imageHint}/>
+                    <Avatar className="h-28 w-28 border-4 border-accent shadow-lg mb-4 bg-white p-2">
+                        {logoImage && (
+                            <AvatarImage src={logoImage.imageUrl} alt="Vieira & Martins Advogados Logo" className="object-contain" data-ai-hint={logoImage.imageHint}/>
                         )}
-                        <AvatarFallback>MA</AvatarFallback>
+                        <AvatarFallback>VM</AvatarFallback>
                     </Avatar>
                     <h1 className="text-2xl font-bold font-headline text-primary-foreground">
                         Vieira & Martins Advogados
