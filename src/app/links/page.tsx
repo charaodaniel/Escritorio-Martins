@@ -70,7 +70,7 @@ export default function LinksPage() {
                         )}
                         <AvatarFallback>VM</AvatarFallback>
                     </Avatar>
-                    <h1 className="text-2xl font-bold font-headline text-primary-foreground">
+                    <h1 className="text-2xl font-bold font-headline text-white">
                         Vieira & Martins Advogados
                     </h1>
                     <p className="mt-1 text-center text-muted-foreground text-lg">
