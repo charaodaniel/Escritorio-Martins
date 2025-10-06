@@ -24,7 +24,7 @@ export default function Hero() {
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full">
         <div className="max-w-4xl w-full">
            <h1 className="font-headline text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
-            Escritório Martins Advogados
+            Escritório Vieira & Martins Advogados
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-200 sm:text-xl max-w-2xl mx-auto">
             Seu parceiro jurídico em todas as áreas do direito. ⚖️ Advocacia especializada. 🧑‍⚖️ Compromisso com a justiça.

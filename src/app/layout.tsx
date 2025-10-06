@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Martins Advogados | Segurança Jurídica em Manoel Viana',
+  title: 'Vieira & Martins Advogados | Segurança Jurídica em Manoel Viana',
   description: 'Seu parceiro jurídico em todas as áreas do direito. Advocacia especializada e compromisso com a justiça.',
 };
 

@@ -62,7 +62,7 @@ export default function Header() {
           className="flex items-center gap-2 font-headline text-xl font-bold"
         >
           <Scale className="h-6 w-6 text-accent" />
-          <span className="transition-colors">Martins Advogados</span>
+          <span className="transition-colors">Vieira & Martins Advogados</span>
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
@@ -87,7 +87,7 @@ export default function Header() {
                         className="flex items-center gap-2 font-headline text-xl font-bold text-accent"
                     >
                         <Scale className="h-6 w-6" />
-                        <span>Martins Advogados</span>
+                        <span>Vieira & Martins Advogados</span>
                     </Link>
                     <nav className="flex flex-col gap-4">
                     {navLinks.map((link) => (

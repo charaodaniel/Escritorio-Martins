@@ -35,7 +35,7 @@ export default function Footer() {
               className="flex items-center gap-2 font-headline text-2xl font-bold"
             >
               <Scale className="h-7 w-7 text-accent" />
-              <span>Martins Advogados</span>
+              <span>Vieira & Martins Advogados</span>
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm">
               Segurança jurídica com excelência e atendimento personalizado em Manoel Viana.
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Martins Advogados. Todos os direitos reservados.</p>
+          <p>&copy; {currentYear} Vieira & Martins Advogados. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

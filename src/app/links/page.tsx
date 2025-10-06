@@ -71,7 +71,7 @@ export default function LinksPage() {
                         <AvatarFallback>MA</AvatarFallback>
                     </Avatar>
                     <h1 className="text-2xl font-bold font-headline text-primary-foreground">
-                        Martins Advogados
+                        Vieira & Martins Advogados
                     </h1>
                     <p className="mt-1 text-center text-muted-foreground text-lg">
                         Segurança jurídica em Manoel Viana.
@@ -102,7 +102,7 @@ export default function LinksPage() {
                 </div>
 
                 <footer className="mt-10 text-center text-sm text-primary-foreground/70">
-                    <p>&copy; {new Date().getFullYear()} Martins Advogados. Todos os direitos reservados.</p>
+                    <p>&copy; {new Date().getFullYear()} Vieira & Martins Advogados. Todos os direitos reservados.</p>
                 </footer>
             </div>
         </div>
