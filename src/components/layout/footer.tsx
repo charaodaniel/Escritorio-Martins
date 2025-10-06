@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Scale, Mail, Phone, MapPin, Facebook, Instagram, MessageCircle } from "lucide-react";
+import { Scale, Mail, Phone, MapPin, Facebook, Instagram, MessageCircle, Link2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navLinks = [
@@ -51,6 +51,11 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+               <li>
+                  <Link href="/links" className="text-sm text-muted-foreground hover:text-accent transition-colors">
+                    Nossos Links
+                  </Link>
+                </li>
             </ul>
           </div>
           <div>
