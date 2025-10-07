@@ -7,14 +7,14 @@ const attorneys = [
   {
     id: "gilberto-martins",
     name: "Gilberto Martins",
-    title: "Sócio Fundador",
+    title: "Advogado",
     bio: "Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.",
     imageId: "attorney-1"
   },
   {
     id: "eduardo-martins",
     name: "Eduardo Martins",
-    title: "Sócio",
+    title: "Advogado",
     bio: "Especialista em direito de família e sucessões, Eduardo combina conhecimento técnico com uma abordagem humana para resolver questões complexas.",
     imageId: "attorney-2"
   },
