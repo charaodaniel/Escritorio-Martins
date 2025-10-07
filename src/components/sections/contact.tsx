@@ -31,7 +31,7 @@ export default function Contact() {
                 </div>
                 <div className="flex items-center gap-4">
                     <Mail className="h-5 w-5 text-accent" />
-                    <a href="mailto:contato@vieramartins.com" className="hover:text-primary transition-colors">contato@vieramartins.com</a>
+                    <a href="mailto:emartinsadvogado@hotmail.com" className="hover:text-primary transition-colors">emartinsadvogado@hotmail.com</a>
                 </div>
                 <div className="flex items-center gap-4">
                     <MessageCircle className="h-5 w-5 text-accent" />

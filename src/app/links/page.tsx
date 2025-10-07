@@ -31,7 +31,7 @@ const links = [
         isExternal: true,
     },
     {
-        href: "mailto:contato@vieramartins.com",
+        href: "mailto:emartinsadvogado@hotmail.com",
         label: "Envie-nos um E-mail",
         icon: AtSign,
         isExternal: true,

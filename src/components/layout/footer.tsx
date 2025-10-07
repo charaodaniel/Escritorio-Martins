@@ -63,7 +63,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:contato@vieramartins.com" className="text-muted-foreground hover:text-accent transition-colors">contato@vieramartins.com</a>
+                <a href="mailto:emartinsadvogado@hotmail.com" className="text-muted-foreground hover:text-accent transition-colors">emartinsadvogado@hotmail.com</a>
               </li>
               <li className="flex items-center gap-3">
                 <MessageCircle className="h-4 w-4 text-accent" />
