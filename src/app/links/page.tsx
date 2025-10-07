@@ -25,7 +25,7 @@ const links = [
         isExternal: true,
     },
     {
-        href: "https://www.google.com/maps/place/R.+Jos%C3%A9+Jo%C3%A3o+Saldanha,+815+-+Centro,+Manoel+Viana+-+RS,+97640-000/@-29.588578,-55.484089,17z/data=!4m6!3m5!1s0x950000990542d9c9:0xa57001657aa150a!8m2!3d-29.5885784!4d-55.4840893!16s%2Fg%2F11csc5v2_l?entry=tts",
+        href: "https://www.google.com/maps/place/R.+Franklin+Bastos+de+Carvalho,+754+-+Centro,+Manoel+Viana+-+RS,+97640-000/@-29.5908985,-55.4839841,17z/data=!3m1!4b1!4m6!3m5!1s0x950000994f340801:0x5e33d45e7b250785!8m2!3d-29.5909032!4d-55.4814092!16s%2Fg%2F11csc5l_kt?entry=tts",
         label: "Veja nossa Localização",
         icon: MapPin,
         isExternal: true,

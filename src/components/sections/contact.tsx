@@ -27,7 +27,7 @@ export default function Contact() {
               <div className="space-y-5 text-muted-foreground">
                  <div className="flex items-start gap-4">
                     <MapPin className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <span>R. José João Saldanha, 815, Centro, Manoel Viana - RS, CEP 97640-000</span>
+                    <span>R. Franklin Bastos de Carvalho, 754, Centro, Manoel Viana - RS, CEP 97640-000</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <Mail className="h-5 w-5 text-accent" />
