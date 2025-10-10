@@ -35,7 +35,7 @@ export default function Attorneys({ content }: AttorneysProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="p-6 pt-3">
-                  <p className="text-muted-foreground">{attorney.bio}</p>
+                  <p className="text-muted-foreground whitespace-pre-line">{attorney.bio}</p>
                 </CardContent>
               </Card>
             )
