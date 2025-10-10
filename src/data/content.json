@@ -1,0 +1,67 @@
+
+{
+  "hero": {
+    "title": "Escritório Vieira & Martins Advogados",
+    "subtitle": "Seu parceiro jurídico em todas as áreas do direito. ⚖️ Advocacia especializada. 🧑‍⚖️ Compromisso com a justiça."
+  },
+  "practiceAreas": {
+    "title": "Nossas Áreas de Atuação",
+    "subtitle": "Oferecemos soluções jurídicas claras, seguras e sob medida para cada cliente em diversas áreas do direito.",
+    "areas": [
+      {
+        "title": "Direito Cível",
+        "description": "Orientação em contratos, responsabilidade civil, obrigações e outros."
+      },
+      {
+        "title": "Família e Sucessões",
+        "description": "Atuação em divórcios, inventários, testamentos, partilha de bens e pensão."
+      },
+      {
+        "title": "Direito Trabalhista",
+        "description": "Defesa em reclamações trabalhistas, rescisões, e orientações preventivas."
+      },
+      {
+        "title": "Direito do Consumidor",
+        "description": "Proteção dos seus direitos em relações de consumo contra práticas abusivas."
+      },
+      {
+        "title": "Direito Imobiliário",
+        "description": "Assessoria em compra e venda, aluguel, usucapião e regularização de imóveis."
+      },
+      {
+        "title": "Outras Áreas",
+        "description": "Consulte-nos para outras demandas jurídicas. Estamos prontos para ajudar."
+      }
+    ]
+  },
+  "whyUs": {
+    "title": "Por que nos escolher?",
+    "subtitle": "Combinamos conhecimento técnico, atendimento dedicado e experiência local para defender seus direitos com excelência.",
+    "features": [
+      {
+        "title": "Atendimento Personalizado",
+        "description": "Cada cliente é ouvido com empatia e as estratégias são feitas sob medida para cada caso."
+      },
+      {
+        "title": "Experiência Local",
+        "description": "Conhecemos a realidade de Manoel Viana, as instituições e as particularidades das leis locais."
+      },
+      {
+        "title": "Suporte Ágil",
+        "description": "Oferecemos respostas rápidas e um acompanhamento próximo e dedicado a cada etapa do seu processo."
+      },
+      {
+        "title": "Ética e Transparência",
+        "description": "Honorários claros e comunicação aberta e honesta durante todo o processo de atendimento."
+      }
+    ]
+  },
+  "ourHistory": {
+    "title": "🏛️ Nossa História",
+    "paragraphs": [
+      "O Vieira & Martins Advogados nasceu do compromisso com a justiça e o desejo de oferecer um atendimento jurídico próximo, ético e eficiente à comunidade de Manoel Viana e região.",
+      "Fundado pelos irmãos Gilberto e Eduardo Martins, o escritório consolidou-se como referência local pela dedicação, profissionalismo e resultados conquistados ao longo dos anos.",
+      "Com uma trajetória marcada pela confiança dos clientes e pela busca constante por atualização e excelência, seguimos firmes em nossa missão: defender direitos com transparência, respeito e responsabilidade."
+    ]
+  }
+}

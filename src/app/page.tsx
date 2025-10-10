@@ -7,16 +7,19 @@ import Testimonials from "@/components/sections/testimonials";
 import Contact from "@/components/sections/contact";
 import Attorneys from "@/components/sections/attorneys";
 import OurHistory from "@/components/sections/our-history";
+import { loadContent } from "@/lib/content-loader";
 
 export default function Home() {
+  const content = loadContent();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">
-        <Hero />
-        <PracticeAreas />
-        <WhyUs />
-        <OurHistory />
+        <Hero content={content.hero} />
+        <PracticeAreas content={content.practiceAreas} />
+        <WhyUs content={content.whyUs} />
+        <OurHistory content={content.ourHistory} />
         <Attorneys />
         <Testimonials />
         <Contact />

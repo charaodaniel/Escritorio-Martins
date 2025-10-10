@@ -7,40 +7,39 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ContentData } from "@/lib/content-loader";
 
-const features = [
-  {
-    icon: Smile,
-    title: "Atendimento Personalizado",
-    description: "Cada cliente é ouvido com empatia e as estratégias são feitas sob medida para cada caso.",
-  },
-  {
-    icon: MapPin,
-    title: "Experiência Local",
-    description: "Conhecemos a realidade de Manoel Viana, as instituições e as particularidades das leis locais.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Suporte Ágil",
-    description: "Oferecemos respostas rápidas e um acompanhamento próximo e dedicado a cada etapa do seu processo.",
-  },
-  {
-    icon: Users,
-    title: "Ética e Transparência",
-    description: "Honorários claros e comunicação aberta e honesta durante todo o processo de atendimento.",
-  },
-];
+const icons = {
+  Smile,
+  MapPin,
+  ShieldCheck,
+  Users
+};
 
-export default function WhyUs() {
+const getIcon = (title: string) => {
+    switch (title) {
+        case "Atendimento Personalizado": return icons.Smile;
+        case "Experiência Local": return icons.MapPin;
+        case "Suporte Ágil": return icons.ShieldCheck;
+        case "Ética e Transparência": return icons.Users;
+        default: return icons.Smile;
+    }
+}
+
+type WhyUsProps = {
+  content: ContentData['whyUs'];
+}
+
+export default function WhyUs({ content }: WhyUsProps) {
   return (
     <section id="why-us" className="py-20 sm:py-28 bg-card">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
-            Por que nos escolher?
+            {content.title}
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Combinamos conhecimento técnico, atendimento dedicado e experiência local para defender seus direitos com excelência.
+            {content.subtitle}
           </p>
         </div>
         <Carousel
@@ -51,13 +50,15 @@ export default function WhyUs() {
           className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl mx-auto mt-16"
         >
           <CarouselContent>
-            {features.map((feature, index) => (
+            {content.features.map((feature, index) => {
+              const Icon = getIcon(feature.title);
+              return (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <Card className="text-center bg-transparent border-0 shadow-none flex flex-col h-full">
                     <CardHeader className="flex justify-center items-center mb-2">
                       <div className="bg-background rounded-full p-5">
-                        <feature.icon className="h-10 w-10 text-primary" />
+                        <Icon className="h-10 w-10 text-primary" />
                       </div>
                     </CardHeader>
                     <CardContent className="flex-grow">
@@ -67,7 +68,7 @@ export default function WhyUs() {
                   </Card>
                 </div>
               </CarouselItem>
-            ))}
+            )})}
           </CarouselContent>
           <CarouselPrevious className="hidden sm:flex" />
           <CarouselNext className="hidden sm:flex" />
