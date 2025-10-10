@@ -30,9 +30,14 @@ export default function Testimonials({ content }: TestimonialsProps) {
     Autoplay({ delay: 4500, stopOnInteraction: true })
   )
 
-  const hasInstagramPosts = content.instagramPosts && content.instagramPosts.length > 0;
-  const hasFacebookPosts = content.facebookPosts && content.facebookPosts.length > 0;
+  const hasInstagramPosts = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
+  const hasFacebookPosts = content.facebook.enabled && content.facebook.posts && content.facebook.posts.length > 0;
 
+  if (!hasInstagramPosts && !hasFacebookPosts) {
+    return null;
+  }
+
+  const defaultTab = hasInstagramPosts ? "instagram" : "facebook";
 
   return (
     <section id="testimonials" className="py-20 sm:py-28 bg-background">
@@ -47,7 +52,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
         </div>
         
         <div className="mt-16">
-            <Tabs defaultValue="instagram" className="w-full">
+            <Tabs defaultValue={defaultTab} className="w-full">
               <TabsList className="grid w-full max-w-sm mx-auto grid-cols-2">
                 <TabsTrigger value="instagram" disabled={!hasInstagramPosts}>
                   <Instagram className="mr-2" /> Instagram
@@ -70,7 +75,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
                     onMouseLeave={instagramPlugin.current.reset}
                     >
                     <CarouselContent>
-                        {content.instagramPosts.map((post, index) => (
+                        {content.instagram.posts.map((post, index) => (
                         <CarouselItem key={index} className="flex justify-center">
                             <div className="p-1">
                             <InstagramEmbed permalink={post.permalink} />
@@ -97,7 +102,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
                     onMouseLeave={facebookPlugin.current.reset}
                     >
                     <CarouselContent>
-                        {content.facebookPosts.map((post, index) => (
+                        {content.facebook.posts.map((post, index) => (
                         <CarouselItem key={index} className="flex justify-center">
                             <div className="p-1">
                             <FacebookEmbed permalink={post.permalink} />

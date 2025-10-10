@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Facebook } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 const heroSchema = z.object({
@@ -58,6 +58,11 @@ const postSchema = z.object({
   permalink: z.string().url("Por favor, insira um URL de publicação válido."),
 });
 
+const socialFeedSchema = z.object({
+    enabled: z.boolean(),
+    posts: z.array(postSchema),
+});
+
 
 const formSchema = z.object({
   hero: heroSchema,
@@ -84,8 +89,8 @@ const formSchema = z.object({
       enabled: z.boolean(),
       title: z.string().min(1, "Título da seção é obrigatório."),
       subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
-      instagramPosts: z.array(postSchema),
-      facebookPosts: z.array(postSchema),
+      instagram: socialFeedSchema,
+      facebook: socialFeedSchema,
   }),
   contact: z.object({
     enabled: z.boolean(),
@@ -112,12 +117,12 @@ export default function AdminPage() {
 
   const { fields: instagramPostFields, append: appendInstagramPost, remove: removeInstagramPost } = useFieldArray({
     control: form.control,
-    name: "testimonials.instagramPosts",
+    name: "testimonials.instagram.posts",
   });
 
   const { fields: facebookPostFields, append: appendFacebookPost, remove: removeFacebookPost } = useFieldArray({
     control: form.control,
-    name: "testimonials.facebookPosts",
+    name: "testimonials.facebook.posts",
   });
 
   useEffect(() => {
@@ -215,7 +220,7 @@ export default function AdminPage() {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
   }
   
-  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled`, isSubmitting: boolean }) => (
+  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled` | 'testimonials.instagram.enabled' | 'testimonials.facebook.enabled', isSubmitting: boolean }) => (
     <FormField
       control={form.control}
       name={name}
@@ -606,8 +611,11 @@ export default function AdminPage() {
                   />
                   
                   {/* Instagram Posts */}
-                  <div className="space-y-4 pt-4">
-                    <h3 className="font-semibold text-lg">Instagram</h3>
+                  <div className="space-y-4 pt-4 p-4 border rounded-md bg-background/50">
+                    <div className="flex justify-between items-center">
+                        <h3 className="font-semibold text-lg flex items-center gap-2"><Instagram className="h-5 w-5" /> Instagram</h3>
+                        <SectionToggle name="testimonials.instagram.enabled" isSubmitting={isSubmitting} />
+                    </div>
                     {instagramPostFields.map((item, index) => (
                         <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background/50 relative">
                             <Button
@@ -623,7 +631,7 @@ export default function AdminPage() {
                             </Button>
                             <FormField
                                 control={form.control}
-                                name={`testimonials.instagramPosts.${index}.permalink`}
+                                name={`testimonials.instagram.posts.${index}.permalink`}
                                 render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Link da Publicação {index + 1}</FormLabel>
@@ -649,8 +657,11 @@ export default function AdminPage() {
                   </div>
 
                   {/* Facebook Posts */}
-                  <div className="space-y-4 pt-4">
-                    <h3 className="font-semibold text-lg">Facebook</h3>
+                  <div className="space-y-4 pt-4 p-4 border rounded-md bg-background/50">
+                    <div className="flex justify-between items-center">
+                        <h3 className="font-semibold text-lg flex items-center gap-2"><Facebook className="h-5 w-5" /> Facebook</h3>
+                        <SectionToggle name="testimonials.facebook.enabled" isSubmitting={isSubmitting} />
+                    </div>
                     {facebookPostFields.map((item, index) => (
                         <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background/50 relative">
                             <Button
@@ -666,7 +677,7 @@ export default function AdminPage() {
                             </Button>
                             <FormField
                                 control={form.control}
-                                name={`testimonials.facebookPosts.${index}.permalink`}
+                                name={`testimonials.facebook.posts.${index}.permalink`}
                                 render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Link da Publicação {index + 1}</FormLabel>
