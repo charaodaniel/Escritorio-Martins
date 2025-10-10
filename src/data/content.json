@@ -76,14 +76,16 @@
         "name": "Gilberto Martins",
         "title": "Advogado",
         "bio": "Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.",
-        "imageUrl": "https://www.alegretetudo.com.br/wp-content/uploads/2023/11/alegretetudo-vieira-e-martins-um-legado-de-comprometimento-e-credibildade-no-direito-da-fronteira-oeste-g.jpg"
+        "imageUrl": "https://www.alegretetudo.com.br/wp-content/uploads/2023/11/alegretetudo-vieira-e-martins-um-legado-de-comprometimento-e-credibildade-no-direito-da-fronteira-oeste-g.jpg",
+        "bioFormat": "default"
       },
       {
         "id": "eduardo-martins",
         "name": "Eduardo Martins",
         "title": "Advogado",
         "bio": "Formação Acadêmica e Experiência Profissional\n\n- Advogado, inscrito na Ordem dos Advogados do Brasil – Seccional do Rio Grande do Sul (OAB/RS) desde 2011.\n- Graduação em Direito – Universidade da Região da Campanha (URCAMP).\n- Pós-Graduação em Direito Público Municipal – Universidade Federal do Pampa (UNIPAMPA).\n- Pós-Graduação em Direito Constitucional – Faculdade de Minas (FACUMINAS).\n- Pós-Graduação em Direito Penal e Processual Penal – FACUMINAS.\n- Pós-Graduação em Direito Eleitoral – FACUMINAS.\n- Procurador-Geral do Município de Manoel Viana (RS).\n- Diretor Jurídico do Consórcio de Desenvolvimento do Pampa Parcial (CODPAMPA) – 2018 a 2020.",
-        "imageUrl": "/1760118106220-Eduardo-perfil.jpeg"
+        "imageUrl": "/1760118106220-Eduardo-perfil.jpeg",
+        "bioFormat": "pre-line"
       }
     ]
   },

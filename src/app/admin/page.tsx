@@ -14,6 +14,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
@@ -34,7 +41,7 @@ const practiceAreaSchema = z.object({
 });
 
 const whyUsFeatureSchema = z.object({
-  title: z.string().min(1, "Título do diferencial é obrigatório."),
+  title: zstring().min(1, "Título do diferencial é obrigatório."),
   description: z.string().min(1, "Descrição do diferencial é obrigatória."),
 });
 
@@ -52,6 +59,7 @@ const attorneyMemberSchema = z.object({
   imageUrl: z.string().refine(value => value.startsWith('/') || value.startsWith('http'), {
     message: "Deve ser um URL válido ou um caminho local (ex: /foto.jpg)."
   }),
+  bioFormat: z.enum(["default", "justified", "pre-line"]),
 });
 
 const postSchema = z.object({
@@ -516,10 +524,35 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Bio do Membro {index + 1}</FormLabel>
-                                <FormControl><Textarea {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
+                                <FormControl><Textarea {...field} rows={6} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name={`attorneys.members.${index}.bioFormat`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Formatação da Bio</FormLabel>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                  <SelectTrigger disabled={isSubmitting || isUploading === index}>
+                                    <SelectValue placeholder="Selecione um estilo de formatação" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="default">Padrão (Parágrafo Simples)</SelectItem>
+                                  <SelectItem value="justified">Justificado</SelectItem>
+                                  <SelectItem value="pre-line">Com Quebras de Linha</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormDescription>
+                                Escolha como o texto da biografia será exibido.
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
                         />
                         <FormField
                             control={form.control}
@@ -568,7 +601,8 @@ export default function AdminPage() {
                         name: "", 
                         title: "", 
                         bio: "", 
-                        imageUrl: "" 
+                        imageUrl: "",
+                        bioFormat: "default"
                       })}
                       disabled={isSubmitting}
                     >

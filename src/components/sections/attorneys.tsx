@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ContentData } from "@/lib/content-loader";
+import { cn } from "@/lib/utils";
 
 type AttorneysProps = {
   content: ContentData['attorneys'];
@@ -35,7 +36,10 @@ export default function Attorneys({ content }: AttorneysProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="p-6 pt-3">
-                  <p className="text-muted-foreground whitespace-pre-line text-justify">{attorney.bio}</p>
+                  <p className={cn("text-muted-foreground", {
+                    "text-justify": attorney.bioFormat === "justified",
+                    "whitespace-pre-line": attorney.bioFormat === "pre-line",
+                  })}>{attorney.bio}</p>
                 </CardContent>
               </Card>
             )
