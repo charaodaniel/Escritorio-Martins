@@ -17,9 +17,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Upload } from "lucide-react";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -83,7 +84,9 @@ const formSchema = z.object({
 export default function AdminPage() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState<number | null>(null);
   const [initialData, setInitialData] = useState<ContentData | null>(null);
+  const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -142,6 +145,45 @@ export default function AdminPage() {
       setIsSubmitting(false);
     }
   }
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(index);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha no upload da imagem.');
+      }
+
+      const { filePath } = await response.json();
+      form.setValue(`attorneys.members.${index}.imageUrl`, filePath);
+      toast({
+        title: 'Upload Concluído',
+        description: `Imagem carregada e caminho salvo como: ${filePath}`,
+      });
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Erro no Upload',
+        description: error.message || 'Não foi possível carregar a imagem.',
+      });
+    } finally {
+      setIsUploading(null);
+      // Reset the file input
+      if (event.target) {
+        event.target.value = '';
+      }
+    }
+  };
 
   if (!initialData) {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
@@ -369,7 +411,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Nome do Membro {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -380,7 +422,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Cargo do Membro {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -391,7 +433,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Bio do Membro {index + 1}</FormLabel>
-                                <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><Textarea {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -402,8 +444,31 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>URL da Imagem {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                                <FormDescription>Caminho local (ex: /minha-foto.jpg) ou URL completa.</FormDescription>
+                                 <div className="flex items-center gap-2">
+                                  <FormControl>
+                                    <Input {...field} disabled={isSubmitting || isUploading === index} />
+                                  </FormControl>
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="icon"
+                                    disabled={isSubmitting || isUploading === index}
+                                    onClick={() => fileInputRefs.current[index]?.click()}
+                                  >
+                                    <Upload className="h-4 w-4" />
+                                  </Button>
+                                  <input
+                                    type="file"
+                                    ref={(el) => (fileInputRefs.current[index] = el)}
+                                    className="hidden"
+                                    accept="image/png, image/jpeg, image/webp"
+                                    onChange={(e) => handleFileChange(e, index)}
+                                    disabled={isSubmitting || isUploading === index}
+                                  />
+                                </div>
+                                <FormDescription>
+                                  {isUploading === index ? 'Carregando imagem...' : 'Caminho local (ex: /minha-foto.jpg) ou URL completa.'}
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -461,7 +526,7 @@ export default function AdminPage() {
 
             </Accordion>
 
-            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
+            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
               {isSubmitting ? "Salvando..." : "Salvar Alterações"}
             </Button>
           </form>
