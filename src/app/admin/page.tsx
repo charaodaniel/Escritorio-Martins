@@ -21,6 +21,7 @@ import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { PlusCircle, Trash2, Upload } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -38,6 +39,7 @@ const whyUsFeatureSchema = z.object({
 });
 
 const ourHistorySchema = z.object({
+  enabled: z.boolean(),
   title: z.string().min(1, "Título da história é obrigatório."),
   paragraphs: z.array(z.string().min(1, "Parágrafo não pode ser vazio.")).min(1, "É necessário pelo menos um parágrafo."),
 });
@@ -58,25 +60,32 @@ const testimonialPostSchema = z.object({
 const formSchema = z.object({
   hero: heroSchema,
   practiceAreas: z.object({
+    enabled: z.boolean(),
     title: z.string().min(1, "Título da seção é obrigatório."),
     subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
     areas: z.array(practiceAreaSchema),
   }),
   whyUs: z.object({
+    enabled: z.boolean(),
     title: z.string().min(1, "Título da seção é obrigatório."),
     subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
     features: z.array(whyUsFeatureSchema),
   }),
   ourHistory: ourHistorySchema,
   attorneys: z.object({
+    enabled: z.boolean(),
     title: z.string().min(1, "Título da seção é obrigatório."),
     subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
     members: z.array(attorneyMemberSchema),
   }),
   testimonials: z.object({
+      enabled: z.boolean(),
       title: z.string().min(1, "Título da seção é obrigatório."),
       subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
       posts: z.array(testimonialPostSchema),
+  }),
+  contact: z.object({
+    enabled: z.boolean(),
   }),
 });
 
@@ -198,6 +207,29 @@ export default function AdminPage() {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
   }
   
+  const SectionHeader = ({ name, title }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled`, title: string }) => (
+    <div className="flex items-center justify-between w-full">
+      <span className="text-xl font-headline text-primary">{title}</span>
+       <FormField
+          control={form.control}
+          name={name}
+          render={({ field }) => (
+            <FormItem className="flex items-center gap-3 space-y-0">
+              <FormControl>
+                <Switch
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  disabled={isSubmitting}
+                />
+              </FormControl>
+              <FormLabel className="font-normal text-sm">
+                {field.value ? 'Visível' : 'Oculto'}
+              </FormLabel>
+            </FormItem>
+          )}
+        />
+    </div>
+  );
 
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
@@ -243,7 +275,9 @@ export default function AdminPage() {
 
               {/* Seção Áreas de Atuação */}
               <AccordionItem value="item-2">
-                <AccordionTrigger className="text-xl font-headline text-primary">Áreas de Atuação</AccordionTrigger>
+                 <AccordionTrigger>
+                  <SectionHeader name="practiceAreas.enabled" title="Áreas de Atuação" />
+                </AccordionTrigger>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -299,7 +333,9 @@ export default function AdminPage() {
 
               {/* Seção Diferenciais */}
               <AccordionItem value="item-3">
-                <AccordionTrigger className="text-xl font-headline text-primary">Diferenciais (Por que nos escolher?)</AccordionTrigger>
+                 <AccordionTrigger>
+                  <SectionHeader name="whyUs.enabled" title="Diferenciais" />
+                </AccordionTrigger>
                  <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -355,7 +391,9 @@ export default function AdminPage() {
 
                {/* Seção Nossa História */}
               <AccordionItem value="item-4">
-                <AccordionTrigger className="text-xl font-headline text-primary">Nossa História</AccordionTrigger>
+                 <AccordionTrigger>
+                  <SectionHeader name="ourHistory.enabled" title="Nossa História" />
+                </AccordionTrigger>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -387,7 +425,9 @@ export default function AdminPage() {
 
               {/* Seção Equipe */}
               <AccordionItem value="item-5">
-                <AccordionTrigger className="text-xl font-headline text-primary">Equipe</AccordionTrigger>
+                 <AccordionTrigger>
+                  <SectionHeader name="attorneys.enabled" title="Equipe" />
+                </AccordionTrigger>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -517,7 +557,9 @@ export default function AdminPage() {
 
              {/* Seção Publicações */}
               <AccordionItem value="item-6">
-                <AccordionTrigger className="text-xl font-headline text-primary">Publicações (Instagram)</AccordionTrigger>
+                 <AccordionTrigger>
+                  <SectionHeader name="testimonials.enabled" title="Publicações (Instagram)" />
+                </AccordionTrigger>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -580,6 +622,16 @@ export default function AdminPage() {
                       <PlusCircle className="mr-2 h-4 w-4" />
                       Adicionar Publicação
                     </Button>
+                </AccordionContent>
+              </AccordionItem>
+
+               {/* Seção Contato */}
+              <AccordionItem value="item-7">
+                <AccordionTrigger>
+                   <SectionHeader name="contact.enabled" title="Contato" />
+                </AccordionTrigger>
+                <AccordionContent className="pt-4">
+                  <p className="text-sm text-muted-foreground">O conteúdo desta seção (telefones, e-mail, endereço) não é editável por aqui. Para alterá-lo, edite o componente <code className="bg-muted px-1 py-0.5 rounded-sm">src/components/sections/contact.tsx</code> diretamente no código.</p>
                 </AccordionContent>
               </AccordionItem>
 

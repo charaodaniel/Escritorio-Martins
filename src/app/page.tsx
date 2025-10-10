@@ -18,12 +18,12 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero content={content.hero} />
-        <PracticeAreas content={content.practiceAreas} />
-        <WhyUs content={content.whyUs} />
-        <OurHistory content={content.ourHistory} />
-        <Attorneys content={content.attorneys} />
-        <Testimonials content={content.testimonials} />
-        <Contact />
+        {content.practiceAreas.enabled && <PracticeAreas content={content.practiceAreas} />}
+        {content.whyUs.enabled && <WhyUs content={content.whyUs} />}
+        {content.ourHistory.enabled && <OurHistory content={content.ourHistory} />}
+        {content.attorneys.enabled && <Attorneys content={content.attorneys} />}
+        {content.testimonials.enabled && <Testimonials content={content.testimonials} />}
+        {content.contact.enabled && <Contact />}
       </main>
       <Footer />
     </div>

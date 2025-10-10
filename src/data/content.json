@@ -1,10 +1,10 @@
-
 {
   "hero": {
     "title": "Escritório Vieira & Martins Advogados",
     "subtitle": "Seu parceiro jurídico em todas as áreas do direito. ⚖️ Advocacia especializada. 🧑‍⚖️ Compromisso com a justiça."
   },
   "practiceAreas": {
+    "enabled": true,
     "title": "Nossas Áreas de Atuação",
     "subtitle": "Oferecemos soluções jurídicas claras, seguras e sob medida para cada cliente em diversas áreas do direito.",
     "areas": [
@@ -35,6 +35,7 @@
     ]
   },
   "whyUs": {
+    "enabled": true,
     "title": "Por que nos escolher?",
     "subtitle": "Combinamos conhecimento técnico, atendimento dedicado e experiência local para defender seus direitos com excelência.",
     "features": [
@@ -57,6 +58,7 @@
     ]
   },
   "ourHistory": {
+    "enabled": true,
     "title": "🏛️ Nossa História",
     "paragraphs": [
       "O Vieira & Martins Advogados nasceu do compromisso com a justiça e o desejo de oferecer um atendimento jurídico próximo, ético e eficiente à comunidade de Manoel Viana e região.",
@@ -65,6 +67,7 @@
     ]
   },
   "attorneys": {
+    "enabled": true,
     "title": "Conheça Nossa Equipe",
     "subtitle": "Profissionais dedicados e apaixonados pelo direito, comprometidos em oferecer a melhor solução jurídica para você.",
     "members": [
@@ -85,27 +88,46 @@
     ]
   },
   "testimonials": {
+    "enabled": true,
     "title": "Nossas Publicações",
     "subtitle": "Acompanhe nossas últimas postagens e novidades diretamente do nosso Instagram.",
     "posts": [
       {
-        "permalink": "https://www.instagram.com/p/C95hWj5gpov/"
+        "permalink": "https://www.instagram.com/reel/DPmePZnCrTi/?utm_source=ig_web_copy_link&igsh=MWc4NndibmJjNGk4Ng=="
       },
       {
-        "permalink": "https://www.instagram.com/p/C9i86QFAjF3/"
+        "permalink": "https://www.instagram.com/p/DPj2oy8Ab60/?utm_source=ig_web_copy_link&igsh=MW5xZXdzdmRzMDJoMQ=="
       },
       {
-        "permalink": "https://www.instagram.com/p/C8p5y0hAWxP/"
+        "permalink": "https://www.instagram.com/p/DPevv0qAZ0k/?utm_source=ig_web_copy_link&igsh=MWNibHBxdGQ5dW90eg=="
       },
       {
-        "permalink": "https://www.instagram.com/p/C8fS9r8A2aB/"
+        "permalink": "https://www.instagram.com/p/DPUckSWkxNq/?utm_source=ig_web_copy_link&igsh=MWV5emxqNWE0cXVmbQ=="
       },
       {
-        "permalink": "https://www.instagram.com/p/C8Cj_N8A23M/"
+        "permalink": "https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_web_copy_link&igsh=YTI4dnR4NDk5Mm9n"
       },
       {
-        "permalink": "https://www.instagram.com/p/C71jC9Og1bS/"
+        "permalink": "https://www.instagram.com/p/DPFACa0AfH4/?utm_source=ig_web_copy_link&igsh=MXR0cGlraGFha3pwZA=="
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DO_2Os9Aeyd/?utm_source=ig_web_copy_link&igsh=a2dka2E3MDQ5OWlh"
+      },
+      {
+        "permalink": "https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_web_copy_link&igsh=a3NoZXZ4Z3Fia2U4"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DO9RaULlRjl/?utm_source=ig_web_copy_link&igsh=d3hzeHJocnZidzFs"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DOzASrKiHYZ/?utm_source=ig_web_copy_link&igsh=NWt5dHRoamhucHRv"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DOwnSx4Dme5/?utm_source=ig_web_copy_link&igsh=MWVrM3V2OXFscXo4aA=="
       }
     ]
+  },
+  "contact": {
+    "enabled": true
   }
 }
