@@ -207,29 +207,27 @@ export default function AdminPage() {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
   }
   
-  const SectionHeader = ({ name, title }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled`, title: string }) => (
-    <div className="flex items-center justify-between w-full">
-      <span className="text-xl font-headline text-primary">{title}</span>
-       <FormField
-          control={form.control}
-          name={name}
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-3 space-y-0">
-              <FormControl>
-                <Switch
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                  disabled={isSubmitting}
-                />
-              </FormControl>
-              <FormLabel className="font-normal text-sm">
-                {field.value ? 'Visível' : 'Oculto'}
-              </FormLabel>
-            </FormItem>
-          )}
-        />
-    </div>
+  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled`, isSubmitting: boolean }) => (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex items-center gap-3 space-y-0">
+          <FormControl>
+            <Switch
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              disabled={isSubmitting}
+            />
+          </FormControl>
+          <FormLabel className="font-normal text-sm !mt-0">
+            {field.value ? 'Visível' : 'Oculto'}
+          </FormLabel>
+        </FormItem>
+      )}
+    />
   );
+
 
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
@@ -275,9 +273,10 @@ export default function AdminPage() {
 
               {/* Seção Áreas de Atuação */}
               <AccordionItem value="item-2">
-                 <AccordionTrigger>
-                  <SectionHeader name="practiceAreas.enabled" title="Áreas de Atuação" />
-                </AccordionTrigger>
+                 <div className="flex w-full items-center justify-between py-4">
+                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Áreas de Atuação</AccordionTrigger>
+                    <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
+                 </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -333,9 +332,10 @@ export default function AdminPage() {
 
               {/* Seção Diferenciais */}
               <AccordionItem value="item-3">
-                 <AccordionTrigger>
-                  <SectionHeader name="whyUs.enabled" title="Diferenciais" />
-                </AccordionTrigger>
+                 <div className="flex w-full items-center justify-between py-4">
+                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Diferenciais</AccordionTrigger>
+                    <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
+                 </div>
                  <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -391,9 +391,10 @@ export default function AdminPage() {
 
                {/* Seção Nossa História */}
               <AccordionItem value="item-4">
-                 <AccordionTrigger>
-                  <SectionHeader name="ourHistory.enabled" title="Nossa História" />
-                </AccordionTrigger>
+                 <div className="flex w-full items-center justify-between py-4">
+                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Nossa História</AccordionTrigger>
+                    <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
+                 </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -425,9 +426,10 @@ export default function AdminPage() {
 
               {/* Seção Equipe */}
               <AccordionItem value="item-5">
-                 <AccordionTrigger>
-                  <SectionHeader name="attorneys.enabled" title="Equipe" />
-                </AccordionTrigger>
+                 <div className="flex w-full items-center justify-between py-4">
+                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Equipe</AccordionTrigger>
+                    <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
+                 </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -557,9 +559,10 @@ export default function AdminPage() {
 
              {/* Seção Publicações */}
               <AccordionItem value="item-6">
-                 <AccordionTrigger>
-                  <SectionHeader name="testimonials.enabled" title="Publicações (Instagram)" />
-                </AccordionTrigger>
+                 <div className="flex w-full items-center justify-between py-4">
+                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Publicações (Instagram)</AccordionTrigger>
+                    <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
+                 </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
@@ -627,9 +630,10 @@ export default function AdminPage() {
 
                {/* Seção Contato */}
               <AccordionItem value="item-7">
-                <AccordionTrigger>
-                   <SectionHeader name="contact.enabled" title="Contato" />
-                </AccordionTrigger>
+                <div className="flex w-full items-center justify-between py-4">
+                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Contato</AccordionTrigger>
+                    <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
+                </div>
                 <AccordionContent className="pt-4">
                   <p className="text-sm text-muted-foreground">O conteúdo desta seção (telefones, e-mail, endereço) não é editável por aqui. Para alterá-lo, edite o componente <code className="bg-muted px-1 py-0.5 rounded-sm">src/components/sections/contact.tsx</code> diretamente no código.</p>
                 </AccordionContent>
