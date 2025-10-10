@@ -52,8 +52,8 @@ const attorneyMemberSchema = z.object({
   imageUrl: z.string().url("Deve ser um URL válido ou caminho local (ex: /foto.jpg)."),
 });
 
-const testimonialPostSchema = z.object({
-  permalink: z.string().url("Por favor, insira um URL de publicação do Instagram válido."),
+const postSchema = z.object({
+  permalink: z.string().url("Por favor, insira um URL de publicação válido."),
 });
 
 
@@ -82,7 +82,8 @@ const formSchema = z.object({
       enabled: z.boolean(),
       title: z.string().min(1, "Título da seção é obrigatório."),
       subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
-      posts: z.array(testimonialPostSchema),
+      instagramPosts: z.array(postSchema),
+      facebookPosts: z.array(postSchema),
   }),
   contact: z.object({
     enabled: z.boolean(),
@@ -107,9 +108,14 @@ export default function AdminPage() {
     name: "attorneys.members",
   });
 
-  const { fields: postFields, append: appendPost, remove: removePost } = useFieldArray({
+  const { fields: instagramPostFields, append: appendInstagramPost, remove: removeInstagramPost } = useFieldArray({
     control: form.control,
-    name: "testimonials.posts",
+    name: "testimonials.instagramPosts",
+  });
+
+  const { fields: facebookPostFields, append: appendFacebookPost, remove: removeFacebookPost } = useFieldArray({
+    control: form.control,
+    name: "testimonials.facebookPosts",
   });
 
   useEffect(() => {
@@ -273,9 +279,11 @@ export default function AdminPage() {
 
               {/* Seção Áreas de Atuação */}
               <AccordionItem value="item-2">
-                 <div className="flex w-full items-center justify-between py-4">
-                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Áreas de Atuação</AccordionTrigger>
-                    <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
+                 <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Áreas de Atuação</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                        <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
+                    </div>
                  </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
@@ -332,9 +340,11 @@ export default function AdminPage() {
 
               {/* Seção Diferenciais */}
               <AccordionItem value="item-3">
-                 <div className="flex w-full items-center justify-between py-4">
-                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Diferenciais</AccordionTrigger>
-                    <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
+                 <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Diferenciais</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                      <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
+                    </div>
                  </div>
                  <AccordionContent className="space-y-6 pt-4">
                   <FormField
@@ -391,9 +401,11 @@ export default function AdminPage() {
 
                {/* Seção Nossa História */}
               <AccordionItem value="item-4">
-                 <div className="flex w-full items-center justify-between py-4">
-                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Nossa História</AccordionTrigger>
-                    <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
+                 <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Nossa História</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                        <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
+                    </div>
                  </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
@@ -426,9 +438,11 @@ export default function AdminPage() {
 
               {/* Seção Equipe */}
               <AccordionItem value="item-5">
-                 <div className="flex w-full items-center justify-between py-4">
-                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Equipe</AccordionTrigger>
-                    <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
+                 <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Equipe</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                        <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
+                    </div>
                  </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
@@ -559,9 +573,11 @@ export default function AdminPage() {
 
              {/* Seção Publicações */}
               <AccordionItem value="item-6">
-                 <div className="flex w-full items-center justify-between py-4">
-                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Publicações (Instagram)</AccordionTrigger>
-                    <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
+                 <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Publicações</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                        <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
+                    </div>
                  </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <FormField
@@ -586,53 +602,103 @@ export default function AdminPage() {
                       </FormItem>
                     )}
                   />
-                  <h3 className="font-semibold mt-4">Links das Publicações</h3>
-                   {postFields.map((item, index) => (
-                      <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background relative">
-                         <Button
-                            type="button"
-                            variant="destructive"
-                            size="icon"
-                            className="absolute top-4 right-4 h-7 w-7"
-                            onClick={() => removePost(index)}
-                            disabled={isSubmitting}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Remover Publicação</span>
-                          </Button>
-                         <FormField
-                            control={form.control}
-                            name={`testimonials.posts.${index}.permalink`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Link da Publicação {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.instagram.com/p/seu-post-aqui" /></FormControl>
-                                <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação e selecione 'Copiar link'. Cole o link aqui.</FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                      </div>
-                   ))}
+                  
+                  {/* Instagram Posts */}
+                  <div className="space-y-4 pt-4">
+                    <h3 className="font-semibold text-lg">Instagram</h3>
+                    {instagramPostFields.map((item, index) => (
+                        <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background/50 relative">
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                size="icon"
+                                className="absolute top-4 right-4 h-7 w-7"
+                                onClick={() => removeInstagramPost(index)}
+                                disabled={isSubmitting}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                                <span className="sr-only">Remover Publicação</span>
+                            </Button>
+                            <FormField
+                                control={form.control}
+                                name={`testimonials.instagramPosts.${index}.permalink`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Link da Publicação {index + 1}</FormLabel>
+                                    <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.instagram.com/p/seu-post-aqui" /></FormControl>
+                                    <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação e selecione 'Copiar link'. Cole o link aqui.</FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                        </div>
+                    ))}
                     <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="mt-2"
-                      onClick={() => appendPost({ permalink: "" })}
-                      disabled={isSubmitting}
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() => appendInstagramPost({ permalink: "" })}
+                        disabled={isSubmitting}
                     >
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      Adicionar Publicação
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Adicionar Publicação do Instagram
                     </Button>
+                  </div>
+
+                  {/* Facebook Posts */}
+                  <div className="space-y-4 pt-4">
+                    <h3 className="font-semibold text-lg">Facebook</h3>
+                    {facebookPostFields.map((item, index) => (
+                        <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background/50 relative">
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                size="icon"
+                                className="absolute top-4 right-4 h-7 w-7"
+                                onClick={() => removeFacebookPost(index)}
+                                disabled={isSubmitting}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                                <span className="sr-only">Remover Publicação</span>
+                            </Button>
+                            <FormField
+                                control={form.control}
+                                name={`testimonials.facebookPosts.${index}.permalink`}
+                                render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Link da Publicação {index + 1}</FormLabel>
+                                    <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.facebook.com/usuario/posts/..." /></FormControl>
+                                    <FormDescription>No Facebook, clique na data/hora da publicação para abrir em uma nova página e copie o link (URL) do seu navegador.</FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                                )}
+                            />
+                        </div>
+                    ))}
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        className="mt-2"
+                        onClick={() => appendFacebookPost({ permalink: "" })}
+                        disabled={isSubmitting}
+                    >
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Adicionar Publicação do Facebook
+                    </Button>
+                  </div>
+
                 </AccordionContent>
               </AccordionItem>
 
                {/* Seção Contato */}
               <AccordionItem value="item-7">
-                <div className="flex w-full items-center justify-between py-4">
-                    <AccordionTrigger className="text-xl font-headline text-primary p-0 flex-1">Contato</AccordionTrigger>
-                    <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
+                <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Contato</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                      <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
+                    </div>
                 </div>
                 <AccordionContent className="pt-4">
                   <p className="text-sm text-muted-foreground">O conteúdo desta seção (telefones, e-mail, endereço) não é editável por aqui. Para alterá-lo, edite o componente <code className="bg-muted px-1 py-0.5 rounded-sm">src/components/sections/contact.tsx</code> diretamente no código.</p>
