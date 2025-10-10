@@ -87,7 +87,7 @@ export default function LinksPage() {
                                 asChild
                                 size="lg"
                                 variant="outline"
-                                className="w-full justify-start h-14 text-md bg-card/80 hover:bg-card border-border hover:border-accent hover:text-accent-foreground backdrop-blur-sm"
+                                className="w-full justify-start h-14 text-md bg-card/80 hover:bg-card border-border hover:border-accent hover:text-accent backdrop-blur-sm"
                             >
                                 <LinkComponent 
                                     href={link.href}
