@@ -19,7 +19,7 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentYear, setCurrentYear] = useState<number | null>(null);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
@@ -88,7 +88,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} Vieira & Martins Advogados. Todos os direitos reservados.</p>
+          {currentYear && <p>&copy; {currentYear} Vieira & Martins Advogados. Todos os direitos reservados.</p>}
         </div>
       </div>
     </footer>

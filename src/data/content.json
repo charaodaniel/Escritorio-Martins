@@ -83,7 +83,7 @@
         "id": "eduardo-martins",
         "name": "Eduardo Martins",
         "title": "Advogado",
-        "bio": "Formação Acadêmica e Experiência Profissional\n\n- Advogado, inscrito na Ordem dos Advogados do Brasil – Seccional do Rio Grande do Sul (OAB/RS) desde 2011.\n- Graduação em Direito – Universidade da Região da Campanha (URCAMP).\n- Pós-Graduação em Direito Público Municipal – Universidade Federal do Pampa (UNIPAMPA).\n- Pós-Graduação em Direito Constitucional – Faculdade de Minas (FACUMINAS).\n- Pós-Graduação em Direito Penal e Processual Penal – FACUMINAS.\n- Pós-Graduação em Direito Eleitoral – FACUMINAS.\n- Procurador-Geral do Município de Manoel Viana (RS).\n- Diretor Jurídico do Consórcio de Desenvolvimento do Pampa Parcial (CODPAMPA) – 2018 a 2020.",
+        "bio": "Formação Acadêmica e Experiência Profissional\n\nAdvogado, inscrito na Ordem dos Advogados do Brasil – Seccional do Rio Grande do Sul (OAB/RS) desde 2011.\nGraduação em Direito – Universidade da Região da Campanha (URCAMP).\nPós-Graduação em Direito Público Municipal – Universidade Federal do Pampa (UNIPAMPA).\nPós-Graduação em Direito Constitucional – Faculdade de Minas (FACUMINAS).\nPós-Graduação em Direito Penal e Processual Penal – FACUMINAS.\nPós-Graduação em Direito Eleitoral – FACUMINAS.\nProcurador-Geral do Município de Manoel Viana (RS).\nDiretor Jurídico do Consórcio de Desenvolvimento do Pampa Parcial (CODPAMPA) – 2018 a 2020.",
         "imageUrl": "/1760118106220-Eduardo-perfil.jpeg",
         "bioFormat": "pre-line"
       }
@@ -117,7 +117,7 @@
       ]
     },
     "facebook": {
-      "enabled": true,
+      "enabled": false,
       "posts": []
     }
   },
