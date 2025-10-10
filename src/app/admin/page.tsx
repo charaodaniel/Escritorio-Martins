@@ -2,7 +2,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Upload } from "lucide-react";
+import { PlusCircle, Trash2, Upload } from "lucide-react";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -43,7 +43,7 @@ const ourHistorySchema = z.object({
 });
 
 const attorneyMemberSchema = z.object({
-  id: z.string(),
+  id: z.string().min(1, "ID é obrigatório."),
   name: z.string().min(1, "Nome é obrigatório."),
   title: z.string().min(1, "Cargo é obrigatório."),
   bio: z.string().min(1, "Bio é obrigatória."),
@@ -93,6 +93,11 @@ export default function AdminPage() {
     defaultValues: initialData || undefined,
   });
 
+  const { fields: attorneyFields, append: appendAttorney, remove: removeAttorney } = useFieldArray({
+    control: form.control,
+    name: "attorneys.members",
+  });
+
   useEffect(() => {
     async function fetchContent() {
       try {
@@ -133,7 +138,7 @@ export default function AdminPage() {
 
       toast({
         title: "Conteúdo Salvo com Sucesso!",
-        description: "As alterações foram enviadas para o GitHub e o site será atualizado em breve.",
+        description: "As alterações foram enviadas e o site será atualizado em breve.",
       });
     } catch (error: any) {
       toast({
@@ -178,7 +183,6 @@ export default function AdminPage() {
       });
     } finally {
       setIsUploading(null);
-      // Reset the file input
       if (event.target) {
         event.target.value = '';
       }
@@ -403,8 +407,19 @@ export default function AdminPage() {
                     )}
                   />
                   <h3 className="font-semibold mt-4">Membros da Equipe</h3>
-                   {form.getValues().attorneys.members.map((_, index) => (
-                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background">
+                   {attorneyFields.map((item, index) => (
+                      <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background relative">
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            className="absolute top-4 right-4 h-7 w-7"
+                            onClick={() => removeAttorney(index)}
+                            disabled={isSubmitting}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            <span className="sr-only">Remover Membro</span>
+                          </Button>
                          <FormField
                             control={form.control}
                             name={`attorneys.members.${index}.name`}
@@ -475,6 +490,23 @@ export default function AdminPage() {
                         />
                       </div>
                    ))}
+                   <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => appendAttorney({ 
+                        id: `new-${Date.now()}`,
+                        name: "", 
+                        title: "", 
+                        bio: "", 
+                        imageUrl: "" 
+                      })}
+                      disabled={isSubmitting}
+                    >
+                      <PlusCircle className="mr-2 h-4 w-4" />
+                      Adicionar Membro
+                    </Button>
                 </AccordionContent>
               </AccordionItem>
 
@@ -535,3 +567,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
