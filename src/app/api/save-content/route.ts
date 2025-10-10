@@ -1,8 +1,33 @@
 
 import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs/promises';
+import path from 'path';
 
-// Rota da API para salvar o conteúdo no GitHub
+// Rota da API para salvar o conteúdo
 export async function POST(req: NextRequest) {
+  const newContentJSON = await req.json();
+
+  // Se estiver em ambiente de desenvolvimento, salva o arquivo localmente
+  if (process.env.NODE_ENV === 'development') {
+    try {
+      const filePath = path.join(process.cwd(), 'src', 'data', 'content.json');
+      const newContentString = JSON.stringify(newContentJSON, null, 2);
+      await fs.writeFile(filePath, newContentString, 'utf-8');
+
+      console.log("Conteúdo salvo localmente em src/data/content.json");
+
+      return NextResponse.json({ message: 'Conteúdo salvo localmente com sucesso!' }, { status: 200 });
+
+    } catch (error: any) {
+      console.error('Erro ao salvar localmente:', error);
+      return NextResponse.json(
+        { message: error.message || 'Ocorreu um erro ao salvar o arquivo localmente.' },
+        { status: 500 }
+      );
+    }
+  }
+
+  // Lógica para produção (salvar no GitHub)
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const GITHUB_REPO = process.env.GITHUB_REPO; // Ex: 'seu-usuario/seu-repositorio'
   const FILE_PATH = 'src/data/content.json';
@@ -16,8 +41,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const newContentJSON = await req.json();
-
     // 1. Obter o SHA do arquivo atual no GitHub
     const currentFileResponse = await fetch(API_URL, {
       headers: {
@@ -27,7 +50,6 @@ export async function POST(req: NextRequest) {
     });
 
     if (!currentFileResponse.ok) {
-       // Se o arquivo não existir, um status 404 é esperado. Podemos lidar com isso ou apenas falhar.
        const errorData = await currentFileResponse.json();
       throw new Error(`Falha ao buscar o arquivo no GitHub: ${errorData.message}`);
     }
@@ -59,15 +81,13 @@ export async function POST(req: NextRequest) {
         throw new Error(`Falha ao fazer commit no GitHub: ${errorData.message}`);
     }
 
-    return NextResponse.json({ message: 'Conteúdo atualizado com sucesso!' }, { status: 200 });
+    return NextResponse.json({ message: 'Conteúdo atualizado com sucesso no GitHub!' }, { status: 200 });
 
   } catch (error: any) {
-    console.error('Erro na API /api/save-content:', error);
+    console.error('Erro na API /api/save-content (Produção):', error);
     return NextResponse.json(
       { message: error.message || 'Ocorreu um erro interno no servidor.' },
       { status: 500 }
     );
   }
 }
-
-    
