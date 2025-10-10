@@ -3,10 +3,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Este middleware protege a rota /admin com autenticação básica.
 export function middleware(req: NextRequest) {
-  // Temporariamente desabilitado para pular o login
-  return NextResponse.next();
-  
-  /*
   if (req.nextUrl.pathname.startsWith('/admin')) {
     const basicAuth = req.headers.get('authorization');
     const adminUser = process.env.ADMIN_USER;
@@ -38,7 +34,6 @@ export function middleware(req: NextRequest) {
   }
 
   return NextResponse.next();
-  */
 }
 
 export const config = {
