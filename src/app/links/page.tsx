@@ -64,7 +64,7 @@ export default function LinksPage() {
             <div className="absolute inset-0 bg-background/90" />
             <div className="relative z-10 w-full max-w-md">
                 <div className="flex flex-col items-center">
-                    <Avatar className="h-28 w-28 border-4 border-accent shadow-lg mb-4 bg-white p-2">
+                    <Avatar className="h-28 w-28 border-4 border-accent shadow-lg mb-4">
                         {logoImage && (
                             <AvatarImage src={logoImage.imageUrl} alt="Vieira & Martins Advogados Logo" className="object-contain" data-ai-hint={logoImage.imageHint}/>
                         )}
