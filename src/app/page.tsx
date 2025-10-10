@@ -15,17 +15,17 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+      <Header content={content.contactInfo} />
       <main className="flex-1">
-        <Hero content={content.hero} />
+        <Hero content={content.hero} whatsappLink={content.contactInfo.whatsappLink} />
         {content.practiceAreas.enabled && <PracticeAreas content={content.practiceAreas} />}
         {content.whyUs.enabled && <WhyUs content={content.whyUs} />}
         {content.ourHistory.enabled && <OurHistory content={content.ourHistory} />}
         {content.attorneys.enabled && <Attorneys content={content.attorneys} />}
         {content.testimonials.enabled && <Testimonials content={content.testimonials} />}
-        {content.contact.enabled && <Contact />}
+        {content.contact.enabled && <Contact content={content.contactInfo} />}
       </main>
-      <Footer />
+      <Footer content={content.contactInfo} />
     </div>
   );
 }

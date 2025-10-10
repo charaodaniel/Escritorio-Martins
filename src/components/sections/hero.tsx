@@ -7,9 +7,10 @@ import { ContentData } from "@/lib/content-loader";
 
 type HeroProps = {
   content: ContentData['hero'];
+  whatsappLink: string;
 }
 
-export default function Hero({ content }: HeroProps) {
+export default function Hero({ content, whatsappLink }: HeroProps) {
   const heroImage = PlaceHolderImages.find((img) => img.id === "hero-background");
 
   return (
@@ -36,7 +37,7 @@ export default function Hero({ content }: HeroProps) {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
             <Button asChild size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg transform transition-transform hover:scale-105">
-              <Link href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer">Fale Conosco no WhatsApp</Link>
+              <Link href={whatsappLink} target="_blank" rel="noopener noreferrer">Fale Conosco no WhatsApp</Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="w-full sm:w-auto text-white border-white/50 hover:bg-white/10 hover:text-white transform transition-transform hover:scale-105">
               <Link href="#practice-areas">Nossas Áreas</Link>

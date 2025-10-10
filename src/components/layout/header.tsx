@@ -12,6 +12,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { ContentData } from "@/lib/content-loader";
 
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
@@ -22,7 +23,11 @@ const navLinks = [
   { href: "#contact", label: "Contato" },
 ];
 
-export default function Header() {
+type HeaderProps = {
+  content: ContentData['contactInfo'];
+}
+
+export default function Header({ content }: HeaderProps) {
   const [isScrolled, setIsScrolled] = React.useState(false);
 
   React.useEffect(() => {
@@ -71,7 +76,7 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-2">
             <Button asChild className="hidden md:flex bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link href="#contact">Agende sua Consulta</Link>
+                <Link href={content.whatsappLink} target="_blank" rel="noopener noreferrer">Agende sua Consulta</Link>
             </Button>
             <Sheet>
                 <SheetTrigger asChild>
@@ -100,7 +105,7 @@ export default function Header() {
                     </nav>
                     <SheetClose asChild>
                         <Button asChild size="lg" className="mt-4 bg-accent text-accent-foreground hover:bg-accent/90">
-                            <Link href="#contact">Agende sua Consulta</Link>
+                            <Link href={content.whatsappLink} target="_blank" rel="noopener noreferrer">Agende sua Consulta</Link>
                         </Button>
                     </SheetClose>
                 </div>

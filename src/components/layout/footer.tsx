@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Scale, Mail, Phone, MapPin, Facebook, Instagram, MessageCircle, Link2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ContentData } from "@/lib/content-loader";
 
 const navLinks = [
   { href: "#practice-areas", label: "Áreas de Atuação" },
@@ -13,17 +14,21 @@ const navLinks = [
   { href: "#contact", label: "Contato" },
 ];
 
-const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=100090526663540", name: "Facebook" },
-    { icon: Instagram, href: "https://www.instagram.com/vieiraemartinsadv/", name: "Instagram" },
-];
+type FooterProps = {
+  content: ContentData['contactInfo'];
+}
 
-export default function Footer() {
+export default function Footer({ content }: FooterProps) {
   const [currentYear, setCurrentYear] = useState<number | null>(null);
 
   useEffect(() => {
     setCurrentYear(new Date().getFullYear());
   }, []);
+
+  const socialLinks = [
+    { icon: Facebook, href: content.facebookUrl, name: "Facebook" },
+    { icon: Instagram, href: content.instagramUrl, name: "Instagram" },
+  ];
 
   return (
     <footer className="bg-card text-card-foreground">
@@ -63,15 +68,15 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-accent" />
-                <a href="mailto:emartinsadvogado@hotmail.com" className="text-muted-foreground hover:text-accent transition-colors">emartinsadvogado@hotmail.com</a>
+                <a href={`mailto:${content.email}`} className="text-muted-foreground hover:text-accent transition-colors">{content.email}</a>
               </li>
               <li className="flex items-center gap-3">
                 <MessageCircle className="h-4 w-4 text-accent" />
-                <a href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">+55 (55) 99916-9181</a>
+                <a href={content.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors">{content.phone}</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-accent" />
-                <span className="text-muted-foreground">R. Franklin Bastos de Carvalho, 754<br />Centro, Manoel Viana - RS</span>
+                <span className="text-muted-foreground">{content.address}</span>
               </li>
             </ul>
           </div>

@@ -3,8 +3,13 @@ import ContactForm from "@/components/contact-form";
 import Map from "@/components/map";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { ContentData } from "@/lib/content-loader";
 
-export default function Contact() {
+type ContactProps = {
+  content: ContentData['contactInfo'];
+}
+
+export default function Contact({ content }: ContactProps) {
   return (
     <section id="contact" className="py-20 sm:py-28 bg-card">
       <div className="container mx-auto px-4 md:px-6">
@@ -27,23 +32,23 @@ export default function Contact() {
               <div className="space-y-5 text-muted-foreground">
                  <div className="flex items-start gap-4">
                     <MapPin className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <span>R. Franklin Bastos de Carvalho, 754, Centro, Manoel Viana - RS, CEP 97640-000</span>
+                    <span>{content.address}</span>
                 </div>
                 <div className="flex items-center gap-4">
                     <Mail className="h-5 w-5 text-accent" />
-                    <a href="mailto:emartinsadvogado@hotmail.com" className="hover:text-primary transition-colors">emartinsadvogado@hotmail.com</a>
+                    <a href={`mailto:${content.email}`} className="hover:text-primary transition-colors">{content.email}</a>
                 </div>
                 <div className="flex items-center gap-4">
                     <MessageCircle className="h-5 w-5 text-accent" />
-                    <a href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">+55 (55) 99916-9181</a>
+                    <a href={content.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">{content.phone}</a>
                 </div>
                 <div className="flex items-center gap-4">
                     <Clock className="h-5 w-5 text-accent" />
-                    <span>Seg a Sex: 09:00 - 12:00 e 14:00 - 18:00</span>
+                    <span>{content.openingHours}</span>
                 </div>
               </div>
               <Button asChild size="lg" className="mt-8 w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg transform transition-transform hover:scale-105">
-                <Link href="https://wa.me/5555999169181" target="_blank" rel="noopener noreferrer">
+                <Link href={content.whatsappLink} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="mr-2 h-5 w-5" />
                   Fale no WhatsApp
                 </Link>

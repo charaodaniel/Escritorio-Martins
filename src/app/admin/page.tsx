@@ -71,6 +71,17 @@ const socialFeedSchema = z.object({
     posts: z.array(postSchema),
 });
 
+const contactInfoSchema = z.object({
+  address: z.string().min(1, "Endereço é obrigatório."),
+  email: z.string().email("E-mail inválido."),
+  whatsapp: z.string().min(1, "Número do WhatsApp é obrigatório (apenas números)."),
+  whatsappLink: z.string().url("Link do WhatsApp inválido."),
+  phone: z.string().min(1, "Telefone para exibição é obrigatório."),
+  openingHours: z.string().min(1, "Horário de funcionamento é obrigatório."),
+  facebookUrl: z.string().url("URL do Facebook inválida."),
+  instagramUrl: z.string().url("URL do Instagram inválida."),
+});
+
 
 const formSchema = z.object({
   hero: heroSchema,
@@ -103,6 +114,7 @@ const formSchema = z.object({
   contact: z.object({
     enabled: z.boolean(),
   }),
+  contactInfo: contactInfoSchema,
 });
 
 
@@ -742,13 +754,102 @@ export default function AdminPage() {
                {/* Seção Contato */}
               <AccordionItem value="item-7">
                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Contato</AccordionTrigger>
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Informações de Contato</AccordionTrigger>
                     <div className="py-4 pr-4 pl-2">
                       <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
                     </div>
                 </div>
-                <AccordionContent className="pt-4">
-                  <p className="text-sm text-muted-foreground">O conteúdo desta seção (telefones, e-mail, endereço) não é editável por aqui. Para alterá-lo, edite o componente <code className="bg-muted px-1 py-0.5 rounded-sm">src/components/sections/contact.tsx</code> diretamente no código.</p>
+                <AccordionContent className="space-y-6 pt-4">
+                  <FormField
+                    control={form.control}
+                    name="contactInfo.address"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Endereço Completo</FormLabel>
+                        <FormControl><Textarea {...field} rows={3} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="contactInfo.email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>E-mail</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="contactInfo.phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Telefone para Exibição</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} placeholder="+55 (55) 99999-9999" /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="contactInfo.whatsapp"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Número do WhatsApp</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} placeholder="5555999999999" /></FormControl>
+                        <FormDescription>Apenas números, com código do país e DDD. Usado para gerar o link.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <FormField
+                    control={form.control}
+                    name="contactInfo.whatsappLink"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Link do WhatsApp</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://wa.me/5555..."/></FormControl>
+                        <FormDescription>Gerado automaticamente, mas pode ser personalizado.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="contactInfo.openingHours"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Horário de Funcionamento</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <FormField
+                    control={form.control}
+                    name="contactInfo.instagramUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>URL do Perfil no Instagram</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="contactInfo.facebookUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>URL do Perfil no Facebook</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </AccordionContent>
               </AccordionItem>
 
@@ -763,7 +864,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
-
-    

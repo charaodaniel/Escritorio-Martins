@@ -4,47 +4,51 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { AtSign, Globe, Home, Instagram, Facebook, MapPin, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import Image from 'next/image';
-
-const links = [
-    {
-        href: "https://wa.me/5555999169181",
-        label: "Agende sua Consulta (WhatsApp)",
-        icon: MessageCircle,
-        isExternal: true,
-    },
-    {
-        href: "https://www.instagram.com/vieiraemartinsadv/",
-        label: "Acesse nosso Instagram",
-        icon: Instagram,
-        isExternal: true,
-    },
-    {
-        href: "https://www.facebook.com/profile.php?id=100090526663540",
-        label: "Acesse nosso Facebook",
-        icon: Facebook,
-        isExternal: true,
-    },
-    {
-        href: "https://www.google.com/maps/place/R.+Franklin+Bastos+de+Carvalho,+754+-+Centro,+Manoel+Viana+-+RS,+97640-000/@-29.5908985,-55.4839841,17z/data=!3m1!4b1!4m6!3m5!1s0x950000994f340801:0x5e33d45e7b250785!8m2!3d-29.5909032!4d-55.4814092!16s%2Fg%2F11csc5l_kt?entry=tts",
-        label: "Veja nossa Localização",
-        icon: MapPin,
-        isExternal: true,
-    },
-    {
-        href: "mailto:emartinsadvogado@hotmail.com",
-        label: "Envie-nos um E-mail",
-        icon: AtSign,
-        isExternal: true,
-    },
-    {
-        href: "/",
-        label: "Visite nosso Site Completo",
-        icon: Globe,
-        isExternal: false,
-    }
-];
+import { loadContent } from "@/lib/content-loader";
 
 export default function LinksPage() {
+    const content = loadContent();
+    const { contactInfo } = content;
+
+    const links = [
+        {
+            href: contactInfo.whatsappLink,
+            label: "Agende sua Consulta (WhatsApp)",
+            icon: MessageCircle,
+            isExternal: true,
+        },
+        {
+            href: contactInfo.instagramUrl,
+            label: "Acesse nosso Instagram",
+            icon: Instagram,
+            isExternal: true,
+        },
+        {
+            href: contactInfo.facebookUrl,
+            label: "Acesse nosso Facebook",
+            icon: Facebook,
+            isExternal: true,
+        },
+        {
+            href: "https://www.google.com/maps/place/R.+Franklin+Bastos+de+Carvalho,+754+-+Centro,+Manoel+Viana+-+RS,+97640-000/@-29.5908985,-55.4839841,17z/data=!3m1!4b1!4m6!3m5!1s0x950000994f340801:0x5e33d45e7b250785!8m2!3d-29.5909032!4d-55.4814092!16s%2Fg%2F11csc5l_kt?entry=tts",
+            label: "Veja nossa Localização",
+            icon: MapPin,
+            isExternal: true,
+        },
+        {
+            href: `mailto:${contactInfo.email}`,
+            label: "Envie-nos um E-mail",
+            icon: AtSign,
+            isExternal: true,
+        },
+        {
+            href: "/",
+            label: "Visite nosso Site Completo",
+            icon: Globe,
+            isExternal: false,
+        }
+    ];
+    
     const logoImage = PlaceHolderImages.find(img => img.id === 'logo');
     const heroImage = PlaceHolderImages.find((img) => img.id === "hero-background");
 
