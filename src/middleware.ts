@@ -11,7 +11,8 @@ export function middleware(req: NextRequest) {
     if (adminUser && adminPass) {
       if (basicAuth) {
         const authValue = basicAuth.split(' ')[1];
-        const [user, pwd] = atob(authValue).split(':');
+        // O `atob` é uma função do browser. No Edge runtime, usamos Buffer.
+        const [user, pwd] = Buffer.from(authValue, 'base64').toString().split(':');
 
         if (user === adminUser && pwd === adminPass) {
           return NextResponse.next();
@@ -38,5 +39,3 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: ['/admin/:path*'],
 };
-
-    
