@@ -49,7 +49,9 @@ const attorneyMemberSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório."),
   title: z.string().min(1, "Cargo é obrigatório."),
   bio: z.string().min(1, "Bio é obrigatória."),
-  imageUrl: z.string().url("Deve ser um URL válido ou caminho local (ex: /foto.jpg)."),
+  imageUrl: z.string().refine(value => value.startsWith('/') || value.startsWith('http'), {
+    message: "Deve ser um URL válido ou um caminho local (ex: /foto.jpg)."
+  }),
 });
 
 const postSchema = z.object({
@@ -716,3 +718,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
