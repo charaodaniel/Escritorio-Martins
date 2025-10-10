@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,6 +33,7 @@ const formSchema = z.object({
 
 export default function ContactForm() {
     const { toast } = useToast();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -43,18 +45,47 @@ export default function ContactForm() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("Formulário enviado:", values);
-        toast({
-            title: "Mensagem Enviada!",
-            description: "Obrigado por entrar em contato. Retornaremos em breve.",
-        });
-        form.reset();
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsSubmitting(true);
+        try {
+            const response = await fetch("https://formsubmit.co/emartinsadvogado@hotmail.com", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+                body: JSON.stringify({
+                    ...values,
+                    _subject: `Nova mensagem de ${values.name} pelo site`,
+                    _template: "table",
+                }),
+            });
+
+            if (response.ok) {
+                toast({
+                    title: "Mensagem Enviada!",
+                    description: "Obrigado por entrar em contato. Retornaremos em breve.",
+                });
+                form.reset();
+            } else {
+                 throw new Error("Houve um problema ao enviar sua mensagem.");
+            }
+        } catch (error) {
+             toast({
+                variant: "destructive",
+                title: "Ops! Algo deu errado.",
+                description: "Não foi possível enviar sua mensagem. Tente novamente mais tarde ou use outro canal de contato.",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                 <input type="hidden" name="_subject" value="Novo Contato do Site!" />
+                 <input type="hidden" name="_template" value="table" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <FormField
                         control={form.control}
@@ -63,7 +94,7 @@ export default function ContactForm() {
                             <FormItem>
                                 <FormLabel>Nome Completo</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Seu nome completo" {...field} />
+                                    <Input placeholder="Seu nome completo" {...field} disabled={isSubmitting} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -76,7 +107,7 @@ export default function ContactForm() {
                             <FormItem>
                                 <FormLabel>Endereço de Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="seuemail@exemplo.com" {...field} />
+                                    <Input placeholder="seuemail@exemplo.com" {...field} disabled={isSubmitting} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -90,7 +121,7 @@ export default function ContactForm() {
                         <FormItem>
                             <FormLabel>Telefone (Opcional)</FormLabel>
                             <FormControl>
-                                <Input placeholder="(XX) XXXXX-XXXX" {...field} />
+                                <Input placeholder="(XX) XXXXX-XXXX" {...field} disabled={isSubmitting} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -107,13 +138,16 @@ export default function ContactForm() {
                                 placeholder="Descreva brevemente sua necessidade jurídica..."
                                 className="min-h-[140px]"
                                 {...field}
+                                disabled={isSubmitting}
                                 />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">Enviar Mensagem</Button>
+                <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 shadow-md" disabled={isSubmitting}>
+                    {isSubmitting ? "Enviando..." : "Enviar Mensagem"}
+                </Button>
             </form>
         </Form>
     );
