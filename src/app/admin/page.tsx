@@ -562,7 +562,7 @@ export default function AdminPage() {
                             <FormItem>
                                 <FormLabel>Link da Publicação {index + 1}</FormLabel>
                                 <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.instagram.com/p/seu-post-aqui" /></FormControl>
-                                <FormDescription>Cole aqui apenas o link (URL) da publicação do Instagram.</FormDescription>
+                                <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação e selecione 'Copiar link'. Cole o link aqui.</FormDescription>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -594,5 +594,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
