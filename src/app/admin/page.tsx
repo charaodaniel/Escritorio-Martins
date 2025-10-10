@@ -41,7 +41,7 @@ const practiceAreaSchema = z.object({
 });
 
 const whyUsFeatureSchema = z.object({
-  title: zstring().min(1, "Título do diferencial é obrigatório."),
+  title: z.string().min(1, "Título do diferencial é obrigatório."),
   description: z.string().min(1, "Descrição do diferencial é obrigatória."),
 });
 
@@ -763,5 +763,7 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
 
     
