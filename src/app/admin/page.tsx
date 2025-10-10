@@ -41,6 +41,19 @@ const ourHistorySchema = z.object({
   paragraphs: z.array(z.string().min(1, "Parágrafo não pode ser vazio.")).min(1, "É necessário pelo menos um parágrafo."),
 });
 
+const attorneyMemberSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, "Nome é obrigatório."),
+  title: z.string().min(1, "Cargo é obrigatório."),
+  bio: z.string().min(1, "Bio é obrigatória."),
+  imageId: z.string(),
+});
+
+const testimonialPostSchema = z.object({
+  permalink: z.string().url("Deve ser um URL válido do Instagram."),
+});
+
+
 const formSchema = z.object({
   hero: heroSchema,
   practiceAreas: z.object({
@@ -54,6 +67,16 @@ const formSchema = z.object({
     features: z.array(whyUsFeatureSchema),
   }),
   ourHistory: ourHistorySchema,
+  attorneys: z.object({
+    title: z.string().min(1, "Título da seção é obrigatório."),
+    subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
+    members: z.array(attorneyMemberSchema),
+  }),
+  testimonials: z.object({
+      title: z.string().min(1, "Título da seção é obrigatório."),
+      subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
+      posts: z.array(testimonialPostSchema),
+  }),
 });
 
 
@@ -294,6 +317,131 @@ export default function AdminPage() {
                 </AccordionContent>
               </AccordionItem>
 
+              {/* Seção Equipe */}
+              <AccordionItem value="item-5">
+                <AccordionTrigger className="text-xl font-headline text-primary">Equipe</AccordionTrigger>
+                <AccordionContent className="space-y-6 pt-4">
+                  <FormField
+                    control={form.control}
+                    name="attorneys.title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Título da Seção</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <FormField
+                    control={form.control}
+                    name="attorneys.subtitle"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Subtítulo da Seção</FormLabel>
+                        <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <h3 className="font-semibold mt-4">Membros da Equipe</h3>
+                   {form.getValues().attorneys.members.map((_, index) => (
+                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background">
+                         <FormField
+                            control={form.control}
+                            name={`attorneys.members.${index}.name`}
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nome do Membro {index + 1}</FormLabel>
+                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                         <FormField
+                            control={form.control}
+                            name={`attorneys.members.${index}.title`}
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Cargo do Membro {index + 1}</FormLabel>
+                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={`attorneys.members.${index}.bio`}
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Bio do Membro {index + 1}</FormLabel>
+                                <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name={`attorneys.members.${index}.imageId`}
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>ID da Imagem {index + 1}</FormLabel>
+                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                                <FormDescription>O ID da imagem do arquivo placeholder-images.json.</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                      </div>
+                   ))}
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Seção Publicações */}
+              <AccordionItem value="item-6">
+                <AccordionTrigger className="text-xl font-headline text-primary">Publicações (Instagram)</AccordionTrigger>
+                <AccordionContent className="space-y-6 pt-4">
+                  <FormField
+                    control={form.control}
+                    name="testimonials.title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Título da Seção</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <FormField
+                    control={form.control}
+                    name="testimonials.subtitle"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Subtítulo da Seção</FormLabel>
+                        <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <h3 className="font-semibold mt-4">Links das Publicações</h3>
+                   {form.getValues().testimonials.posts.map((_, index) => (
+                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background">
+                         <FormField
+                            control={form.control}
+                            name={`testimonials.posts.${index}.permalink`}
+                            render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Link da Publicação {index + 1}</FormLabel>
+                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
+                                <FormDescription>URL completo do post no Instagram.</FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                            )}
+                        />
+                      </div>
+                   ))}
+                </AccordionContent>
+              </AccordionItem>
+
             </Accordion>
 
             <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
@@ -305,5 +453,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    

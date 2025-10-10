@@ -1,3 +1,4 @@
+
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import Hero from "@/components/sections/hero";
@@ -20,8 +21,8 @@ export default function Home() {
         <PracticeAreas content={content.practiceAreas} />
         <WhyUs content={content.whyUs} />
         <OurHistory content={content.ourHistory} />
-        <Attorneys />
-        <Testimonials />
+        <Attorneys content={content.attorneys} />
+        <Testimonials content={content.testimonials} />
         <Contact />
       </main>
       <Footer />

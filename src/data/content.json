@@ -63,5 +63,49 @@
       "Fundado pelos irmãos Gilberto e Eduardo Martins, o escritório consolidou-se como referência local pela dedicação, profissionalismo e resultados conquistados ao longo dos anos.",
       "Com uma trajetória marcada pela confiança dos clientes e pela busca constante por atualização e excelência, seguimos firmes em nossa missão: defender direitos com transparência, respeito e responsabilidade."
     ]
+  },
+  "attorneys": {
+    "title": "Conheça Nossa Equipe",
+    "subtitle": "Profissionais dedicados e apaixonados pelo direito, comprometidos em oferecer a melhor solução jurídica para você.",
+    "members": [
+      {
+        "id": "gilberto-martins",
+        "name": "Gilberto Martins",
+        "title": "Advogado",
+        "bio": "Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.",
+        "imageId": "attorney-1"
+      },
+      {
+        "id": "eduardo-martins",
+        "name": "Eduardo Martins",
+        "title": "Advogado",
+        "bio": "Especialista em direito de família e sucessões, Eduardo combina conhecimento técnico com uma abordagem humana para resolver questões complexas.",
+        "imageId": "attorney-2"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Nossas Publicações",
+    "subtitle": "Acompanhe nossas últimas postagens e novidades diretamente do nosso Instagram.",
+    "posts": [
+      {
+        "permalink": "https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_embed&amp;utm_campaign=loading"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DPFACa0AfH4/?utm_source=ig_embed&amp;utm_campaign=loading"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DO9RaULlRjl/?utm_source=ig_embed&amp;utm_campaign=loading"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DO6sncHjxHf/?utm_source=ig_embed&amp;utm_campaign=loading"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DOzASrKiHYZ/?utm_source=ig_embed&amp;utm_campaign=loading"
+      },
+      {
+        "permalink": "https://www.instagram.com/p/DOwnSx4Dme5/?utm_source=ig_embed&amp;utm_campaign=loading"
+      }
+    ]
   }
 }

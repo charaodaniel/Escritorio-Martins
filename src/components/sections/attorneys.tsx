@@ -1,39 +1,28 @@
+
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { ContentData } from "@/lib/content-loader";
 
-const attorneys = [
-  {
-    id: "gilberto-martins",
-    name: "Gilberto Martins",
-    title: "Advogado",
-    bio: "Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.",
-    imageId: "attorney-1"
-  },
-  {
-    id: "eduardo-martins",
-    name: "Eduardo Martins",
-    title: "Advogado",
-    bio: "Especialista em direito de família e sucessões, Eduardo combina conhecimento técnico com uma abordagem humana para resolver questões complexas.",
-    imageId: "attorney-2"
-  },
-];
+type AttorneysProps = {
+  content: ContentData['attorneys'];
+}
 
-export default function Attorneys() {
+export default function Attorneys({ content }: AttorneysProps) {
   return (
     <section id="attorneys" className="py-20 sm:py-28 bg-card">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
-            Conheça Nossa Equipe
+            {content.title}
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Profissionais dedicados e apaixonados pelo direito, comprometidos em oferecer a melhor solução jurídica para você.
+            {content.subtitle}
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12 justify-center">
-          {attorneys.map((attorney) => {
+          {content.members.map((attorney) => {
             const image = PlaceHolderImages.find(img => img.id === attorney.imageId);
             if (!image) return null;
             return (

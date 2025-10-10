@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -10,29 +11,14 @@ import {
 } from "@/components/ui/carousel";
 import InstagramEmbed from "@/components/instagram-embed";
 import Autoplay from "embla-carousel-autoplay";
+import { ContentData } from "@/lib/content-loader";
 
-const instagramPosts = [
-    {
-        permalink: "https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_embed&amp;utm_campaign=loading",
-    },
-    {
-        permalink: "https://www.instagram.com/p/DPFACa0AfH4/?utm_source=ig_embed&amp;utm_campaign=loading",
-    },
-    {
-        permalink: "https://www.instagram.com/p/DO9RaULlRjl/?utm_source=ig_embed&amp;utm_campaign=loading",
-    },
-     {
-        permalink: "https://www.instagram.com/p/DO6sncHjxHf/?utm_source=ig_embed&amp;utm_campaign=loading",
-    },
-    {
-        permalink: "https://www.instagram.com/p/DOzASrKiHYZ/?utm_source=ig_embed&amp;utm_campaign=loading",
-    },
-    {
-        permalink: "https://www.instagram.com/p/DOwnSx4Dme5/?utm_source=ig_embed&amp;utm_campaign=loading",
-    },
-];
+type TestimonialsProps = {
+  content: ContentData['testimonials'];
+}
 
-export default function Testimonials() {
+
+export default function Testimonials({ content }: TestimonialsProps) {
   const plugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   )
@@ -42,10 +28,10 @@ export default function Testimonials() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
-            Nossas Publicações
+            {content.title}
           </h2>
           <p className="mt-6 text-lg text-muted-foreground">
-            Acompanhe nossas últimas postagens e novidades diretamente do nosso Instagram.
+            {content.subtitle}
           </p>
         </div>
         
@@ -61,7 +47,7 @@ export default function Testimonials() {
               onMouseLeave={plugin.current.reset}
             >
               <CarouselContent>
-                {instagramPosts.map((post, index) => (
+                {content.posts.map((post, index) => (
                   <CarouselItem key={index} className="flex justify-center">
                     <div className="p-1">
                        <InstagramEmbed permalink={post.permalink} />
