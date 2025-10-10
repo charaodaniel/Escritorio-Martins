@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
-import { loadContent, ContentData } from "@/lib/content-loader";
+import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const heroSchema = z.object({
@@ -91,11 +91,28 @@ export default function AdminPage() {
   });
 
   useEffect(() => {
-    // Carrega o conteúdo do JSON quando o componente monta
-    const content = loadContent();
-    setInitialData(content);
-    form.reset(content);
-  }, [form]);
+    async function fetchContent() {
+      try {
+        const response = await fetch('/api/get-content');
+        if (!response.ok) {
+          throw new Error('Falha ao carregar conteúdo.');
+        }
+        const content = await response.json();
+        setInitialData(content);
+        form.reset(content);
+      } catch (error) {
+        console.error("Erro ao buscar conteúdo:", error);
+        toast({
+          variant: "destructive",
+          title: "Erro ao Carregar Painel",
+          description: "Não foi possível carregar os dados para edição.",
+        });
+      }
+    }
+
+    fetchContent();
+  }, [form, toast]);
+
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
@@ -453,3 +470,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
