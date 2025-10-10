@@ -1,0 +1,2 @@
+Este arquivo existe para garantir a criação do diretório 'public'. Você pode excluí-lo.
+Por favor, mova o arquivo 'logo-vieiraemartinsadvogado.jpeg' para este diretório.
