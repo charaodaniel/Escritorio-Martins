@@ -46,7 +46,7 @@ const attorneyMemberSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório."),
   title: z.string().min(1, "Cargo é obrigatório."),
   bio: z.string().min(1, "Bio é obrigatória."),
-  imageId: z.string(),
+  imageUrl: z.string().url("Deve ser um URL válido ou caminho local (ex: /foto.jpg)."),
 });
 
 const testimonialPostSchema = z.object({
@@ -398,12 +398,12 @@ export default function AdminPage() {
                         />
                         <FormField
                             control={form.control}
-                            name={`attorneys.members.${index}.imageId`}
+                            name={`attorneys.members.${index}.imageUrl`}
                             render={({ field }) => (
                             <FormItem>
-                                <FormLabel>ID da Imagem {index + 1}</FormLabel>
+                                <FormLabel>URL da Imagem {index + 1}</FormLabel>
                                 <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                                <FormDescription>O ID da imagem do arquivo placeholder-images.json.</FormDescription>
+                                <FormDescription>Caminho local (ex: /minha-foto.jpg) ou URL completa.</FormDescription>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -470,5 +470,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    

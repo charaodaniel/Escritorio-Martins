@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { ContentData } from "@/lib/content-loader";
 
 type AttorneysProps = {
@@ -23,13 +22,11 @@ export default function Attorneys({ content }: AttorneysProps) {
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12 justify-center">
           {content.members.map((attorney) => {
-            const image = PlaceHolderImages.find(img => img.id === attorney.imageId);
-            if (!image) return null;
             return (
               <Card key={attorney.id} className="overflow-hidden text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 max-w-sm mx-auto">
                 <CardHeader className="p-6 items-center bg-background">
                      <Avatar className="h-32 w-32 border-4 border-white shadow-lg">
-                        <AvatarImage src={image.imageUrl} alt={attorney.name} data-ai-hint={image.imageHint} className="object-cover" />
+                        <AvatarImage src={attorney.imageUrl} alt={attorney.name} className="object-cover" />
                         <AvatarFallback>{attorney.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                   <div className="mt-4">

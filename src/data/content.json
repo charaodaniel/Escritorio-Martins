@@ -1,3 +1,4 @@
+
 {
   "hero": {
     "title": "Escritório Vieira & Martins Advogados",
@@ -72,14 +73,14 @@
         "name": "Gilberto Martins",
         "title": "Advogado",
         "bio": "Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.",
-        "imageId": "attorney-1"
+        "imageUrl": "https://www.alegretetudo.com.br/wp-content/uploads/2023/11/alegretetudo-vieira-e-martins-um-legado-de-comprometimento-e-credibildade-no-direito-da-fronteira-oeste-e.jpg"
       },
       {
         "id": "eduardo-martins",
         "name": "Eduardo Martins",
         "title": "Advogado",
         "bio": "Especialista em direito de família e sucessões, Eduardo combina conhecimento técnico com uma abordagem humana para resolver questões complexas.",
-        "imageId": "attorney-2"
+        "imageUrl": "/logo-vieiraemartinsadvogado.jpeg"
       }
     ]
   },
