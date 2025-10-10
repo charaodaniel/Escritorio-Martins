@@ -51,7 +51,7 @@ const attorneyMemberSchema = z.object({
 });
 
 const testimonialPostSchema = z.object({
-  permalink: z.string().url("Deve ser um URL válido do Instagram."),
+  permalink: z.string().url("Por favor, insira um URL de publicação do Instagram válido."),
 });
 
 
@@ -96,6 +96,11 @@ export default function AdminPage() {
   const { fields: attorneyFields, append: appendAttorney, remove: removeAttorney } = useFieldArray({
     control: form.control,
     name: "attorneys.members",
+  });
+
+  const { fields: postFields, append: appendPost, remove: removePost } = useFieldArray({
+    control: form.control,
+    name: "testimonials.posts",
   });
 
   useEffect(() => {
@@ -510,7 +515,7 @@ export default function AdminPage() {
                 </AccordionContent>
               </AccordionItem>
 
-              {/* Seção Publicações */}
+             {/* Seção Publicações */}
               <AccordionItem value="item-6">
                 <AccordionTrigger className="text-xl font-headline text-primary">Publicações (Instagram)</AccordionTrigger>
                 <AccordionContent className="space-y-6 pt-4">
@@ -537,22 +542,44 @@ export default function AdminPage() {
                     )}
                   />
                   <h3 className="font-semibold mt-4">Links das Publicações</h3>
-                   {form.getValues().testimonials.posts.map((_, index) => (
-                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background">
+                   {postFields.map((item, index) => (
+                      <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background relative">
+                         <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            className="absolute top-4 right-4 h-7 w-7"
+                            onClick={() => removePost(index)}
+                            disabled={isSubmitting}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            <span className="sr-only">Remover Publicação</span>
+                          </Button>
                          <FormField
                             control={form.control}
                             name={`testimonials.posts.${index}.permalink`}
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Link da Publicação {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                                <FormDescription>URL completo do post no Instagram.</FormDescription>
+                                <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.instagram.com/p/seu-post-aqui" /></FormControl>
+                                <FormDescription>Cole aqui apenas o link (URL) da publicação do Instagram.</FormDescription>
                                 <FormMessage />
                             </FormItem>
                             )}
                         />
                       </div>
                    ))}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="mt-2"
+                      onClick={() => appendPost({ permalink: "" })}
+                      disabled={isSubmitting}
+                    >
+                      <PlusCircle className="mr-2 h-4 w-4" />
+                      Adicionar Publicação
+                    </Button>
                 </AccordionContent>
               </AccordionItem>
 
