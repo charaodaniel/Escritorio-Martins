@@ -3,6 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Este middleware protege a rota /admin com autenticação básica.
 export function middleware(req: NextRequest) {
+  // Autenticação temporariamente desativada.
+  if (req.nextUrl.pathname.startsWith('/admin')) {
+    return NextResponse.next();
+  }
+
+  /*
+  // CÓDIGO DE AUTENTICAÇÃO ORIGINAL - Descomente para reativar o login
   if (req.nextUrl.pathname.startsWith('/admin')) {
     const basicAuth = req.headers.get('authorization');
     // As variáveis de ambiente no Edge Runtime da Vercel são acessadas via process.env.
@@ -44,6 +51,7 @@ export function middleware(req: NextRequest) {
         },
       });
   }
+  */
 
   return NextResponse.next();
 }
