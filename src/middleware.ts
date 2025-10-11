@@ -5,22 +5,21 @@ import { NextRequest, NextResponse } from 'next/server';
 export function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith('/admin')) {
     const basicAuth = req.headers.get('authorization');
-    // As variáveis de ambiente no Edge Runtime da Vercel não são as mesmas do Node.js.
-    // Usaremos as variáveis sem o prefixo NEXT_PUBLIC_ aqui, pois elas são configuradas no ambiente do projeto.
+    // As variáveis de ambiente no Edge Runtime da Vercel são acessadas via process.env.
     const adminUser = process.env.ADMIN_USER;
     const adminPass = process.env.ADMIN_PASS;
 
-    // Se as variáveis de ambiente ESTÃO configuradas, checa a autenticação.
+    // Se as credenciais ESTÃO configuradas no ambiente
     if (adminUser && adminPass) {
       if (basicAuth) {
         const authValue = basicAuth.split(' ')[1];
         const [user, pwd] = Buffer.from(authValue, 'base64').toString().split(':');
 
         if (user === adminUser && pwd === adminPass) {
-          return NextResponse.next();
+          return NextResponse.next(); // Acesso permitido
         }
       }
-      // Se a autenticação falhar, pede as credenciais.
+      // Se a autenticação falhar ou não for fornecida, solicita as credenciais.
       return new NextResponse('Authentication Required', {
         status: 401,
         headers: {
@@ -28,16 +27,16 @@ export function middleware(req: NextRequest) {
         },
       });
     }
-    
-    // Se as variáveis de ambiente NÃO ESTÃO configuradas.
-    // Em desenvolvimento, permite o acesso com um aviso.
+
+    // Se as credenciais NÃO ESTÃO configuradas no ambiente.
+    // Em desenvolvimento, permite o acesso com um aviso no console.
     if (process.env.NODE_ENV === 'development') {
          console.warn("Autenticação do painel desabilitada. Defina ADMIN_USER e ADMIN_PASS em .env para proteger o painel.");
          return NextResponse.next();
     }
 
-    // Em produção, se as variáveis não estiverem setadas, bloqueia o acesso e pede autenticação
-    // em vez de dar 404.
+    // Em produção, se as variáveis não estiverem configuradas, o acesso é negado e as credenciais são solicitadas.
+    // Isso evita o erro 404 e torna o comportamento mais seguro.
     return new NextResponse('Authentication Required', {
         status: 401,
         headers: {
