@@ -33,6 +33,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
 
+const COLOR_PALETTE = [
+  '#000000', '#444444', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
+  '#E60000', '#FF9900', '#FFFF00', '#008A00', '#0066CC', '#9933FF',
+  'hsl(var(--primary))', 'hsl(var(--accent))', 'hsl(var(--foreground))'
+];
+
+
 const Toolbar = ({ editor }: { editor: any }) => {
   if (!editor) {
     return null;
@@ -89,6 +96,10 @@ const Toolbar = ({ editor }: { editor: any }) => {
         <SelectContent>
           <SelectItem value="PT Sans">PT Sans</SelectItem>
           <SelectItem value="Playfair Display">Playfair Display</SelectItem>
+          <SelectItem value="Roboto">Roboto</SelectItem>
+          <SelectItem value="Lora">Lora</SelectItem>
+          <SelectItem value="Montserrat">Montserrat</SelectItem>
+          <SelectItem value="Open Sans">Open Sans</SelectItem>
         </SelectContent>
       </Select>
       
@@ -99,6 +110,21 @@ const Toolbar = ({ editor }: { editor: any }) => {
             </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-2">
+            <div className="grid grid-cols-5 gap-2">
+              {COLOR_PALETTE.map((color, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="icon"
+                  className="h-6 w-6 rounded-full p-0"
+                  style={{ backgroundColor: color }}
+                  onClick={() => editor.chain().focus().setColor(color).run()}
+                >
+                  {currentColor === color && <div className="w-3 h-3 rounded-full border-2 border-background"/>}
+                </Button>
+              ))}
+            </div>
+            <hr className="my-2 border-border"/>
             <div className="flex gap-2 items-center">
                 <Input
                     type="color"

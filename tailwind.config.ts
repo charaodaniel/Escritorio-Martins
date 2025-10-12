@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -12,6 +13,10 @@ export default {
       fontFamily: {
         body: ['"PT Sans"', 'sans-serif'],
         headline: ['"Playfair Display"', 'serif'],
+        roboto: ['"Roboto"', 'sans-serif'],
+        lora: ['"Lora"', 'serif'],
+        montserrat: ['"Montserrat"', 'sans-serif'],
+        'open-sans': ['"Open Sans"', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
@@ -136,6 +141,18 @@ export default {
             },
             '[style*="font-family: PT Sans"]': {
               fontFamily: theme('fontFamily.body'),
+            },
+            '[style*="font-family: Roboto"]': {
+              fontFamily: theme('fontFamily.roboto'),
+            },
+            '[style*="font-family: Lora"]': {
+              fontFamily: theme('fontFamily.lora'),
+            },
+            '[style*="font-family: Montserrat"]': {
+              fontFamily: theme('fontFamily.montserrat'),
+            },
+            '[style*="font-family: Open Sans"]': {
+              fontFamily: theme('fontFamily.open-sans'),
             },
           },
         },
