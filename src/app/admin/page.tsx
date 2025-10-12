@@ -4,6 +4,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,7 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload, Instagram, Facebook } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Facebook, Image as ImageIcon } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
 
@@ -496,7 +497,9 @@ export default function AdminPage() {
                     )}
                   />
                   <h3 className="font-semibold mt-4">Membros da Equipe</h3>
-                   {attorneyFields.map((item, index) => (
+                   {attorneyFields.map((item, index) => {
+                     const imageUrl = form.watch(`attorneys.members.${index}.imageUrl`);
+                     return (
                       <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background relative">
                           <Button
                             type="button"
@@ -509,29 +512,49 @@ export default function AdminPage() {
                             <Trash2 className="h-4 w-4" />
                             <span className="sr-only">Remover Membro</span>
                           </Button>
+                          <div className="flex flex-col sm:flex-row items-start gap-4">
+                            <div className="flex-shrink-0">
+                                <FormLabel>Pré-visualização</FormLabel>
+                                <div className="mt-2 w-28 h-28 rounded-full bg-muted flex items-center justify-center overflow-hidden border">
+                                    {imageUrl ? (
+                                        <Image
+                                            src={imageUrl}
+                                            alt={`Preview ${index + 1}`}
+                                            width={112}
+                                            height={112}
+                                            className="object-cover w-full h-full"
+                                        />
+                                    ) : (
+                                        <ImageIcon className="w-12 h-12 text-muted-foreground" />
+                                    )}
+                                </div>
+                            </div>
+                            <div className="flex-grow space-y-4 w-full">
+                                <FormField
+                                    control={form.control}
+                                    name={`attorneys.members.${index}.name`}
+                                    render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Nome do Membro {index + 1}</FormLabel>
+                                        <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name={`attorneys.members.${index}.title`}
+                                    render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Cargo do Membro {index + 1}</FormLabel>
+                                        <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                    )}
+                                />
+                            </div>
+                          </div>
                          <FormField
-                            control={form.control}
-                            name={`attorneys.members.${index}.name`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Nome do Membro {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                         <FormField
-                            control={form.control}
-                            name={`attorneys.members.${index}.title`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Cargo do Membro {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                        <FormField
                             control={form.control}
                             name={`attorneys.members.${index}.bio`}
                             render={({ field }) => (
@@ -559,7 +582,7 @@ export default function AdminPage() {
                                     disabled={isSubmitting || isUploading === index}
                                     onClick={() => fileInputRefs.current[index]?.click()}
                                   >
-                                    <Upload className="h-4 w-4" />
+                                    {isUploading === index ? '...' : <Upload className="h-4 w-4" />}
                                   </Button>
                                   <input
                                     type="file"
@@ -578,7 +601,7 @@ export default function AdminPage() {
                             )}
                         />
                       </div>
-                   ))}
+                   )})}
                    <Button
                       type="button"
                       variant="outline"
@@ -840,3 +863,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
