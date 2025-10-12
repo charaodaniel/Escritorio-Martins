@@ -1,57 +1,45 @@
 
 import { NextRequest, NextResponse } from 'next/server';
+import users from '@/data/users.json';
 
 // Este middleware protege a rota /admin com autenticação básica.
 export function middleware(req: NextRequest) {
-  // Autenticação temporariamente desativada.
   if (req.nextUrl.pathname.startsWith('/admin')) {
-    return NextResponse.next();
-  }
+    // Em ambiente de desenvolvimento, se o array de usuários estiver vazio, permite o acesso.
+    if (process.env.NODE_ENV === 'development' && users.length === 0) {
+      console.warn("Autenticação do painel desabilitada. Nenhum usuário encontrado em src/data/users.json.");
+      return NextResponse.next();
+    }
+    
+    // Se não houver usuários configurados em produção, nega o acesso.
+    if (users.length === 0) {
+        return new NextResponse('Configuration error: No admin users defined.', { status: 500 });
+    }
 
-  /*
-  // CÓDIGO DE AUTENTICAÇÃO ORIGINAL - Descomente para reativar o login
-  if (req.nextUrl.pathname.startsWith('/admin')) {
     const basicAuth = req.headers.get('authorization');
-    // As variáveis de ambiente no Edge Runtime da Vercel são acessadas via process.env.
-    const adminUser = process.env.ADMIN_USER;
-    const adminPass = process.env.ADMIN_PASS;
 
-    // Se as credenciais ESTÃO configuradas no ambiente
-    if (adminUser && adminPass) {
-      if (basicAuth) {
-        const authValue = basicAuth.split(' ')[1];
-        const [user, pwd] = Buffer.from(authValue, 'base64').toString().split(':');
+    if (basicAuth) {
+      const authValue = basicAuth.split(' ')[1];
+      const [user, pwd] = Buffer.from(authValue, 'base64').toString().split(':');
 
-        if (user === adminUser && pwd === adminPass) {
-          return NextResponse.next(); // Acesso permitido
-        }
+      // Verifica se as credenciais correspondem a algum usuário no arquivo JSON
+      const isValid = users.some(
+        (u) => u.username === user && u.password === pwd
+      );
+
+      if (isValid) {
+        return NextResponse.next(); // Acesso permitido
       }
-      // Se a autenticação falhar ou não for fornecida, solicita as credenciais.
-      return new NextResponse('Authentication Required', {
-        status: 401,
-        headers: {
-          'WWW-Authenticate': 'Basic realm="Admin Area"',
-        },
-      });
     }
 
-    // Se as credenciais NÃO ESTÃO configuradas no ambiente.
-    // Em desenvolvimento, permite o acesso com um aviso no console.
-    if (process.env.NODE_ENV === 'development') {
-         console.warn("Autenticação do painel desabilitada. Defina ADMIN_USER e ADMIN_PASS em .env para proteger o painel.");
-         return NextResponse.next();
-    }
-
-    // Em produção, se as variáveis não estiverem configuradas, o acesso é negado e as credenciais são solicitadas.
-    // Isso evita o erro 404 e torna o comportamento mais seguro.
+    // Se a autenticação falhar ou não for fornecida, solicita as credenciais.
     return new NextResponse('Authentication Required', {
-        status: 401,
-        headers: {
-          'WWW-Authenticate': 'Basic realm="Admin Area"',
-        },
-      });
+      status: 401,
+      headers: {
+        'WWW-Authenticate': 'Basic realm="Admin Area"',
+      },
+    });
   }
-  */
 
   return NextResponse.next();
 }
