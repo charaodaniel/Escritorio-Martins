@@ -351,7 +351,7 @@ export default function AdminPage() {
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold font-headline mb-2 text-primary">Painel de Edição</h1>
+        <h1 className="text-3xl font-bold font-headline mb-2 text-primary">Painel de Edição de Conteúdo</h1>
         <p className="text-muted-foreground mb-8">Altere o conteúdo do site aqui. As mudanças serão refletidas após o deploy automático.</p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -933,6 +933,16 @@ export default function AdminPage() {
                 </AccordionContent>
               </AccordionItem>
 
+            </Accordion>
+
+            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
+              {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
+            </Button>
+          </form>
+        </Form>
+        
+        <div className="mt-8">
+            <Accordion type="single" collapsible className="w-full">
               {/* Seção Gerenciamento de Usuários */}
               <AccordionItem value="item-8">
                 <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
@@ -1014,19 +1024,11 @@ export default function AdminPage() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
-
             </Accordion>
-
-            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
-              {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
-            </Button>
-          </form>
-        </Form>
+        </div>
       </div>
     </div>
   );
 }
-
-    
 
     
