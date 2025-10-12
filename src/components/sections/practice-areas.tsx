@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ContentData } from "@/lib/content-loader";
 import { FileText, Users, Briefcase, Home, Shield, Scale } from "lucide-react";

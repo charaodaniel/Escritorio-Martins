@@ -47,9 +47,9 @@ export default function Testimonials({ content }: TestimonialsProps) {
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
             {content.title}
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground">
-            {content.subtitle}
-          </p>
+          <div className="mt-6 text-lg text-muted-foreground prose dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: content.subtitle }}
+          />
         </div>
         
         <div className="mt-16">
