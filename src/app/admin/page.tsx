@@ -296,7 +296,7 @@ export default function AdminPage() {
             title: "Usuários Atualizados!",
             description: "A lista de usuários foi salva com sucesso.",
         });
-        setUsers(updatedUsers);
+        await fetchUsers(); // Re-fetch users to update the list
     } catch (error: any) {
         toast({
             variant: "destructive",
@@ -309,17 +309,27 @@ export default function AdminPage() {
   };
 
   const handleAddUser = async (values: z.infer<typeof newUserSchema>) => {
-      if (users.find(u => u.username === values.username)) {
+      const currentUsersResponse = await fetch('/api/get-users');
+      if (!currentUsersResponse.ok) {
+          toast({ variant: "destructive", title: "Erro", description: "Não foi possível verificar usuários existentes." });
+          return;
+      }
+      const currentUsers = await currentUsersResponse.json();
+
+      if (currentUsers.find((u: User) => u.username === values.username)) {
           newUserForm.setError("username", { message: "Este nome de usuário já existe." });
           return;
       }
-      const newUsers = [...users, values];
+
+      const allUsersResponse = await (await fetch('/api/get-all-users-for-update')).json();
+      const newUsers = [...allUsersResponse, values];
       await handleSaveUsers(newUsers);
       newUserForm.reset();
   };
 
   const handleRemoveUser = async (usernameToRemove: string) => {
-      const updatedUsers = users.filter(u => u.username !== usernameToRemove);
+      const allUsersResponse = await (await fetch('/api/get-all-users-for-update')).json();
+      const updatedUsers = allUsersResponse.filter((u: User) => u.username !== usernameToRemove);
       await handleSaveUsers(updatedUsers);
   };
   

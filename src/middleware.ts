@@ -1,10 +1,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
-import users from '@/data/users.json';
+import { loadUsers } from '@/lib/users-loader';
 
 // Este middleware protege a rota /admin com autenticação básica.
 export function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith('/admin')) {
+    const users = loadUsers();
+    
     // Em ambiente de desenvolvimento, se o array de usuários estiver vazio, permite o acesso.
     if (process.env.NODE_ENV === 'development' && users.length === 0) {
       console.warn("Autenticação do painel desabilitada. Nenhum usuário encontrado em src/data/users.json.");
