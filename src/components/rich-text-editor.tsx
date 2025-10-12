@@ -30,7 +30,7 @@ import {
   Heading2,
   Heading3,
   Heading4,
-  Paragraph,
+  Pilcrow,
 } from "lucide-react";
 import { useCallback } from 'react';
 import { Button } from "./ui/button";
@@ -118,7 +118,7 @@ const Toolbar = ({ editor }: { editor: any }) => {
           <SelectValue placeholder="Estilo" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="paragraph"><div className="flex items-center gap-2"><Paragraph className="h-4 w-4" /> Parágrafo</div></SelectItem>
+          <SelectItem value="paragraph"><div className="flex items-center gap-2"><Pilcrow className="h-4 w-4" /> Parágrafo</div></SelectItem>
           <SelectItem value="heading-1"><div className="flex items-center gap-2"><Heading1 className="h-4 w-4" /> Título 1</div></SelectItem>
           <SelectItem value="heading-2"><div className="flex items-center gap-2"><Heading2 className="h-4 w-4" /> Título 2</div></SelectItem>
           <SelectItem value="heading-3"><div className="flex items-center gap-2"><Heading3 className="h-4 w-4" /> Título 3</div></SelectItem>
@@ -250,3 +250,5 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     </div>
   );
 }
+
+    
