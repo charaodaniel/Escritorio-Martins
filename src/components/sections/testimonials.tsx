@@ -15,6 +15,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { ContentData } from "@/lib/content-loader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Instagram, Facebook } from 'lucide-react';
+import { cn } from "@/lib/utils";
 
 
 type TestimonialsProps = {
@@ -30,14 +31,14 @@ export default function Testimonials({ content }: TestimonialsProps) {
     Autoplay({ delay: 4500, stopOnInteraction: true })
   )
 
-  const hasInstagramPosts = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
-  const hasFacebookPosts = content.facebook.enabled && content.facebook.posts && content.facebook.posts.length > 0;
+  const isInstagramVisible = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
+  const isFacebookVisible = content.facebook.enabled && content.facebook.posts && content.facebook.posts.length > 0;
 
-  if (!hasInstagramPosts && !hasFacebookPosts) {
+  if (!isInstagramVisible && !isFacebookVisible) {
     return null;
   }
 
-  const defaultTab = hasInstagramPosts ? "instagram" : "facebook";
+  const defaultTab = isInstagramVisible ? "instagram" : "facebook";
 
   return (
     <section id="testimonials" className="py-20 sm:py-28 bg-background">
@@ -53,16 +54,23 @@ export default function Testimonials({ content }: TestimonialsProps) {
         
         <div className="mt-16">
             <Tabs defaultValue={defaultTab} className="w-full">
-              <TabsList className="grid w-full max-w-sm mx-auto grid-cols-2">
-                <TabsTrigger value="instagram" disabled={!hasInstagramPosts}>
-                  <Instagram className="mr-2" /> Instagram
-                </TabsTrigger>
-                <TabsTrigger value="facebook" disabled={!hasFacebookPosts}>
-                   <Facebook className="mr-2" /> Facebook
-                </TabsTrigger>
+              <TabsList className={cn(
+                "grid w-full max-w-sm mx-auto",
+                isInstagramVisible && isFacebookVisible ? "grid-cols-2" : "grid-cols-1"
+              )}>
+                {isInstagramVisible && (
+                  <TabsTrigger value="instagram">
+                    <Instagram className="mr-2" /> Instagram
+                  </TabsTrigger>
+                )}
+                {isFacebookVisible && (
+                  <TabsTrigger value="facebook">
+                    <Facebook className="mr-2" /> Facebook
+                  </TabsTrigger>
+                )}
               </TabsList>
               
-              {hasInstagramPosts && (
+              {isInstagramVisible && (
                 <TabsContent value="instagram">
                     <Carousel
                     plugins={[instagramPlugin.current]}
@@ -89,7 +97,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
                 </TabsContent>
               )}
 
-              {hasFacebookPosts && (
+              {isFacebookVisible && (
                 <TabsContent value="facebook">
                     <Carousel
                     plugins={[facebookPlugin.current]}
