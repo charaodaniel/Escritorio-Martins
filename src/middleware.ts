@@ -4,7 +4,9 @@ import { loadUsers } from '@/lib/users-loader';
 
 // Este middleware protege a rota /admin com autenticação básica.
 export function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith('/admin')) {
+  const isAdminPath = req.nextUrl.pathname.startsWith('/admin') || req.nextUrl.pathname.startsWith('/api/get-all-users-for-update');
+
+  if (isAdminPath) {
     const users = loadUsers();
     
     // Em ambiente de desenvolvimento, se o array de usuários estiver vazio, permite o acesso.
@@ -47,5 +49,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/api/get-all-users-for-update'],
 };

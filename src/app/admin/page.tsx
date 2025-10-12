@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
-import { User } from "@/lib/users-loader";
+import type { User } from "@/lib/users-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { PlusCircle, Trash2, Upload, Instagram, Facebook, Image as ImageIcon, Users, UserPlus, LogOut } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
@@ -1069,3 +1069,4 @@ export default function AdminPage() {
     
 
     
+
