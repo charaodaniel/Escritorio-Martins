@@ -17,9 +17,9 @@ export default function Attorneys({ content }: AttorneysProps) {
           <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
             {content.title}
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground">
-            {content.subtitle}
-          </p>
+           <div className="mt-6 text-lg text-muted-foreground prose dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: content.subtitle }}
+          />
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12 justify-center">
           {content.members.map((attorney) => {
@@ -36,10 +36,7 @@ export default function Attorneys({ content }: AttorneysProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="p-6 pt-3">
-                  <p className={cn("text-muted-foreground", {
-                    "text-justify": attorney.bioFormat === "justified",
-                    "whitespace-pre-line": attorney.bioFormat === "pre-line",
-                  })}>{attorney.bio}</p>
+                  <div className="text-muted-foreground prose dark:prose-invert max-w-none text-left" dangerouslySetInnerHTML={{ __html: attorney.bio }}/>
                 </CardContent>
               </Card>
             )
@@ -49,5 +46,3 @@ export default function Attorneys({ content }: AttorneysProps) {
     </section>
   );
 }
-
-    

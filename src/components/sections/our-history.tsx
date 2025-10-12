@@ -12,11 +12,10 @@ export default function OurHistory({ content }: OurHistoryProps) {
           <h2 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
             {content.title}
           </h2>
-          <div className="mt-8 space-y-6 text-lg text-muted-foreground">
-            {content.paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
+          <div 
+            className="mt-8 text-lg text-muted-foreground prose dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: content.content }}
+          />
         </div>
       </div>
     </section>

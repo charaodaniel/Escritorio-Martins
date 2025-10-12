@@ -32,9 +32,9 @@ export default function Hero({ content, whatsappLink }: HeroProps) {
            <h1 className="font-headline text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
             {content.title}
           </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-200 sm:text-xl max-w-2xl mx-auto">
-            {content.subtitle}
-          </p>
+          <div className="mt-6 text-lg leading-8 text-gray-200 sm:text-xl max-w-2xl mx-auto prose dark:prose-invert"
+            dangerouslySetInnerHTML={{ __html: content.subtitle }}
+          />
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-x-6">
             <Button asChild size="lg" className="w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg transform transition-transform hover:scale-105">
               <Link href={whatsappLink} target="_blank" rel="noopener noreferrer">Fale Conosco no WhatsApp</Link>

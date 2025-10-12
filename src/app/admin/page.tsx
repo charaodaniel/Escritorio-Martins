@@ -22,13 +22,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { PlusCircle, Trash2, Upload, Instagram, Facebook } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import RichTextEditor from "@/components/rich-text-editor";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -59,7 +59,6 @@ const attorneyMemberSchema = z.object({
   imageUrl: z.string().refine(value => value.startsWith('/') || value.startsWith('http'), {
     message: "Deve ser um URL válido ou um caminho local (ex: /foto.jpg)."
   }),
-  bioFormat: z.enum(["default", "justified", "pre-line"]),
 });
 
 const postSchema = z.object({
@@ -97,7 +96,11 @@ const formSchema = z.object({
     subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
     features: z.array(whyUsFeatureSchema),
   }),
-  ourHistory: ourHistorySchema,
+  ourHistory: z.object({
+    enabled: z.boolean(),
+    title: z.string().min(1, "Título da história é obrigatório."),
+    content: z.string().min(1, "O conteúdo da história é obrigatório."),
+  }),
   attorneys: z.object({
     enabled: z.boolean(),
     title: z.string().min(1, "Título da seção é obrigatório."),
@@ -295,7 +298,7 @@ export default function AdminPage() {
                       <FormItem>
                         <FormLabel>Subtítulo</FormLabel>
                         <FormControl>
-                          <Textarea {...field} disabled={isSubmitting} />
+                          <RichTextEditor {...field} disabled={isSubmitting} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -330,7 +333,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -355,7 +358,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Descrição da Área {index + 1}</FormLabel>
-                                <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -391,7 +394,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -416,7 +419,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Descrição do Diferencial {index + 1}</FormLabel>
-                                <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -446,20 +449,17 @@ export default function AdminPage() {
                       </FormItem>
                     )}
                   />
-                  {form.getValues().ourHistory.paragraphs.map((_, index) => (
-                     <FormField
-                        key={index}
-                        control={form.control}
-                        name={`ourHistory.paragraphs.${index}`}
-                        render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Parágrafo {index + 1}</FormLabel>
-                            <FormControl><Textarea {...field} rows={4} disabled={isSubmitting} /></FormControl>
-                            <FormMessage />
-                        </FormItem>
-                        )}
-                    />
-                  ))}
+                   <FormField
+                    control={form.control}
+                    name="ourHistory.content"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Conteúdo</FormLabel>
+                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </AccordionContent>
               </AccordionItem>
 
@@ -489,7 +489,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -536,35 +536,10 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Bio do Membro {index + 1}</FormLabel>
-                                <FormControl><Textarea {...field} rows={6} disabled={isSubmitting || isUploading === index} /></FormControl>
+                                <FormControl><RichTextEditor {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name={`attorneys.members.${index}.bioFormat`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Formatação da Bio</FormLabel>
-                              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                  <SelectTrigger disabled={isSubmitting || isUploading === index}>
-                                    <SelectValue placeholder="Selecione um estilo de formatação" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                  <SelectItem value="default">Padrão (Parágrafo Simples)</SelectItem>
-                                  <SelectItem value="justified">Justificado</SelectItem>
-                                  <SelectItem value="pre-line">Com Quebras de Linha</SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <FormDescription>
-                                Escolha como o texto da biografia será exibido.
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
                         />
                         <FormField
                             control={form.control}
@@ -613,8 +588,7 @@ export default function AdminPage() {
                         name: "", 
                         title: "", 
                         bio: "", 
-                        imageUrl: "",
-                        bioFormat: "default"
+                        imageUrl: ""
                       })}
                       disabled={isSubmitting}
                     >
@@ -650,7 +624,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><Textarea {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -766,7 +740,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Endereço Completo</FormLabel>
-                        <FormControl><Textarea {...field} rows={3} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -864,5 +838,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
