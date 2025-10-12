@@ -32,7 +32,7 @@ export default function Contact({ content }: ContactProps) {
               <div className="space-y-5 text-muted-foreground">
                  <div className="flex items-start gap-4">
                     <MapPin className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <span>{content.address}</span>
+                    <div className="text-muted-foreground prose dark:prose-invert max-w-none text-base" dangerouslySetInnerHTML={{ __html: content.address }}/>
                 </div>
                 <div className="flex items-center gap-4">
                     <Mail className="h-5 w-5 text-accent" />

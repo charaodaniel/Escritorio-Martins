@@ -76,7 +76,7 @@ export default function Footer({ content }: FooterProps) {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-accent" />
-                <span className="text-muted-foreground">{content.address}</span>
+                <div className="text-muted-foreground prose dark:prose-invert max-w-none text-sm" dangerouslySetInnerHTML={{ __html: content.address }}/>
               </li>
             </ul>
           </div>
