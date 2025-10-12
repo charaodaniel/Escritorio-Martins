@@ -1,7 +1,15 @@
 
 [
   {
-    "username": "escritorio_vieira_martins",
+    "username": "administrador",
+    "password": "123456789"
+  },
+  {
+    "username": "gilberto",
+    "password": "123456789"
+  },
+  {
+    "username": "eduardo",
     "password": "123456789"
   }
 ]
