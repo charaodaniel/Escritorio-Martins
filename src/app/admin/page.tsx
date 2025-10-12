@@ -28,10 +28,11 @@ import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import { User } from "@/lib/users-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload, Instagram, Facebook, Image as ImageIcon, Users, UserPlus } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Facebook, Image as ImageIcon, Users, UserPlus, LogOut } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -132,6 +133,7 @@ const newUserSchema = z.object({
 
 export default function AdminPage() {
   const { toast } = useToast();
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState<number | null>(null);
   const [initialData, setInitialData] = useState<ContentData | null>(null);
@@ -320,6 +322,23 @@ export default function AdminPage() {
       const updatedUsers = users.filter(u => u.username !== usernameToRemove);
       await handleSaveUsers(updatedUsers);
   };
+  
+  const handleLogout = async () => {
+    try {
+      // Faz uma requisição com credenciais inválidas para forçar o browser a limpar o cache de autenticação
+      await fetch('/api/auth-required', {
+        headers: {
+          'Authorization': 'Basic ' + btoa('logout:logout')
+        }
+      });
+      // Redireciona para a página inicial
+      router.push('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Mesmo se falhar, tenta redirecionar
+      router.push('/');
+    }
+  };
 
 
   if (!initialData) {
@@ -351,8 +370,15 @@ export default function AdminPage() {
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold font-headline mb-2 text-primary">Painel de Edição de Conteúdo</h1>
+        <div className="flex justify-between items-center mb-2">
+            <h1 className="text-3xl font-bold font-headline text-primary">Painel de Edição de Conteúdo</h1>
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Sair
+            </Button>
+        </div>
         <p className="text-muted-foreground mb-8">Altere o conteúdo do site aqui. As mudanças serão refletidas após o deploy automático.</p>
+        
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
@@ -934,7 +960,6 @@ export default function AdminPage() {
               </AccordionItem>
 
             </Accordion>
-
             <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
               {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
             </Button>
@@ -1030,5 +1055,7 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
 
     
