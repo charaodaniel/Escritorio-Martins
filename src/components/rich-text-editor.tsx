@@ -26,6 +26,11 @@ import {
   Redo,
   RemoveFormatting,
   Palette,
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+  Paragraph,
 } from "lucide-react";
 import { useCallback } from 'react';
 import { Button } from "./ui/button";
@@ -62,6 +67,24 @@ const Toolbar = ({ editor }: { editor: any }) => {
   }, [editor]);
 
   const currentColor = editor.getAttributes('textStyle').color || '';
+  
+  const handleTextStyleChange = (value: string) => {
+    if (value === 'paragraph') {
+      editor.chain().focus().setParagraph().run();
+    } else {
+      const level = parseInt(value.replace('heading-', ''), 10) as 1 | 2 | 3 | 4;
+      editor.chain().focus().toggleHeading({ level }).run();
+    }
+  };
+
+  const getActiveTextStyle = () => {
+    if (editor.isActive('paragraph')) return 'paragraph';
+    if (editor.isActive('heading', { level: 1 })) return 'heading-1';
+    if (editor.isActive('heading', { level: 2 })) return 'heading-2';
+    if (editor.isActive('heading', { level: 3 })) return 'heading-3';
+    if (editor.isActive('heading', { level: 4 })) return 'heading-4';
+    return 'paragraph';
+  };
 
   const toolbarButtons = [
     { command: () => editor.chain().focus().toggleBold().run(), icon: Bold, isActive: editor.isActive('bold'), label: "Negrito" },
@@ -86,6 +109,23 @@ const Toolbar = ({ editor }: { editor: any }) => {
 
   return (
     <div className="border border-input rounded-t-md p-2 flex flex-wrap gap-1 bg-background">
+      <Select
+        defaultValue={getActiveTextStyle()}
+        onValueChange={handleTextStyleChange}
+        value={getActiveTextStyle()}
+      >
+        <SelectTrigger className="w-[150px] h-8 text-xs">
+          <SelectValue placeholder="Estilo" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="paragraph"><div className="flex items-center gap-2"><Paragraph className="h-4 w-4" /> Parágrafo</div></SelectItem>
+          <SelectItem value="heading-1"><div className="flex items-center gap-2"><Heading1 className="h-4 w-4" /> Título 1</div></SelectItem>
+          <SelectItem value="heading-2"><div className="flex items-center gap-2"><Heading2 className="h-4 w-4" /> Título 2</div></SelectItem>
+          <SelectItem value="heading-3"><div className="flex items-center gap-2"><Heading3 className="h-4 w-4" /> Título 3</div></SelectItem>
+          <SelectItem value="heading-4"><div className="flex items-center gap-2"><Heading4 className="h-4 w-4" /> Título 4</div></SelectItem>
+        </SelectContent>
+      </Select>
+      
       <Select
         defaultValue={editor.getAttributes('textStyle').fontFamily || 'PT Sans'}
         onValueChange={(value) => value && editor.chain().focus().setFontFamily(value).run()}
@@ -174,8 +214,10 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-         // Desativar underline do starter-kit para usar a extensão dedicada
         underline: false,
+        heading: {
+          levels: [1, 2, 3, 4],
+        },
       }),
       TextStyle,
       FontFamily,
@@ -196,7 +238,7 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     editable: !disabled,
     editorProps: {
       attributes: {
-        class: "prose dark:prose-invert max-w-none w-full min-h-[200px] rounded-b-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 prose-p:my-2 prose-headings:my-4 prose-ul:my-2 prose-ol:my-2",
+        class: "prose dark:prose-invert max-w-none w-full min-h-[200px] rounded-b-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 prose-p:my-2 prose-h1:my-4 prose-h2:my-4 prose-h3:my-4 prose-h4:my-4 prose-ul:my-2 prose-ol:my-2",
       },
     },
   });
