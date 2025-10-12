@@ -59,6 +59,7 @@ const attorneyMemberSchema = z.object({
   imageUrl: z.string().refine(value => value.startsWith('/') || value.startsWith('http'), {
     message: "Deve ser um URL válido ou um caminho local (ex: /foto.jpg)."
   }),
+  bioFormat: z.enum(['default', 'justify', 'pre-line']).default('default'),
 });
 
 const postSchema = z.object({
@@ -298,7 +299,7 @@ export default function AdminPage() {
                       <FormItem>
                         <FormLabel>Subtítulo</FormLabel>
                         <FormControl>
-                          <RichTextEditor {...field} disabled={isSubmitting} />
+                          <RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -333,7 +334,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -358,7 +359,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Descrição da Área {index + 1}</FormLabel>
-                                <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -394,7 +395,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -419,7 +420,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Descrição do Diferencial {index + 1}</FormLabel>
-                                <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                                <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -455,7 +456,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Conteúdo</FormLabel>
-                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -489,7 +490,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -536,7 +537,7 @@ export default function AdminPage() {
                             render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Bio do Membro {index + 1}</FormLabel>
-                                <FormControl><RichTextEditor {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
+                                <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -588,7 +589,8 @@ export default function AdminPage() {
                         name: "", 
                         title: "", 
                         bio: "", 
-                        imageUrl: ""
+                        imageUrl: "",
+                        bioFormat: "default"
                       })}
                       disabled={isSubmitting}
                     >
@@ -624,7 +626,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -740,7 +742,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Endereço Completo</FormLabel>
-                        <FormControl><RichTextEditor {...field} disabled={isSubmitting} /></FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}

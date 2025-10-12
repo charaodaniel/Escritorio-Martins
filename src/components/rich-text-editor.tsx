@@ -1,9 +1,13 @@
+
 "use client";
 
 import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
+import FontFamily from '@tiptap/extension-font-family';
+import TextStyle from '@tiptap/extension-text-style';
+
 import {
   Bold,
   Italic,
@@ -23,6 +27,7 @@ import {
 import { useCallback } from 'react';
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 const Toolbar = ({ editor }: { editor: any }) => {
   if (!editor) {
@@ -67,6 +72,18 @@ const Toolbar = ({ editor }: { editor: any }) => {
 
   return (
     <div className="border border-input rounded-t-md p-2 flex flex-wrap gap-1 bg-background">
+      <Select
+        defaultValue={editor.getAttributes('textStyle').fontFamily || 'PT Sans'}
+        onValueChange={(value) => editor.chain().focus().setFontFamily(value).run()}
+      >
+        <SelectTrigger className="w-[150px]">
+          <SelectValue placeholder="Fonte" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="PT Sans">PT Sans</SelectItem>
+          <SelectItem value="Playfair Display">Playfair Display</SelectItem>
+        </SelectContent>
+      </Select>
       {toolbarButtons.map(({ command, icon: Icon, isActive, label }) => (
         <Button
           key={label}
@@ -97,6 +114,8 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
       StarterKit.configure({
         // starter kit configuration
       }),
+      TextStyle,
+      FontFamily,
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -114,7 +133,7 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
       attributes: {
         class: cn(
           "prose dark:prose-invert max-w-none w-full min-h-[200px] rounded-b-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          "prose-p:my-2 prose-headings:my-4"
+          "prose-p:my-2 prose-headings:my-4 prose-ul:my-2 prose-ol:my-2"
         ),
       },
     },

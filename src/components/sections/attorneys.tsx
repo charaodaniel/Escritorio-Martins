@@ -9,6 +9,17 @@ type AttorneysProps = {
   content: ContentData['attorneys'];
 }
 
+const getBioFormatClass = (format?: string) => {
+  switch (format) {
+    case 'justify':
+      return 'text-justify';
+    case 'pre-line':
+      return 'whitespace-pre-line';
+    default:
+      return '';
+  }
+};
+
 export default function Attorneys({ content }: AttorneysProps) {
   return (
     <section id="attorneys" className="py-20 sm:py-28 bg-card">
@@ -23,6 +34,7 @@ export default function Attorneys({ content }: AttorneysProps) {
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12 justify-center">
           {content.members.map((attorney) => {
+            const bioClass = getBioFormatClass(attorney.bioFormat);
             return (
               <Card key={attorney.id} className="overflow-hidden text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-2 max-w-sm mx-auto">
                 <CardHeader className="p-6 items-center bg-background">
@@ -36,7 +48,7 @@ export default function Attorneys({ content }: AttorneysProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="p-6 pt-3">
-                  <div className="text-muted-foreground prose dark:prose-invert max-w-none text-left" dangerouslySetInnerHTML={{ __html: attorney.bio }}/>
+                  <div className={cn("text-muted-foreground prose dark:prose-invert max-w-none text-left", bioClass)} dangerouslySetInnerHTML={{ __html: attorney.bio }}/>
                 </CardContent>
               </Card>
             )
