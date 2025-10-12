@@ -9,22 +9,22 @@ import {
 } from "@/components/ui/carousel";
 import { ContentData } from "@/lib/content-loader";
 
-const icons = {
-  Smile,
-  MapPin,
-  ShieldCheck,
-  Users
+const IconComponent = ({ title }: { title: string }) => {
+  const className = "h-10 w-10 text-primary";
+  if (title === "Atendimento Personalizado") {
+    return <Smile className={className} />;
+  }
+  if (title === "Experiência Local") {
+    return <MapPin className={className} />;
+  }
+  if (title === "Suporte Ágil") {
+    return <ShieldCheck className={className} />;
+  }
+  if (title === "Ética e Transparência") {
+    return <Users className={className} />;
+  }
+  return <Smile className={className} />;
 };
-
-const getIcon = (title: string) => {
-    switch (title) {
-        case "Atendimento Personalizado": return icons.Smile;
-        case "Experiência Local": return icons.MapPin;
-        case "Suporte Ágil": return icons.ShieldCheck;
-        case "Ética e Transparência": return icons.Users;
-        default: return icons.Smile;
-    }
-}
 
 type WhyUsProps = {
   content: ContentData['whyUs'];
@@ -38,9 +38,10 @@ export default function WhyUs({ content }: WhyUsProps) {
           <h2 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">
             {content.title}
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground">
-            {content.subtitle}
-          </p>
+          <div
+            className="mt-6 text-lg text-muted-foreground prose dark:prose-invert max-w-none"
+            dangerouslySetInnerHTML={{ __html: content.subtitle }}
+          />
         </div>
         <Carousel
           opts={{
@@ -51,19 +52,18 @@ export default function WhyUs({ content }: WhyUsProps) {
         >
           <CarouselContent>
             {content.features.map((feature, index) => {
-              const Icon = getIcon(feature.title);
               return (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-1 h-full">
                   <Card className="text-center bg-transparent border-0 shadow-none flex flex-col h-full">
                     <CardHeader className="flex justify-center items-center mb-2">
                       <div className="bg-background rounded-full p-5">
-                        <Icon className="h-10 w-10 text-primary" />
+                        <IconComponent title={feature.title} />
                       </div>
                     </CardHeader>
                     <CardContent className="flex-grow">
                       <CardTitle className="text-xl font-bold font-headline mb-3 text-primary">{feature.title}</CardTitle>
-                      <p className="text-muted-foreground">{feature.description}</p>
+                      <div className="text-muted-foreground prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: feature.description }}/>
                     </CardContent>
                   </Card>
                 </div>

@@ -2,27 +2,30 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ContentData } from "@/lib/content-loader";
 import { FileText, Users, Briefcase, Home, Shield, Scale } from "lucide-react";
 
-const icons = {
-  Scale,
-  Users,
-  Briefcase,
-  Shield,
-  Home,
-  FileText,
-};
-
-const getIcon = (title: string) => {
-    switch (title) {
-        case "Direito Cível": return icons.Scale;
-        case "Família e Sucessões": return icons.Users;
-        case "Direito Trabalhista": return icons.Briefcase;
-        case "Direito do Consumidor": return icons
-    }
-}
-
 type PracticeAreasProps = {
   content: ContentData['practiceAreas'];
 }
+
+const IconComponent = ({ title }: { title: string }) => {
+  const className = "h-8 w-8 text-primary mr-4";
+  if (title === "Direito Cível") {
+    return <Scale className={className} />;
+  }
+  if (title === "Família e Sucessões") {
+    return <Users className={className} />;
+  }
+  if (title === "Direito Trabalhista") {
+    return <Briefcase className={className} />;
+  }
+  if (title === "Direito do Consumidor") {
+    return <Shield className={className} />;
+  }
+  if (title === "Direito Imobiliário") {
+    return <Home className={className} />;
+  }
+  return <FileText className={className} />;
+};
+
 
 export default function PracticeAreas({ content }: PracticeAreasProps) {
   return (
@@ -38,12 +41,10 @@ export default function PracticeAreas({ content }: PracticeAreasProps) {
         </div>
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {content.areas.map((area, index) => {
-            const Icon = getIcon(area.title) || icons.FileText;
-
             return (
               <Card key={index} className="overflow-hidden">
                 <CardHeader className="p-6 items-center">
-                  <Icon className="h-8 w-8 text-primary mr-4" />
+                  <IconComponent title={area.title} />
                   <CardTitle className="font-headline text-2xl">{area.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
