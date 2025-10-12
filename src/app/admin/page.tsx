@@ -26,10 +26,12 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
+import { User } from "@/lib/users-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload, Instagram, Facebook, Image as ImageIcon } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Facebook, Image as ImageIcon, Users, UserPlus } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -122,17 +124,31 @@ const formSchema = z.object({
   contactInfo: contactInfoSchema,
 });
 
+const newUserSchema = z.object({
+  username: z.string().min(3, "O nome de usuário deve ter pelo menos 3 caracteres."),
+  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres."),
+});
+
 
 export default function AdminPage() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState<number | null>(null);
   const [initialData, setInitialData] = useState<ContentData | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || undefined,
+  });
+
+  const newUserForm = useForm<z.infer<typeof newUserSchema>>({
+    resolver: zodResolver(newUserSchema),
+    defaultValues: {
+        username: "",
+        password: "",
+    },
   });
 
   const { fields: attorneyFields, append: appendAttorney, remove: removeAttorney } = useFieldArray({
@@ -149,6 +165,24 @@ export default function AdminPage() {
     control: form.control,
     name: "testimonials.facebook.posts",
   });
+
+  async function fetchUsers() {
+    try {
+      const response = await fetch('/api/get-users');
+      if (!response.ok) {
+        throw new Error('Falha ao carregar usuários.');
+      }
+      const userList = await response.json();
+      setUsers(userList);
+    } catch (error) {
+      console.error("Erro ao buscar usuários:", error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao Carregar Usuários",
+        description: "Não foi possível carregar a lista de usuários.",
+      });
+    }
+  }
 
   useEffect(() => {
     async function fetchContent() {
@@ -171,6 +205,7 @@ export default function AdminPage() {
     }
 
     fetchContent();
+    fetchUsers();
   }, [form, toast]);
 
 
@@ -240,6 +275,52 @@ export default function AdminPage() {
       }
     }
   };
+
+  const handleSaveUsers = async (updatedUsers: User[]) => {
+    setIsSubmitting(true);
+    try {
+        const response = await fetch("/api/save-users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedUsers),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Falha ao salvar os usuários.");
+        }
+
+        toast({
+            title: "Usuários Atualizados!",
+            description: "A lista de usuários foi salva com sucesso.",
+        });
+        setUsers(updatedUsers);
+    } catch (error: any) {
+        toast({
+            variant: "destructive",
+            title: "Erro ao Salvar Usuários",
+            description: error.message || "Não foi possível salvar as alterações.",
+        });
+    } finally {
+        setIsSubmitting(false);
+    }
+  };
+
+  const handleAddUser = async (values: z.infer<typeof newUserSchema>) => {
+      if (users.find(u => u.username === values.username)) {
+          newUserForm.setError("username", { message: "Este nome de usuário já existe." });
+          return;
+      }
+      const newUsers = [...users, values];
+      await handleSaveUsers(newUsers);
+      newUserForm.reset();
+  };
+
+  const handleRemoveUser = async (usernameToRemove: string) => {
+      const updatedUsers = users.filter(u => u.username !== usernameToRemove);
+      await handleSaveUsers(updatedUsers);
+  };
+
 
   if (!initialData) {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
@@ -852,10 +933,92 @@ export default function AdminPage() {
                 </AccordionContent>
               </AccordionItem>
 
+              {/* Seção Gerenciamento de Usuários */}
+              <AccordionItem value="item-8">
+                <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
+                <AccordionContent className="space-y-6 pt-4">
+                  
+                  {/* Lista de Usuários */}
+                  <div className="p-4 border rounded-md bg-background">
+                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Usuários Cadastrados</h3>
+                    <div className="space-y-2">
+                        {users.map(user => (
+                            <div key={user.username} className="flex items-center justify-between p-2 rounded-md bg-muted/50">
+                                <span className="text-sm font-medium">{user.username}</span>
+                                {users.length > 1 ? (
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button variant="destructive" size="icon" className="h-7 w-7" disabled={isSubmitting}>
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Esta ação não pode ser desfeita. Isso removerá permanentemente o usuário <span className="font-bold">{user.username}</span>.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                            <AlertDialogAction onClick={() => handleRemoveUser(user.username)}>Remover</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                                ) : (
+                                   <Button variant="destructive" size="icon" className="h-7 w-7" disabled={true} title="Não é possível remover o último usuário.">
+                                     <Trash2 className="h-4 w-4" />
+                                   </Button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  {/* Adicionar Novo Usuário */}
+                  <div className="p-4 border rounded-md bg-background">
+                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Usuário</h3>
+                    <Form {...newUserForm}>
+                      <form onSubmit={newUserForm.handleSubmit(handleAddUser)} className="space-y-4">
+                        <FormField
+                          control={newUserForm.control}
+                          name="username"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Nome de Usuário</FormLabel>
+                              <FormControl>
+                                <Input {...field} disabled={isSubmitting} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={newUserForm.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Senha</FormLabel>
+                              <FormControl>
+                                <Input type="password" {...field} disabled={isSubmitting} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Button type="submit" variant="outline" disabled={isSubmitting}>
+                           <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Usuário
+                        </Button>
+                      </form>
+                    </Form>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
             </Accordion>
 
             <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
-              {isSubmitting ? "Salvando..." : "Salvar Alterações"}
+              {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
             </Button>
           </form>
         </Form>
