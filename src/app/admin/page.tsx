@@ -95,7 +95,7 @@ const formSchema = z.object({
   }),
   attorneys: z.object({
     enabled: z.boolean(),
-    title: z-string().min(1, "Título da seção é obrigatório."),
+    title: z.string().min(1, "Título da seção é obrigatório."),
     subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
     members: z.array(attorneyMemberSchema),
   }),
@@ -1005,5 +1005,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
