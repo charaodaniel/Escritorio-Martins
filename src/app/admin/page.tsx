@@ -22,7 +22,7 @@ import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import type { User } from "@/lib/users-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut, Bot, CalendarClock, Play } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -61,11 +61,6 @@ const postSchema = z.object({
 const socialFeedSchema = z.object({
     enabled: z.boolean(),
     posts: z.array(postSchema),
-});
-
-const automationSchema = z.object({
-  enabled: z.boolean(),
-  schedule: z.array(z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, "Formato de hora inválido (HH:mm).")).max(2, "Você pode agendar no máximo 2 horários."),
 });
 
 const contactInfoSchema = z.object({
@@ -110,7 +105,6 @@ const formSchema = z.object({
       subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
       instagram: socialFeedSchema,
   }),
-  automation: automationSchema,
   contact: z.object({
     enabled: z.boolean(),
   }),
@@ -127,7 +121,6 @@ export default function AdminPage() {
   const { toast } = useToast();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isScraping, setIsScraping] = useState(false);
   const [isUploading, setIsUploading] = useState<number | null>(null);
   const [initialData, setInitialData] = useState<ContentData | null>(null);
   const [users, setUsers] = useState<User[]>([]);
@@ -219,11 +212,9 @@ export default function AdminPage() {
         throw new Error(errorData.message || "Falha ao salvar o conteúdo.");
       }
       
-      await fetch('/api/reschedule-scraper');
-
       toast({
         title: "Conteúdo Salvo com Sucesso!",
-        description: "As alterações foram enviadas e o site será atualizado em breve. O agendador da automação foi reiniciado.",
+        description: "As alterações foram enviadas e o site será atualizado em breve.",
       });
 
     } catch (error: any) {
@@ -344,41 +335,11 @@ export default function AdminPage() {
     }
   };
 
-  const handleRunScraper = async () => {
-    setIsScraping(true);
-    try {
-      const response = await fetch('/api/run-scraper');
-      const result = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(result.message || 'Falha ao executar a automação.');
-      }
-      
-      toast({
-        title: "Automação Concluída!",
-        description: result.message,
-      });
-
-      // Recarrega o conteúdo do painel para exibir os novos posts
-      await fetchContent(true);
-
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Erro na Automação",
-        description: error.message,
-      });
-    } finally {
-      setIsScraping(false);
-    }
-  };
-
-
   if (!initialData) {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
   }
   
-  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled` | 'testimonials.instagram.enabled' | 'automation.enabled', isSubmitting: boolean }) => (
+  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled` | 'testimonials.instagram.enabled', isSubmitting: boolean }) => (
     <FormField
       control={form.control}
       name={name}
@@ -823,7 +784,7 @@ export default function AdminPage() {
                                     <FormControl>
                                       <Textarea {...field} disabled={isSubmitting} placeholder='Cole o código de incorporação aqui...' className="min-h-[160px] font-mono text-xs" />
                                     </FormControl>
-                                    <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação, selecione 'Incorporar' e cole o código aqui.</FormDescription>
+                                    <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação, selecione 'Incorporar' e cole o código aqui. A legenda será removida automaticamente.</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                                 )}
@@ -947,63 +908,6 @@ export default function AdminPage() {
                 </AccordionContent>
               </AccordionItem>
 
-              {/* Seção Automação */}
-               <AccordionItem value="item-9">
-                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Automação do Instagram</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                        <SectionToggle name="automation.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                 </div>
-                <AccordionContent className="space-y-6 pt-4">
-                  <div className="p-4 border rounded-md bg-background">
-                    <h3 className="font-semibold text-lg flex items-center gap-2"><Bot className="h-5 w-5" /> Controle da Automação</h3>
-                    <p className="text-sm text-muted-foreground my-4">
-                      A automação busca as publicações mais recentes do Instagram e as adiciona ao site. Você pode executá-la manualmente ou agendar para rodar automaticamente.
-                    </p>
-                    <Button onClick={handleRunScraper} disabled={isScraping || isSubmitting} className="w-full sm:w-auto">
-                      <Play className="mr-2 h-4 w-4" />
-                      {isScraping ? 'Buscando publicações...' : 'Executar Agora'}
-                    </Button>
-                  </div>
-
-                  <div className="p-4 border rounded-md bg-background">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><CalendarClock className="h-5 w-5" /> Agendamento</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Defina até dois horários (formato HH:mm) para a automação ser executada todos os dias. Salve o conteúdo principal para aplicar as mudanças de agendamento.
-                    </p>
-                     <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                            control={form.control}
-                            name="automation.schedule.0"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Horário 1</FormLabel>
-                                <FormControl>
-                                    <Input {...field} disabled={isSubmitting} placeholder="09:00" />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                         <FormField
-                            control={form.control}
-                            name="automation.schedule.1"
-                            render={({ field }) => (
-                                <FormItem>
-                                <FormLabel>Horário 2</FormLabel>
-                                <FormControl>
-                                    <Input {...field} disabled={isSubmitting} placeholder="21:00" />
-                                </FormControl>
-                                <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-
               {/* Seção Gerenciamento de Usuários */}
               <AccordionItem value="item-8">
                 <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
@@ -1096,3 +1000,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    

@@ -16,6 +16,13 @@ type TestimonialsProps = {
   content: ContentData['testimonials'];
 }
 
+// Função para remover o atributo data-instgrm-captioned do código de embed
+const getEmbedCodeWithoutCaption = (embedCode: string): string => {
+  if (!embedCode) return "";
+  return embedCode.replace(/data-instgrm-captioned/g, '');
+};
+
+
 export default function Testimonials({ content }: TestimonialsProps) {
   const instagramPlugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
@@ -73,7 +80,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
                   <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/2 lg:basis-1/3 flex justify-center">
                     <div 
                       className="p-2 w-full max-w-sm"
-                      dangerouslySetInnerHTML={{ __html: post.embedCode }}
+                      dangerouslySetInnerHTML={{ __html: getEmbedCodeWithoutCaption(post.embedCode) }}
                     />
                   </CarouselItem>
                 ))}

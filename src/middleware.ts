@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { loadUsers } from '@/lib/users-loader';
 
 // Rotas que exigem autenticação
-const protectedRoutes = ['/admin', '/api/get-all-users-for-update', '/api/run-scraper', '/api/reschedule-scraper'];
+const protectedRoutes = ['/admin', '/api/get-all-users-for-update'];
 
 // Este middleware protege as rotas administrativas com autenticação básica.
 export function middleware(req: NextRequest) {
@@ -53,5 +53,7 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   // O matcher precisa cobrir todas as rotas protegidas
-  matcher: ['/admin/:path*', '/api/get-all-users-for-update/:path*', '/api/run-scraper/:path*', '/api/reschedule-scraper/:path*'],
+  matcher: ['/admin/:path*', '/api/get-all-users-for-update/:path*'],
 };
+
+    
