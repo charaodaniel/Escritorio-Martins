@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import InstagramEmbed from "@/components/instagram-embed";
+import InstagramImage from "@/components/instagram-image";
 import FacebookEmbed from "@/components/facebook-embed";
 import Autoplay from "embla-carousel-autoplay";
 import { ContentData } from "@/lib/content-loader";
@@ -78,21 +78,21 @@ export default function Testimonials({ content }: TestimonialsProps) {
                         align: "start",
                         loop: true,
                     }}
-                    className="w-full max-w-2xl mx-auto mt-8"
+                    className="w-full max-w-5xl mx-auto mt-8"
                     onMouseEnter={instagramPlugin.current.stop}
                     onMouseLeave={instagramPlugin.current.reset}
                     >
                     <CarouselContent>
                         {content.instagram.posts.map((post, index) => (
-                        <CarouselItem key={index} className="flex justify-center">
-                            <div className="p-1">
-                            <InstagramEmbed permalink={post.permalink} />
+                        <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center">
+                            <div className="p-2 w-full max-w-sm">
+                              <InstagramImage url={post.permalink} />
                             </div>
                         </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious className="-left-4 hidden sm:flex" />
-                    <CarouselNext className="-right-4 hidden sm:flex" />
+                    <CarouselPrevious className="-left-4 hidden xl:flex" />
+                    <CarouselNext className="-right-4 hidden xl:flex" />
                     </Carousel>
                 </TabsContent>
               )}
@@ -113,7 +113,7 @@ export default function Testimonials({ content }: TestimonialsProps) {
                         {content.facebook.posts.map((post, index) => (
                         <CarouselItem key={index} className="flex justify-center">
                             <div className="p-1">
-                            <FacebookEmbed permalink={post.permalink} />
+                              <FacebookEmbed permalink={post.permalink} />
                             </div>
                         </CarouselItem>
                         ))}

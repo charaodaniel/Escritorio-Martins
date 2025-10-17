@@ -39,6 +39,12 @@ const nextConfig: NextConfig = {
         hostname: 'scontent.furg2-1.fna.fbcdn.net',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'scontent-*.cdninstagram.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
