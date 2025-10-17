@@ -1,3 +1,4 @@
+
 {
   "hero": {
     "title": "Escritório Vieira & Martins Advogados",
@@ -117,5 +118,18 @@
     "openingHours": "Seg a Sex: 09:00 - 12:00 e 14:00 - 18:00",
     "facebookUrl": "https://www.facebook.com/profile.php?id=100090526663540",
     "instagramUrl": "https://www.instagram.com/vieiraemartinsadv/"
+  },
+  "scraper": {
+    "enabled": true,
+    "schedules": [
+      {
+        "time": "09:00"
+      },
+      {
+        "time": "21:00"
+      }
+    ]
   }
 }
+
+    

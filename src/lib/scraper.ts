@@ -1,15 +1,31 @@
+
 import puppeteer from 'puppeteer';
 import fs from 'fs/promises';
 import path from 'path';
 import { loadContent, ContentData } from './content-loader';
 
 const INSTAGRAM_PROFILE_URL = 'https://www.instagram.com/vieiraemartinsadv/';
-const MAX_POSTS = 12; // Coleta as 12 publicações mais recentes
+const MAX_POSTS = 12;
 
-// Função para gerar o código de incorporação (blockquote) a partir de uma URL de post
+// Função para gerar o código de incorporação a partir de uma URL de post
 const getEmbedCode = (postUrl: string): string => {
-  return `<blockquote class="instagram-media" data-instgrm-permalink="${postUrl}?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"><a href="${postUrl}?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"></div></blockquote>`;
+    // Garante que a URL não tenha parâmetros de rastreamento antes de criar o permalink
+    const cleanUrl = new URL(postUrl);
+    cleanUrl.search = ''; // Remove query params
+    const permalink = `${cleanUrl.toString()}?utm_source=ig_embed&amp;utm_campaign=loading`;
+
+    return `<blockquote class="instagram-media" data-instgrm-permalink="${permalink}" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"><a href="${permalink}" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"></div></blockquote>`;
 };
+
+// Função para extrair o permalink de um embedCode
+const getPermalinkFromEmbed = (embedCode: string): string | null => {
+    const match = embedCode.match(/data-instgrm-permalink="([^"]+)"/);
+    if (!match) return null;
+    const url = new URL(match[1]);
+    url.search = ''; // Limpa os parâmetros de busca para uma comparação mais limpa
+    return url.toString();
+};
+
 
 export async function runScraper() {
   console.log('🚀 Iniciando scraper do Instagram...');
@@ -17,8 +33,8 @@ export async function runScraper() {
 
   try {
     browser = await puppeteer.launch({
-        headless: true, // "new" é a opção recomendada
-        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Argumentos importantes para rodar em ambientes de servidor/docker
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     
     const page = await browser.newPage();
@@ -29,8 +45,6 @@ export async function runScraper() {
 
     console.log('Página carregada. Coletando links das publicações...');
 
-    // O seletor para os links das publicações pode mudar. Este é um exemplo.
-    // O seletor `a[href^="/p/"]` pega todos os links que começam com /p/, que são os posts.
     const postLinks = await page.evaluate((max) => {
         const links = Array.from(document.querySelectorAll('a[href^="/p/"]'));
         const uniqueLinks = new Set(links.map(a => (a as HTMLAnchorElement).href));
@@ -42,17 +56,35 @@ export async function runScraper() {
       return;
     }
 
-    console.log(`✅ ${postLinks.length} links de publicações encontrados.`);
+    console.log(`✅ ${postLinks.length} links de publicações recentes encontrados.`);
 
-    const newPosts = postLinks.map(link => ({
-      embedCode: getEmbedCode(link),
-    }));
-
-    // Carrega o arquivo de conteúdo atual
     const contentFilePath = path.join(process.cwd(), 'src', 'data', 'content.json');
     const currentContent = loadContent();
+    
+    const existingPermalinks = new Set(
+        currentContent.testimonials.instagram.posts.map(p => getPermalinkFromEmbed(p.embedCode)).filter(Boolean)
+    );
 
-    // Atualiza apenas a parte das publicações do Instagram
+    const newPosts = postLinks
+      .map(link => {
+          const cleanUrl = new URL(link);
+          cleanUrl.search = '';
+          return { permalink: cleanUrl.toString(), embedCode: getEmbedCode(link) };
+      })
+      .filter(post => !existingPermalinks.has(post.permalink));
+
+    if (newPosts.length === 0) {
+        console.log('✅ Nenhuma nova publicação para adicionar. O conteúdo já está atualizado.');
+        return;
+    }
+
+    console.log(`✨ Adicionando ${newPosts.length} novas publicações.`);
+    
+    const updatedPosts = [
+        ...newPosts.map(p => ({ embedCode: p.embedCode })),
+        ...currentContent.testimonials.instagram.posts
+    ];
+    
     const updatedContent: ContentData = {
       ...currentContent,
       testimonials: {
@@ -60,12 +92,11 @@ export async function runScraper() {
         instagram: {
           ...currentContent.testimonials.instagram,
           enabled: true,
-          posts: newPosts,
+          posts: updatedPosts,
         },
       },
     };
 
-    // Salva o arquivo content.json atualizado
     await fs.writeFile(contentFilePath, JSON.stringify(updatedContent, null, 2), 'utf-8');
     
     console.log('✅ Arquivo content.json atualizado com sucesso com as novas publicações.');
@@ -80,3 +111,5 @@ export async function runScraper() {
     }
   }
 }
+
+    
