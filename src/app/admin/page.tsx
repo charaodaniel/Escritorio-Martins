@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
@@ -67,7 +68,7 @@ const attorneyMemberSchema = z.object({
 });
 
 const postSchema = z.object({
-  permalink: z.string().url("Por favor, insira um URL de publicação válido."),
+  embedCode: z.string().min(1, "Por favor, insira o código de incorporação."),
 });
 
 const socialFeedSchema = z.object({
@@ -788,12 +789,14 @@ export default function AdminPage() {
                             </Button>
                             <FormField
                                 control={form.control}
-                                name={`testimonials.instagram.posts.${index}.permalink`}
+                                name={`testimonials.instagram.posts.${index}.embedCode`}
                                 render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Link da Publicação {index + 1}</FormLabel>
-                                    <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.instagram.com/p/seu-post-aqui" /></FormControl>
-                                    <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação e selecione 'Copiar link'. Cole o link aqui.</FormDescription>
+                                    <FormLabel>Código de Incorporação {index + 1}</FormLabel>
+                                    <FormControl>
+                                      <Textarea {...field} disabled={isSubmitting} placeholder='Cole o código de incorporação aqui...' className="min-h-[160px] font-mono text-xs" />
+                                    </FormControl>
+                                    <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação, selecione 'Incorporar' e cole o código aqui.</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                                 )}
@@ -805,7 +808,7 @@ export default function AdminPage() {
                         variant="outline"
                         size="sm"
                         className="mt-2"
-                        onClick={() => appendInstagramPost({ permalink: "" })}
+                        onClick={() => appendInstagramPost({ embedCode: "" })}
                         disabled={isSubmitting}
                     >
                         <PlusCircle className="mr-2 h-4 w-4" />
@@ -971,8 +974,8 @@ export default function AdminPage() {
                   {/* Adicionar Novo Usuário */}
                   <div className="p-4 border rounded-md bg-background">
                     <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Usuário</h3>
-                    <Form {...newUserForm}>
-                      <form onSubmit={newUserForm.handleSubmit(handleAddUser)} className="space-y-4">
+                    <Form {...newUserForm} onSubmit={newUserForm.handleSubmit(handleAddUser)}>
+                      <form className="space-y-4">
                         <FormField
                           control={newUserForm.control}
                           name="username"

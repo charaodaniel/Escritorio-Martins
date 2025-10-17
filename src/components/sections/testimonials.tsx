@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -9,7 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import InstagramImage from "@/components/instagram-image";
 import Autoplay from "embla-carousel-autoplay";
 import { ContentData } from "@/lib/content-loader";
 import { Instagram } from 'lucide-react';
@@ -22,8 +21,27 @@ type TestimonialsProps = {
 
 export default function Testimonials({ content }: TestimonialsProps) {
   const instagramPlugin = React.useRef(
-    Autoplay({ delay: 4000, stopOnInteraction: true })
+    Autoplay({ delay: 5000, stopOnInteraction: true })
   )
+
+  useEffect(() => {
+    // Carrega o script do Instagram se ele ainda não estiver na página
+    const script = document.createElement('script');
+    script.src = "//www.instagram.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    // O Instagram `embed.js` tem uma função `window.instgrm.Embeds.process()`
+    // que podemos chamar para renderizar novos embeds que foram adicionados dinamicamente.
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
+
+    return () => {
+      // Limpa o script se o componente for desmontado, opcional
+      // document.body.removeChild(script);
+    };
+  }, [content.instagram.posts]);
 
   const isInstagramVisible = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
 
@@ -52,22 +70,23 @@ export default function Testimonials({ content }: TestimonialsProps) {
               </div>
             </div>
             <Carousel
-            plugins={[instagramPlugin.current]}
-            opts={{
-                align: "start",
-                loop: true,
-            }}
-            className="w-full max-w-5xl mx-auto"
-            onMouseEnter={instagramPlugin.current.stop}
-            onMouseLeave={instagramPlugin.current.reset}
+              plugins={[instagramPlugin.current]}
+              opts={{
+                  align: "start",
+                  loop: true,
+              }}
+              className="w-full max-w-5xl mx-auto"
+              onMouseEnter={instagramPlugin.current.stop}
+              onMouseLeave={instagramPlugin.current.reset}
             >
             <CarouselContent>
                 {content.instagram.posts.map((post, index) => (
-                <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 flex justify-center">
-                    <div className="p-2 w-full max-w-sm">
-                      <InstagramImage url={post.permalink} />
-                    </div>
-                </CarouselItem>
+                  <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/2 lg:basis-1/3 flex justify-center">
+                    <div 
+                      className="p-2 w-full max-w-sm"
+                      dangerouslySetInnerHTML={{ __html: post.embedCode }}
+                    />
+                  </CarouselItem>
                 ))}
             </CarouselContent>
             <CarouselPrevious className="-left-4 hidden xl:flex" />
@@ -77,4 +96,15 @@ export default function Testimonials({ content }: TestimonialsProps) {
       </div>
     </section>
   );
+}
+
+// Declaração para o objeto global do Instagram para o TypeScript
+declare global {
+  interface Window {
+    instgrm?: {
+      Embeds: {
+        process: () => void;
+      };
+    };
+  }
 }
