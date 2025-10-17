@@ -24,15 +24,18 @@ export async function GET(req: NextRequest) {
 
     const html = await response.text();
     
-    // A regex busca pela propriedade "display_url" no JSON embutido na página do Instagram
-    const match = html.match(/"display_url":"([^"]+)"/);
+    // Regex aprimorada para buscar "display_url" ou a meta tag "og:image" como fallback.
+    const match = html.match(/"display_url":"([^"]+)"|,"og:image" content="([^"]+)"/);
 
-    if (!match || !match[1]) {
+    if (!match || (!match[1] && !match[2])) {
       throw new Error('Imagem não encontrada no HTML da página.');
     }
 
-    // A URL pode conter caracteres de escape como \u0026 para &, então decodificamos
-    const imageUrl = JSON.parse(`"${match[1]}"`);
+    // Pega o resultado do grupo que capturou a imagem (seja o primeiro ou o segundo).
+    const rawImageUrl = match[1] || match[2];
+
+    // A URL pode conter caracteres de escape como \u0026 para &, então decodificamos.
+    const imageUrl = JSON.parse(`"${rawImageUrl}"`);
 
     return NextResponse.json({ imageUrl });
 
