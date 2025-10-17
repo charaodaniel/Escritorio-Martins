@@ -163,11 +163,6 @@ export default function AdminPage() {
     name: "testimonials.instagram.posts",
   });
 
-  const { fields: facebookPostFields, append: appendFacebookPost, remove: removeFacebookPost } = useFieldArray({
-    control: form.control,
-    name: "testimonials.facebook.posts",
-  });
-
   async function fetchUsers() {
     try {
       const response = await fetch('/api/get-users');
@@ -817,53 +812,6 @@ export default function AdminPage() {
                         Adicionar Publicação do Instagram
                     </Button>
                   </div>
-
-                  {/* Facebook Posts */}
-                  <div className="space-y-4 pt-4 p-4 border rounded-md bg-background/50">
-                    <div className="flex justify-between items-center">
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><Facebook className="h-5 w-5" /> Facebook</h3>
-                        <SectionToggle name="testimonials.facebook.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                    {facebookPostFields.map((item, index) => (
-                        <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background/50 relative">
-                            <Button
-                                type="button"
-                                variant="destructive"
-                                size="icon"
-                                className="absolute top-4 right-4 h-7 w-7"
-                                onClick={() => removeFacebookPost(index)}
-                                disabled={isSubmitting}
-                            >
-                                <Trash2 className="h-4 w-4" />
-                                <span className="sr-only">Remover Publicação</span>
-                            </Button>
-                            <FormField
-                                control={form.control}
-                                name={`testimonials.facebook.posts.${index}.permalink`}
-                                render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Link da Publicação {index + 1}</FormLabel>
-                                    <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://www.facebook.com/usuario/posts/..." /></FormControl>
-                                    <FormDescription>No Facebook, clique na data/hora da publicação para abrir em uma nova página e copie o link (URL) do seu navegador.</FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
-                        </div>
-                    ))}
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        className="mt-2"
-                        onClick={() => appendFacebookPost({ permalink: "" })}
-                        disabled={isSubmitting}
-                    >
-                        <PlusCircle className="mr-2 h-4 w-4" />
-                        Adicionar Publicação do Facebook
-                    </Button>
-                  </div>
-
                 </AccordionContent>
               </AccordionItem>
 
@@ -1065,8 +1013,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
-
-    
-

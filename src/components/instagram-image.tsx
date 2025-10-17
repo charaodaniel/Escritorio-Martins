@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 type InstagramImageProps = {
   url: string;
@@ -39,7 +40,12 @@ export default function InstagramImage({ url }: InstagramImageProps) {
       }
     }
 
-    fetchImage();
+    if (url) {
+      fetchImage();
+    } else {
+      setIsLoading(false);
+      setError(true);
+    }
   }, [url]);
 
   if (isLoading) {
@@ -50,8 +56,15 @@ export default function InstagramImage({ url }: InstagramImageProps) {
     return (
       <div className="w-full aspect-square rounded-xl bg-muted flex flex-col items-center justify-center text-center p-4">
         <AlertTriangle className="h-8 w-8 text-destructive mb-2" />
-        <p className="text-sm text-destructive font-semibold">Erro ao carregar</p>
-        <p className="text-xs text-muted-foreground">Não foi possível carregar esta publicação.</p>
+        <p className="text-sm text-destructive-foreground font-semibold">Erro ao carregar</p>
+        <p className="text-xs text-muted-foreground mb-4">Não foi possível carregar a publicação.</p>
+        {url && (
+            <Button asChild variant="outline" size="sm">
+                <Link href={url} target="_blank" rel="noopener noreferrer">
+                    Ver no Instagram
+                </Link>
+            </Button>
+        )}
       </div>
     );
   }
