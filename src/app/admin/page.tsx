@@ -949,14 +949,16 @@ export default function AdminPage() {
 
               {/* Seção Automação */}
                <AccordionItem value="item-9">
-                <AccordionTrigger className="text-xl font-headline text-primary">Automação do Instagram</AccordionTrigger>
+                 <div className="flex w-full items-center justify-between">
+                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Automação do Instagram</AccordionTrigger>
+                    <div className="py-4 pr-4 pl-2">
+                        <SectionToggle name="automation.enabled" isSubmitting={isSubmitting} />
+                    </div>
+                 </div>
                 <AccordionContent className="space-y-6 pt-4">
                   <div className="p-4 border rounded-md bg-background">
-                    <div className="flex justify-between items-center mb-4">
-                      <h3 className="font-semibold text-lg flex items-center gap-2"><Bot className="h-5 w-5" /> Controle da Automação</h3>
-                      <SectionToggle name="automation.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <h3 className="font-semibold text-lg flex items-center gap-2"><Bot className="h-5 w-5" /> Controle da Automação</h3>
+                    <p className="text-sm text-muted-foreground my-4">
                       A automação busca as publicações mais recentes do Instagram e as adiciona ao site. Você pode executá-la manualmente ou agendar para rodar automaticamente.
                     </p>
                     <Button onClick={handleRunScraper} disabled={isScraping || isSubmitting} className="w-full sm:w-auto">
@@ -1094,7 +1096,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
-
-    
