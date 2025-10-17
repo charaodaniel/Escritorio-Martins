@@ -3,7 +3,12 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from '@/lib/utils';
+import { initializeScheduler } from '@/lib/scheduler';
 
+// Inicializa o agendador de tarefas no lado do servidor
+if (typeof window === 'undefined') {
+  initializeScheduler();
+}
 
 export const metadata: Metadata = {
   title: 'Vieira & Martins Advogados | Segurança Jurídica em Manoel Viana',
@@ -29,5 +34,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-    

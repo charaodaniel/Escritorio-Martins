@@ -102,6 +102,13 @@
       ]
     }
   },
+  "automation": {
+    "enabled": true,
+    "schedule": [
+      "09:00",
+      "21:00"
+    ]
+  },
   "contact": {
     "enabled": true
   },
@@ -116,5 +123,3 @@
     "instagramUrl": "https://www.instagram.com/vieiraemartinsadv/"
   }
 }
-
-    
