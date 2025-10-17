@@ -963,8 +963,108 @@ export default function AdminPage() {
                   />
                 </AccordionContent>
               </AccordionItem>
-
             </Accordion>
+
+            <div className="space-y-4">
+              <h2 className="text-xl font-headline text-primary">Configurações da Automação</h2>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> Controle da Automação</CardTitle>
+                  <CardDescription>
+                    Gerencie e execute a automação que busca as últimas publicações do Instagram.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="scraper.enabled"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel>Status da Automação</FormLabel>
+                          <FormDescription>
+                              Ative para que a busca por novas publicações ocorra automaticamente nos horários definidos.
+                          </FormDescription>
+                        </div>
+                        <FormControl>
+                          <Switch
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            disabled={isSubmitting}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="scraper.schedules"
+                      render={() => (
+                        <FormItem>
+                          <FormLabel>Horários de Execução (formato 24h)</FormLabel>
+                          <FormDescription>
+                            Defina os horários em que a automação será executada. Salve as alterações de conteúdo para aplicar.
+                          </FormDescription>
+                        </FormItem>
+                      )}
+                    />
+                    {scheduleFields.map((item, index) => (
+                        <div key={item.id} className="flex items-center gap-2">
+                            <FormField
+                                control={form.control}
+                                name={`scraper.schedules.${index}.time`}
+                                render={({ field }) => (
+                                    <FormItem className="flex-grow">
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                placeholder="HH:MM"
+                                                className="font-mono"
+                                                disabled={isSubmitting}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                size="icon"
+                                onClick={() => removeSchedule(index)}
+                                disabled={isSubmitting || scheduleFields.length <= 1}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    ))}
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => appendSchedule({ time: "09:00" })}
+                        disabled={isSubmitting}
+                    >
+                        <Clock className="mr-2 h-4 w-4" />
+                        Adicionar Horário
+                    </Button>
+                  </div>
+
+                  <div className="space-y-2 pt-4 border-t">
+                    <FormLabel>Execução Manual</FormLabel>
+                    <Button type="button" onClick={handleRunScraper} disabled={isScraping || isSubmitting} className="w-full sm:w-auto">
+                      {isScraping ? "Buscando..." : <><Play className="mr-2 h-4 w-4" /> Executar Agora</>}
+                    </Button>
+                    <FormDescription>
+                      Clique para buscar novas publicações do Instagram imediatamente.
+                    </FormDescription>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
             <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null || isScraping}>
               {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
             </Button>
@@ -973,104 +1073,6 @@ export default function AdminPage() {
         
         <div className="mt-8 space-y-8">
             <Accordion type="single" collapsible className="w-full">
-              {/* Seção Automação do Instagram */}
-              <AccordionItem value="item-9">
-                  <AccordionTrigger className="text-xl font-headline text-primary">Automação do Instagram</AccordionTrigger>
-                  <AccordionContent className="pt-4">
-                      <Card>
-                          <CardHeader>
-                              <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> Controle da Automação</CardTitle>
-                              <CardDescription>
-                                  Gerencie e execute a automação que busca as últimas publicações do Instagram e as adiciona ao site.
-                              </CardDescription>
-                          </CardHeader>
-                          <CardContent className="space-y-6">
-                              <div className="space-y-2">
-                                <FormLabel>Status da Automação Agendada</FormLabel>
-                                <FormField
-                                  control={form.control}
-                                  name="scraper.enabled"
-                                  render={({ field }) => (
-                                    <FormItem className="flex items-center gap-3 space-y-0">
-                                      <FormControl>
-                                        <Switch
-                                          checked={field.value}
-                                          onCheckedChange={field.onChange}
-                                          disabled={isSubmitting}
-                                        />
-                                      </FormControl>
-                                      <FormLabel className="font-normal !mt-0">
-                                        {field.value ? 'Ativada' : 'Desativada'}
-                                      </FormLabel>
-                                    </FormItem>
-                                  )}
-                                />
-                                <FormDescription>
-                                    Ative para que a busca por novas publicações ocorra automaticamente nos horários definidos.
-                                </FormDescription>
-                              </div>
-
-                              <div className="space-y-4">
-                                  <FormLabel>Horários de Execução (formato 24h)</FormLabel>
-                                  {scheduleFields.map((item, index) => (
-                                      <div key={item.id} className="flex items-center gap-2">
-                                          <FormField
-                                              control={form.control}
-                                              name={`scraper.schedules.${index}.time`}
-                                              render={({ field }) => (
-                                                  <FormItem className="flex-grow">
-                                                      <FormControl>
-                                                          <Input
-                                                              {...field}
-                                                              placeholder="HH:MM"
-                                                              className="font-mono"
-                                                              disabled={isSubmitting}
-                                                          />
-                                                      </FormControl>
-                                                      <FormMessage />
-                                                  </FormItem>
-                                              )}
-                                          />
-                                          <Button
-                                              type="button"
-                                              variant="destructive"
-                                              size="icon"
-                                              onClick={() => removeSchedule(index)}
-                                              disabled={isSubmitting || scheduleFields.length <= 1}
-                                          >
-                                              <Trash2 className="h-4 w-4" />
-                                          </Button>
-                                      </div>
-                                  ))}
-                                  <Button
-                                      type="button"
-                                      variant="outline"
-                                      size="sm"
-                                      onClick={() => appendSchedule({ time: "09:00" })}
-                                      disabled={isSubmitting}
-                                  >
-                                      <Clock className="mr-2 h-4 w-4" />
-                                      Adicionar Horário
-                                  </Button>
-                                  <FormDescription>
-                                     Defina os horários em que a automação será executada. Salve as alterações para aplicar.
-                                  </FormDescription>
-                              </div>
-
-                              <div className="space-y-2 pt-4 border-t">
-                                <FormLabel>Execução Manual</FormLabel>
-                                <Button type="button" onClick={handleRunScraper} disabled={isScraping || isSubmitting} className="w-full sm:w-auto">
-                                  {isScraping ? "Buscando..." : <><Play className="mr-2 h-4 w-4" /> Executar Agora</>}
-                                </Button>
-                                <FormDescription>
-                                  Clique para buscar novas publicações do Instagram imediatamente.
-                                </FormDescription>
-                              </div>
-                          </CardContent>
-                      </Card>
-                  </AccordionContent>
-              </AccordionItem>
-
               {/* Seção Gerenciamento de Usuários */}
               <AccordionItem value="item-8">
                 <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
@@ -1158,5 +1160,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
