@@ -22,28 +22,21 @@ export default function Testimonials({ content }: TestimonialsProps) {
   )
 
   useEffect(() => {
-    // Carrega o script do Instagram se ele ainda não estiver na página
-    const scriptId = 'instagram-embed-script';
-    if (document.getElementById(scriptId)) {
-      if (window.instgrm) {
-        window.instgrm.Embeds.process();
-      }
-      return;
-    }
-    
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.src = "//www.instagram.com/embed.js";
-    script.async = true;
-    
-    script.onload = () => {
+    // Garante que o script de embed do Instagram seja processado.
+    // O script é carregado uma vez e o `process` é chamado para renderizar novos embeds.
+    if (window.instgrm) {
+      window.instgrm.Embeds.process();
+    } else {
+      const script = document.createElement('script');
+      script.src = "//www.instagram.com/embed.js";
+      script.async = true;
+      script.onload = () => {
         if (window.instgrm) {
             window.instgrm.Embeds.process();
         }
-    };
-
-    document.body.appendChild(script);
-
+      };
+      document.body.appendChild(script);
+    }
   }, [content.instagram.posts]);
 
   const isInstagramVisible = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
@@ -104,3 +97,5 @@ declare global {
     };
   }
 }
+
+    

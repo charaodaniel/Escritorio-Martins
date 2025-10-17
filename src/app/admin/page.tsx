@@ -22,12 +22,11 @@ import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import type { User } from "@/lib/users-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut, Bot, Play, Clock } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const heroSchema = z.object({
   title: z.string().min(1, "Título é obrigatório."),
@@ -42,12 +41,6 @@ const practiceAreaSchema = z.object({
 const whyUsFeatureSchema = z.object({
   title: z.string().min(1, "Título do diferencial é obrigatório."),
   description: z.string().min(1, "Descrição do diferencial é obrigatória."),
-});
-
-const ourHistorySchema = z.object({
-  enabled: z.boolean(),
-  title: z.string().min(1, "Título da história é obrigatório."),
-  paragraphs: z.array(z.string().min(1, "Parágrafo não pode ser vazio.")).min(1, "É necessário pelo menos um parágrafo."),
 });
 
 const attorneyMemberSchema = z.object({
@@ -81,15 +74,6 @@ const contactInfoSchema = z.object({
   instagramUrl: z.string().url("URL do Instagram inválida."),
 });
 
-const scheduleSchema = z.object({
-  time: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Formato de hora inválido (HH:MM)."),
-});
-
-const scraperSchema = z.object({
-  enabled: z.boolean(),
-  schedules: z.array(scheduleSchema),
-});
-
 const formSchema = z.object({
   hero: heroSchema,
   practiceAreas: z.object({
@@ -111,7 +95,7 @@ const formSchema = z.object({
   }),
   attorneys: z.object({
     enabled: z.boolean(),
-    title: z.string().min(1, "Título da seção é obrigatório."),
+    title: z-string().min(1, "Título da seção é obrigatório."),
     subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
     members: z.array(attorneyMemberSchema),
   }),
@@ -120,13 +104,11 @@ const formSchema = z.object({
       title: z.string().min(1, "Título da seção é obrigatório."),
       subtitle: z.string().min(1, "Subtítulo da seção é obrigatório."),
       instagram: socialFeedSchema,
-      facebook: socialFeedSchema,
   }),
   contact: z.object({
     enabled: z.boolean(),
   }),
   contactInfo: contactInfoSchema,
-  scraper: scraperSchema,
 });
 
 const newUserSchema = z.object({
@@ -140,7 +122,6 @@ export default function AdminPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState<number | null>(null);
-  const [isScraping, setIsScraping] = useState(false);
   const [initialData, setInitialData] = useState<ContentData | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const fileInputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -166,11 +147,6 @@ export default function AdminPage() {
   const { fields: instagramPostFields, append: appendInstagramPost, remove: removeInstagramPost } = useFieldArray({
     control: form.control,
     name: "testimonials.instagram.posts",
-  });
-
-  const { fields: scheduleFields, append: appendSchedule, remove: removeSchedule } = useFieldArray({
-    control: form.control,
-    name: "scraper.schedules",
   });
 
   async function fetchUsers() {
@@ -241,9 +217,6 @@ export default function AdminPage() {
         description: "As alterações foram enviadas e o site será atualizado em breve.",
       });
 
-      // Restart scheduler with new times
-      await fetch('/api/reschedule-scraper');
-
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -254,34 +227,6 @@ export default function AdminPage() {
       setIsSubmitting(false);
     }
   }
-
-  const handleRunScraper = async () => {
-    setIsScraping(true);
-    try {
-      const response = await fetch("/api/run-scraper");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Falha ao executar a automação.");
-      }
-
-      toast({
-        title: "Automação Executada!",
-        description: data.message || "As publicações do Instagram foram atualizadas.",
-      });
-      // Re-fetch content to show new posts
-      await fetchContent(true);
-
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Erro na Automação",
-        description: error.message || "Não foi possível buscar as publicações.",
-      });
-    } finally {
-      setIsScraping(false);
-    }
-  };
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const file = event.target.files?.[0];
@@ -395,7 +340,7 @@ export default function AdminPage() {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
   }
   
-  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled` | 'testimonials.instagram.enabled' | 'testimonials.facebook.enabled', isSubmitting: boolean }) => (
+  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled` | 'testimonials.instagram.enabled', isSubmitting: boolean }) => (
     <FormField
       control={form.control}
       name={name}
@@ -965,107 +910,7 @@ export default function AdminPage() {
               </AccordionItem>
             </Accordion>
 
-            <div className="space-y-4">
-              <h2 className="text-xl font-headline text-primary">Configurações da Automação</h2>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><Bot className="h-5 w-5" /> Controle da Automação</CardTitle>
-                  <CardDescription>
-                    Gerencie e execute a automação que busca as últimas publicações do Instagram.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="scraper.enabled"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                        <div className="space-y-0.5">
-                          <FormLabel>Status da Automação</FormLabel>
-                          <FormDescription>
-                              Ative para que a busca por novas publicações ocorra automaticamente nos horários definidos.
-                          </FormDescription>
-                        </div>
-                        <FormControl>
-                          <Switch
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                            disabled={isSubmitting}
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="scraper.schedules"
-                      render={() => (
-                        <FormItem>
-                          <FormLabel>Horários de Execução (formato 24h)</FormLabel>
-                          <FormDescription>
-                            Defina os horários em que a automação será executada. Salve as alterações de conteúdo para aplicar.
-                          </FormDescription>
-                        </FormItem>
-                      )}
-                    />
-                    {scheduleFields.map((item, index) => (
-                        <div key={item.id} className="flex items-center gap-2">
-                            <FormField
-                                control={form.control}
-                                name={`scraper.schedules.${index}.time`}
-                                render={({ field }) => (
-                                    <FormItem className="flex-grow">
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                placeholder="HH:MM"
-                                                className="font-mono"
-                                                disabled={isSubmitting}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <Button
-                                type="button"
-                                variant="destructive"
-                                size="icon"
-                                onClick={() => removeSchedule(index)}
-                                disabled={isSubmitting || scheduleFields.length <= 1}
-                            >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
-                        </div>
-                    ))}
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => appendSchedule({ time: "09:00" })}
-                        disabled={isSubmitting}
-                    >
-                        <Clock className="mr-2 h-4 w-4" />
-                        Adicionar Horário
-                    </Button>
-                  </div>
-
-                  <div className="space-y-2 pt-4 border-t">
-                    <FormLabel>Execução Manual</FormLabel>
-                    <Button type="button" onClick={handleRunScraper} disabled={isScraping || isSubmitting} className="w-full sm:w-auto">
-                      {isScraping ? "Buscando..." : <><Play className="mr-2 h-4 w-4" /> Executar Agora</>}
-                    </Button>
-                    <FormDescription>
-                      Clique para buscar novas publicações do Instagram imediatamente.
-                    </FormDescription>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null || isScraping}>
+            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
               {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
             </Button>
           </form>
@@ -1160,3 +1005,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
