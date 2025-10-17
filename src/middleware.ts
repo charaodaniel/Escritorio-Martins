@@ -2,11 +2,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { loadUsers } from '@/lib/users-loader';
 
-// Este middleware protege a rota /admin com autenticação básica.
-export function middleware(req: NextRequest) {
-  const isAdminPath = req.nextUrl.pathname.startsWith('/admin') || req.nextUrl.pathname.startsWith('/api/get-all-users-for-update');
+// Rotas que exigem autenticação
+const protectedRoutes = ['/admin', '/api/get-all-users-for-update', '/api/run-scraper'];
 
-  if (isAdminPath) {
+// Este middleware protege as rotas administrativas com autenticação básica.
+export function middleware(req: NextRequest) {
+  const isProtectedPath = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route));
+
+  if (isProtectedPath) {
     const users = loadUsers();
     
     // Em ambiente de desenvolvimento, se o array de usuários estiver vazio, permite o acesso.
@@ -49,5 +52,6 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/get-all-users-for-update'],
+  // O matcher precisa cobrir todas as rotas protegidas
+  matcher: ['/admin/:path*', '/api/get-all-users-for-update/:path*', '/api/run-scraper/:path*'],
 };

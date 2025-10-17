@@ -11,13 +11,10 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { ContentData } from "@/lib/content-loader";
-import { Instagram } from 'lucide-react';
-
 
 type TestimonialsProps = {
   content: ContentData['testimonials'];
 }
-
 
 export default function Testimonials({ content }: TestimonialsProps) {
   const instagramPlugin = React.useRef(
@@ -26,21 +23,27 @@ export default function Testimonials({ content }: TestimonialsProps) {
 
   useEffect(() => {
     // Carrega o script do Instagram se ele ainda não estiver na página
+    const scriptId = 'instagram-embed-script';
+    if (document.getElementById(scriptId)) {
+      if (window.instgrm) {
+        window.instgrm.Embeds.process();
+      }
+      return;
+    }
+    
     const script = document.createElement('script');
+    script.id = scriptId;
     script.src = "//www.instagram.com/embed.js";
     script.async = true;
+    
+    script.onload = () => {
+        if (window.instgrm) {
+            window.instgrm.Embeds.process();
+        }
+    };
+
     document.body.appendChild(script);
 
-    // O Instagram `embed.js` tem uma função `window.instgrm.Embeds.process()`
-    // que podemos chamar para renderizar novos embeds que foram adicionados dinamicamente.
-    if (window.instgrm) {
-      window.instgrm.Embeds.process();
-    }
-
-    return () => {
-      // Limpa o script se o componente for desmontado, opcional
-      // document.body.removeChild(script);
-    };
   }, [content.instagram.posts]);
 
   const isInstagramVisible = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
@@ -62,13 +65,6 @@ export default function Testimonials({ content }: TestimonialsProps) {
         </div>
         
         <div className="mt-16">
-            <div className="flex justify-center mb-8">
-              <div className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
-                <div className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background bg-background text-foreground shadow-sm">
-                    <Instagram className="mr-2" /> Instagram
-                </div>
-              </div>
-            </div>
             <Carousel
               plugins={[instagramPlugin.current]}
               opts={{
