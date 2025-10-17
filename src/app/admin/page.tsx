@@ -946,17 +946,8 @@ export default function AdminPage() {
                   />
                 </AccordionContent>
               </AccordionItem>
-            </Accordion>
 
-            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
-              {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
-            </Button>
-          </form>
-        </Form>
-        
-        <div className="mt-8 space-y-8">
-            <Accordion type="single" collapsible className="w-full">
-               {/* Seção Automação */}
+              {/* Seção Automação */}
                <AccordionItem value="item-9">
                 <AccordionTrigger className="text-xl font-headline text-primary">Automação do Instagram</AccordionTrigger>
                 <AccordionContent className="space-y-6 pt-4">
@@ -1093,8 +1084,17 @@ export default function AdminPage() {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-        </div>
+
+            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
+              {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );
 }
+
+    
+
+    
