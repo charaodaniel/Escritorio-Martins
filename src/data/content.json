@@ -1,3 +1,4 @@
+
 {
   "hero": {
     "title": "Escritório Vieira & Martins Advogados",
@@ -138,7 +139,7 @@
     "enabled": true
   },
   "contactInfo": {
-    "address": "<h4>R. Franklin Bastos de Carvalho, 754, Centro, Manoel Viana - RS, CEP 97640-000</h4>",
+    "address": "<p>R. Franklin Bastos de Carvalho, 754, Centro, Manoel Viana - RS, CEP 97640-000</p>",
     "email": "emartinsadvogado@hotmail.com",
     "whatsapp": "5555999169181",
     "whatsappLink": "https://wa.me/5555999169181",
@@ -148,5 +149,3 @@
     "instagramUrl": "https://www.instagram.com/vieiraemartinsadv/"
   }
 }
-
-    
