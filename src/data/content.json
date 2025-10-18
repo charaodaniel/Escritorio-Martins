@@ -94,10 +94,10 @@
       "enabled": true,
       "posts": [
         {
-          "embedCode": "<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/p/DP1h-9TDSLh/?utm_source=ig_embed&utm_campaign=loading\" data-instgrm-version=\"14\"><a href=\"https://www.instagram.com/p/DP1h-9TDSLh/?utm_source=ig_embed&utm_campaign=loading\"></a></blockquote>"
+          "postUrl": "https://www.instagram.com/p/DP1h-9TDSLh/"
         },
         {
-          "embedCode": "<blockquote class=\"instagram-media\" data-instgrm-captioned data-instgrm-permalink=\"https://www.instagram.com/p/DPwxkSrD8Di/?utm_source=ig_embed&utm_campaign=loading\" data-instgrm-version=\"14\"><a href=\"https://www.instagram.com/p/DPwxkSrD8Di/?utm_source=ig_embed&utm_campaign=loading\"></a></blockquote>"
+          "postUrl": "https://www.instagram.com/p/DPwxkSrD8Di/"
         }
       ]
     }
@@ -116,5 +116,3 @@
     "instagramUrl": "https://www.instagram.com/vieiraemartinsadv/"
   }
 }
-
-    

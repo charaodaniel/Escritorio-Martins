@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Carousel,
   CarouselContent,
@@ -11,40 +11,16 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { ContentData } from "@/lib/content-loader";
+import InstagramPostEmbed from "@/components/instagram-post-embed";
 
 type TestimonialsProps = {
   content: ContentData['testimonials'];
 }
 
-// Função para remover o atributo data-instgrm-captioned do código de embed
-const getEmbedCodeWithoutCaption = (embedCode: string): string => {
-  if (!embedCode) return "";
-  return embedCode.replace(/data-instgrm-captioned/g, '');
-};
-
-
 export default function Testimonials({ content }: TestimonialsProps) {
   const instagramPlugin = React.useRef(
     Autoplay({ delay: 5000, stopOnInteraction: true })
   )
-
-  useEffect(() => {
-    // Garante que o script de embed do Instagram seja processado.
-    // O script é carregado uma vez e o `process` é chamado para renderizar novos embeds.
-    if (window.instgrm) {
-      window.instgrm.Embeds.process();
-    } else {
-      const script = document.createElement('script');
-      script.src = "//www.instagram.com/embed.js";
-      script.async = true;
-      script.onload = () => {
-        if (window.instgrm) {
-            window.instgrm.Embeds.process();
-        }
-      };
-      document.body.appendChild(script);
-    }
-  }, [content.instagram.posts]);
 
   const isInstagramVisible = content.instagram.enabled && content.instagram.posts && content.instagram.posts.length > 0;
 
@@ -78,10 +54,9 @@ export default function Testimonials({ content }: TestimonialsProps) {
             <CarouselContent>
                 {content.instagram.posts.map((post, index) => (
                   <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/2 lg:basis-1/3 flex justify-center">
-                    <div 
-                      className="p-2 w-full max-w-sm"
-                      dangerouslySetInnerHTML={{ __html: getEmbedCodeWithoutCaption(post.embedCode) }}
-                    />
+                    <div className="p-2 w-full max-w-sm">
+                      <InstagramPostEmbed postUrl={post.postUrl} />
+                    </div>
                   </CarouselItem>
                 ))}
             </CarouselContent>
@@ -104,5 +79,3 @@ declare global {
     };
   }
 }
-
-    

@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
@@ -55,7 +54,7 @@ const attorneyMemberSchema = z.object({
 });
 
 const postSchema = z.object({
-  embedCode: z.string().min(1, "Por favor, insira o código de incorporação."),
+  postUrl: z.string().url("Por favor, insira um URL do Instagram válido."),
 });
 
 const socialFeedSchema = z.object({
@@ -777,14 +776,14 @@ export default function AdminPage() {
                             </Button>
                             <FormField
                                 control={form.control}
-                                name={`testimonials.instagram.posts.${index}.embedCode`}
+                                name={`testimonials.instagram.posts.${index}.postUrl`}
                                 render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Código de Incorporação {index + 1}</FormLabel>
+                                    <FormLabel>Link da Publicação {index + 1}</FormLabel>
                                     <FormControl>
-                                      <Textarea {...field} disabled={isSubmitting} placeholder='Cole o código de incorporação aqui...' className="min-h-[160px] font-mono text-xs" />
+                                      <Input {...field} disabled={isSubmitting} placeholder='Cole o link da publicação do Instagram aqui...' />
                                     </FormControl>
-                                    <FormDescription>No Instagram, clique nos três pontinhos (...) acima da publicação, selecione 'Incorporar' e cole o código aqui. A legenda será removida automaticamente.</FormDescription>
+                                    <FormDescription>Copie o link da publicação (pelo botão de compartilhar ou pela barra de endereço) e cole aqui.</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                                 )}
@@ -796,7 +795,7 @@ export default function AdminPage() {
                         variant="outline"
                         size="sm"
                         className="mt-2"
-                        onClick={() => appendInstagramPost({ embedCode: "" })}
+                        onClick={() => appendInstagramPost({ postUrl: "" })}
                         disabled={isSubmitting}
                     >
                         <PlusCircle className="mr-2 h-4 w-4" />
@@ -1000,5 +999,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
