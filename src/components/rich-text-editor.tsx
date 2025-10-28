@@ -9,6 +9,7 @@ import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { Color } from '@tiptap/extension-color';
+import { BulletList } from '@tiptap/extension-bullet-list';
 
 import {
   Bold,
@@ -38,7 +39,6 @@ import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
-import { Extension } from '@tiptap/core';
 
 const COLOR_PALETTE = [
   '#000000', '#444444', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
@@ -46,26 +46,21 @@ const COLOR_PALETTE = [
   'hsl(var(--primary))', 'hsl(var(--accent))', 'hsl(var(--foreground))'
 ];
 
-const ListStyle = Extension.create({
-  name: 'listStyle',
-  addGlobalAttributes() {
-    return [
-      {
-        types: ['bulletList'],
-        attributes: {
-          'data-list-style': {
-            default: null,
-            parseHTML: element => element.getAttribute('data-list-style'),
-            renderHTML: attributes => {
-              if (!attributes['data-list-style']) {
-                return {}
-              }
-              return { 'data-list-style': attributes['data-list-style'] }
-            },
-          },
+const CustomBulletList = BulletList.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      'data-list-style': {
+        default: null,
+        parseHTML: element => element.getAttribute('data-list-style'),
+        renderHTML: attributes => {
+          if (!attributes['data-list-style']) {
+            return {}
+          }
+          return { 'data-list-style': attributes['data-list-style'] }
         },
       },
-    ]
+    }
   },
 });
 
@@ -257,7 +252,9 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
         heading: {
           levels: [1, 2, 3, 4],
         },
+        bulletList: false, // Desabilitar o padrão para usar o nosso
       }),
+      CustomBulletList,
       TextStyle,
       FontFamily,
       Color,
@@ -269,7 +266,6 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
-      ListStyle,
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -290,3 +286,5 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     </div>
   );
 }
+
+    
