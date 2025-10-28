@@ -106,19 +106,17 @@ const Toolbar = ({ editor }: { editor: any }) => {
   };
   
   const toggleBulletListWithStyle = (style: string | null) => {
-    const chain = editor.chain().focus();
-
     if (!editor.isActive('bulletList')) {
-        chain.toggleBulletList().run();
-        if (style) {
-            chain.updateAttributes('bulletList', { 'data-list-style': style }).run();
-        }
+        // If the list is not active, turn it on and set the style in one chain.
+        editor.chain().focus().toggleBulletList().updateAttributes('bulletList', { 'data-list-style': style }).run();
     } else {
         const currentStyle = editor.getAttributes('bulletList')['data-list-style'];
-        if (currentStyle === style) {
-            chain.toggleBulletList().run();
+        if (currentStyle === style || (currentStyle === null && style === null)) {
+            // If the same style button is clicked, turn off the list.
+            editor.chain().focus().toggleBulletList().run();
         } else {
-            chain.updateAttributes('bulletList', { 'data-list-style': style }).run();
+            // If a different style button is clicked, just update the style.
+            editor.chain().focus().updateAttributes('bulletList', { 'data-list-style': style }).run();
         }
     }
 };
