@@ -9,7 +9,8 @@ import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { Color } from '@tiptap/extension-color';
-import { BulletList } from '@tiptap/extension-bullet-list';
+import BulletList from '@tiptap/extension-bullet-list';
+import ListItem from '@tiptap/extension-list-item';
 
 import {
   Bold,
@@ -50,14 +51,11 @@ const CustomBulletList = BulletList.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
-      'data-list-style': {
+      class: {
         default: null,
-        parseHTML: element => element.getAttribute('data-list-style'),
+        parseHTML: element => element.getAttribute('class'),
         renderHTML: attributes => {
-          if (!attributes['data-list-style']) {
-            return {};
-          }
-          return { 'data-list-style': attributes['data-list-style'] };
+          return { class: attributes.class };
         },
       },
     };
@@ -105,19 +103,15 @@ const Toolbar = ({ editor }: { editor: any }) => {
     return 'paragraph';
   };
   
-  const toggleBulletListWithStyle = (style: string | null) => {
-    const chain = editor.chain().focus();
-    const isListActive = editor.isActive('bulletList');
-    const currentStyle = editor.getAttributes('bulletList')['data-list-style'] || null;
-
-    if (isListActive && currentStyle === style) {
-        // If the list is active with the same style, turn it off.
-        chain.toggleBulletList().run();
-    } else {
-        // Otherwise, turn on the list and set/update the style.
-        chain.toggleBulletList().updateAttributes('bulletList', { 'data-list-style': style }).run();
+  const toggleDashList = () => {
+    editor.chain().focus().toggleBulletList().run()
+    if (editor.isActive('bulletList')) {
+      editor.chain().focus().updateAttributes('bulletList', { class: 'list-dash' }).run();
     }
-  };
+  }
+
+  const isDashListActive = editor.isActive('bulletList', { class: 'list-dash' });
+  const isDefaultListActive = editor.isActive('bulletList') && !isDashListActive;
 
   const toolbarButtons = [
     { command: () => editor.chain().focus().toggleBold().run(), icon: Bold, isActive: editor.isActive('bold'), label: "Negrito" },
@@ -130,8 +124,8 @@ const Toolbar = ({ editor }: { editor: any }) => {
     { command: () => editor.chain().focus().setTextAlign('right').run(), icon: AlignRight, isActive: editor.isActive({ textAlign: 'right' }), label: "Alinhar à Direita" },
     { command: () => editor.chain().focus().setTextAlign('justify').run(), icon: AlignJustify, isActive: editor.isActive({ textAlign: 'justify' }), label: "Justificar" },
     { type: 'divider' },
-    { command: () => toggleBulletListWithStyle(null), icon: List, isActive: editor.isActive('bulletList', { 'data-list-style': null }), label: "Lista (Pontos)" },
-    { command: () => toggleBulletListWithStyle('dash'), icon: ListMinus, isActive: editor.isActive('bulletList', { 'data-list-style': 'dash' }), label: "Lista (Traços)" },
+    { command: () => editor.chain().focus().toggleBulletList().run(), icon: List, isActive: isDefaultListActive, label: "Lista (Pontos)" },
+    { command: toggleDashList, icon: ListMinus, isActive: isDashListActive, label: "Lista (Traços)" },
     { command: () => editor.chain().focus().toggleOrderedList().run(), icon: ListOrdered, isActive: editor.isActive('orderedList'), label: "Lista Numerada" },
     { type: 'divider' },
     { command: setLink, icon: Link2, isActive: editor.isActive('link'), label: "Inserir Link" },
@@ -248,9 +242,11 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        bulletList: false, 
+        bulletList: false, // Desabilitamos o bulletList do StarterKit para usar o nosso customizado
+        listItem: false,
       }),
       CustomBulletList,
+      ListItem,
       TextStyle,
       FontFamily,
       Color,
