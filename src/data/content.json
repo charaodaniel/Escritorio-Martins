@@ -1,25 +1,24 @@
-
 {
   "hero": {
     "title": "Escritório Vieira & Martins Advogados",
-    "subtitle": "<p>Seu parceiro jurídico em todas as áreas do direito. ⚖️ Advocacia especializada em Manoel Viana. 🧑‍⚖️ Compromisso com a justiça.</p>"
+    "subtitle": "<p>Seu parceiro jurídico em todas as áreas do direito. ⚖️ Advocacia especializada. 🧑‍⚖️ Compromisso com a justiça.</p>"
   },
   "practiceAreas": {
     "enabled": true,
-    "title": "Nossas Áreas de Atuação Jurídica",
-    "subtitle": "<p>Oferecemos soluções jurídicas claras, seguras e sob medida para cada cliente em diversas áreas do direito em Manoel Viana.</p>",
+    "title": "Nossas Áreas de Atuação",
+    "subtitle": "<p>Oferecemos soluções jurídicas claras, seguras e sob medida para cada cliente em diversas áreas do direito.</p>",
     "areas": [
       {
         "title": "Direito Cível",
-        "description": "<p>Orientação em contratos, responsabilidade civil, obrigações e outras questões cíveis.</p>"
+        "description": "<p>Orientação em contratos, responsabilidade civil, obrigações e outros.</p>"
       },
       {
-        "title": "Direito de Família e Sucessões",
-        "description": "<p>Atuação em divórcios, inventários, testamentos, partilha de bens e pensão alimentícia.</p>"
+        "title": "Família e Sucessões",
+        "description": "<p>Atuação em divórcios, inventários, testamentos, partilha de bens e pensão.</p>"
       },
       {
         "title": "Direito Trabalhista",
-        "description": "<p>Defesa em reclamações trabalhistas, rescisões, e orientações preventivas para empregadores.</p>"
+        "description": "<p>Defesa em reclamações trabalhistas, rescisões, e orientações preventivas.</p>"
       },
       {
         "title": "Direito do Consumidor",
@@ -27,7 +26,7 @@
       },
       {
         "title": "Direito Imobiliário",
-        "description": "<p>Assessoria em compra e venda, aluguel, usucapião e regularização de imóveis rurais e urbanos.</p>"
+        "description": "<p>Assessoria em compra e venda, aluguel, usucapião e regularização de imóveis.</p>"
       },
       {
         "title": "Outras Áreas",
@@ -37,7 +36,7 @@
   },
   "whyUs": {
     "enabled": true,
-    "title": "Por que escolher nosso escritório em Manoel Viana?",
+    "title": "Por que nos escolher?",
     "subtitle": "<p>Combinamos conhecimento técnico, atendimento dedicado e experiência local para defender seus direitos com excelência.</p>",
     "features": [
       {
@@ -65,14 +64,14 @@
   },
   "attorneys": {
     "enabled": true,
-    "title": "Conheça Nossa Equipe de Advogados",
-    "subtitle": "<p>Profissionais dedicados e apaixonados pelo direito, comprometidos em oferecer a melhor solução jurídica para você em Manoel Viana.</p>",
+    "title": "Conheça Nossa Equipe",
+    "subtitle": "<p>Profissionais dedicados e apaixonados pelo direito, comprometidos em oferecer a melhor solução jurídica para você.</p>",
     "members": [
       {
         "id": "gilberto-martins",
         "name": "Gilberto Martins",
         "title": "Advogado",
-        "bio": "<p>Com vasta experiência em direito cível e empresarial, Gilberto é reconhecido por sua abordagem estratégica e dedicação incansável aos seus clientes.</p>",
+        "bio": "<p>Brasileiro, solteiro – Advogado – OAB/RS 81.274</p><p>E-mail: <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"mailto:gilbertovmartinsadvogado@hotmail.com\">gilbertovmartinsadvogado@hotmail.com</a></p><p>Celular: (55) 99928-4812</p><p>Site: <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"http://www.vieiraemartinsadvogados.com\">www.vieiraemartinsadvogados.com</a></p><p></p><h3 style=\"text-align: center;\"><span style=\"color: rgb(204, 204, 204);\"><strong>PERFIL PROFISSIONAL</strong></span></h3><p style=\"text-align: justify;\">Advogado atuante desde 2010, com experiência consolidada em Direito Público, Administrativo, Civil e Empresarial. Sócio-fundador do escritório Vieira &amp; Martins Advogados, onde exerce advocacia consultiva e contenciosa, com ênfase em demandas municipais, contratos públicos e assessoria jurídica institucional. Atuação marcada pela defesa de interesses públicos e privados, com enfoque em soluções jurídicas estratégicas, gestão eficiente e visão empreendedora.</p><p style=\"text-align: center;\"><strong>FORMAÇÃO ACADÊMICA</strong></p><ul><li><p>Bacharel em Direito – Universidade da Região da Campanha (URCAMP), Campus Alegrete – Conclusão: 2º semestre de 2010</p></li><li><p>Pós-Graduação Lato Sensu em Gestão Pública Municipal – Universidade Federal do Pampa (UNIPAMPA)</p></li><li><p>Pós-Graduação Lato Sensu em Direito Processual Civil – Faculdade Damásio</p></li><li><p>MBA em Direito Corporativo (em andamento) – Faculdade Damásio</p></li><li><p>Graduando em Ciências Contábeis – Centro Universitário Leonardo da Vinci (UNIASSELVI)</p></li><li><p>Graduando em Administração – Centro Universitário Leonardo da Vinci (UNIASSELVI)</p></li></ul><h3 style=\"text-align: center;\"><span style=\"color: rgb(204, 204, 204);\"><strong>EXPERIÊNCIA PROFISSIONAL</strong></span></h3><ul><li><p>Procurador do Município de São Francisco de Assis/RS</p></li></ul><p>- Representação judicial e extrajudicial do Município;</p><p>- Atuação em execuções fiscais, ações cíveis e administrativas;</p><p>- Elaboração de pareceres técnicos e análise de contratos públicos.</p><ul><li><p>Secretário de Governo e Planejamento do Município de Manoel Viana/RS</p></li></ul><p>- Planejamento estratégico e coordenação de políticas públicas municipais;</p><p>- Elaboração de projetos e assessoramento jurídico à Administração Pública;</p><p>- Atuação na captação de recursos e estruturação de processos administrativos.</p><ul><li><p>Empresário e Sócio-Fundador – Vieira &amp; Martins Advogados</p></li></ul><p>- Atuação nas áreas cível, administrativa e empresarial;</p><p>- Assessoria jurídica a empresas e entes públicos;</p><p>- Elaboração de contratos, pareceres e defesas técnicas;</p><p>- Representação de pessoas físicas e jurídicas em todas as instâncias judiciais.</p><h3 style=\"text-align: center;\"><span style=\"color: rgb(204, 204, 204);\"><strong>ÁREAS DE ATUAÇÃO</strong></span></h3><ul><li><p>Direito Administrativo e Público</p></li><li><p>Direito Civil e Contratual</p></li><li><p>Direito Empresarial</p></li><li><p>Direito Tributário e Financeiro Público</p></li><li><p>Direito Processual Civil</p></li><li><p>Gestão Pública e Licitações</p></li></ul><h3 style=\"text-align: center;\"><span style=\"color: rgb(204, 204, 204);\"><strong>QUALIFICAÇÕES E COMPETÊNCIAS</strong></span></h3><ul><li><p>Experiência em gestão pública e planejamento estratégico;</p></li><li><p>Conhecimento técnico em finanças municipais e processos licitatórios;</p></li><li><p>Atuação na assessoria a órgãos públicos e entidades privadas;</p></li><li><p>Perfil empreendedor, com visão analítica e capacidade de liderança.</p></li></ul>",
         "imageUrl": "/1760304477120-alegretetudo-vieira-e-martins-um-legado-de-comprometimento-e-credibildade-no-direito-da-fronteira-oeste-e.jpg",
         "bioFormat": "default"
       },
@@ -88,49 +87,49 @@
   },
   "testimonials": {
     "enabled": true,
-    "title": "Nossas Publicações Recentes",
-    "subtitle": "<p>Acompanhe nossas últimas postagens, notícias e novidades diretamente de nossas redes sociais.</p>",
+    "title": "Nossas Publicações",
+    "subtitle": "<p>Acompanhe nossas últimas postagens e novidades diretamente de nossas redes sociais.</p>",
     "instagram": {
       "enabled": true,
       "posts": [
         {
-          "postUrl": "https://www.instagram.com/p/DPpDw8sEW7H/"
+          "postUrl": "https://www.instagram.com/p/DPpDw8sEW7H/?utm_source=ig_web_copy_link&igsh=ejQyY3M4eXl6dTln"
         },
         {
-          "postUrl": "https://www.instagram.com/reel/DPmePZnCrTi/"
+          "postUrl": "https://www.instagram.com/reel/DPmePZnCrTi/?utm_source=ig_web_copy_link&igsh=MWc4NndibmJjNGk4Ng=="
         },
         {
-          "postUrl": "https://www.instagram.com/p/DPj2oy8Ab60/"
+          "postUrl": "https://www.instagram.com/p/DPj2oy8Ab60/?utm_source=ig_web_copy_link&igsh=MW5xZXdzdmRzMDJoMQ=="
         },
         {
-          "postUrl": "https://www.instagram.com/p/DPevv0qAZ0k/"
+          "postUrl": "https://www.instagram.com/p/DPevv0qAZ0k/?utm_source=ig_web_copy_link&igsh=MWNibHBxdGQ5dW90eg=="
         },
         {
-          "postUrl": "https://www.instagram.com/p/DPUckSWkxNq/"
+          "postUrl": "https://www.instagram.com/p/DPUckSWkxNq/?utm_source=ig_web_copy_link&igsh=MWV5emxqNWE0cXVmbQ=="
         },
         {
-          "postUrl": "https://www.instagram.com/reel/DPRDLkngp2b/"
+          "postUrl": "https://www.instagram.com/reel/DPRDLkngp2b/?utm_source=ig_web_copy_link&igsh=YTI4dnR4NDk5Mm9n"
         },
         {
-          "postUrl": "https://www.instagram.com/p/DPFACa0AfH4/"
+          "postUrl": "https://www.instagram.com/p/DPFACa0AfH4/?utm_source=ig_web_copy_link&igsh=MXR0cGlraGFha3pwZA=="
         },
         {
-          "postUrl": "https://www.instagram.com/p/DO_2Os9Aeyd/"
+          "postUrl": "https://www.instagram.com/p/DO_2Os9Aeyd/?utm_source=ig_web_copy_link&igsh=a2dka2E3MDQ5OWlh"
         },
         {
-          "postUrl": "https://www.instagram.com/reel/DO9k047iYWe/"
+          "postUrl": "https://www.instagram.com/reel/DO9k047iYWe/?utm_source=ig_web_copy_link&igsh=a3NoZXZ4Z3Fia2U4"
         },
         {
-          "postUrl": "https://www.instagram.com/p/DO9RaULlRjl/"
+          "postUrl": "https://www.instagram.com/p/DO9RaULlRjl/?utm_source=ig_web_copy_link&igsh=d3hzeHJocnZidzFs"
         },
         {
-          "postUrl": "https://www.instagram.com/p/DO6sncHjxHf/"
+          "postUrl": "https://www.instagram.com/p/DO6sncHjxHf/?utm_source=ig_web_copy_link&igsh=MTZ0ODhsc3dyaXdzaw=="
         },
         {
-          "postUrl": "https://www.instagram.com/p/DOzASrKiHYZ/"
+          "postUrl": "https://www.instagram.com/p/DOzASrKiHYZ/?utm_source=ig_web_copy_link&igsh=NWt5dHRoamhucHRv"
         },
         {
-          "postUrl": "https://www.instagram.com/p/DOwnSx4Dme5/"
+          "postUrl": "https://www.instagram.com/p/DOwnSx4Dme5/?utm_source=ig_web_copy_link&igsh=MWVrM3V2OXFscXo4aA=="
         }
       ]
     }
@@ -141,7 +140,7 @@
   "contactInfo": {
     "address": "<p>R. Franklin Bastos de Carvalho, 754, Centro, Manoel Viana - RS, CEP 97640-000</p>",
     "email": "emartinsadvogado@hotmail.com",
-    "whatsapp": "5555999169181",
+    "whatsapp": "55999169181",
     "whatsappLink": "https://wa.me/5555999169181",
     "phone": "(55) 99916-9181",
     "openingHours": "Seg a Sex: 09:00 - 12:00 e 14:00 - 18:00",
