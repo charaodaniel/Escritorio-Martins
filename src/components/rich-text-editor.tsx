@@ -31,18 +31,43 @@ import {
   Heading3,
   Heading4,
   Pilcrow,
+  ListMinus,
 } from "lucide-react";
 import { useCallback } from 'react';
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Input } from "./ui/input";
+import { Extension } from '@tiptap/core';
 
 const COLOR_PALETTE = [
   '#000000', '#444444', '#666666', '#999999', '#CCCCCC', '#FFFFFF',
   '#E60000', '#FF9900', '#FFFF00', '#008A00', '#0066CC', '#9933FF',
   'hsl(var(--primary))', 'hsl(var(--accent))', 'hsl(var(--foreground))'
 ];
+
+const ListStyle = Extension.create({
+  name: 'listStyle',
+  addGlobalAttributes() {
+    return [
+      {
+        types: ['bulletList'],
+        attributes: {
+          'data-list-style': {
+            default: null,
+            parseHTML: element => element.getAttribute('data-list-style'),
+            renderHTML: attributes => {
+              if (!attributes['data-list-style']) {
+                return {}
+              }
+              return { 'data-list-style': attributes['data-list-style'] }
+            },
+          },
+        },
+      },
+    ]
+  },
+});
 
 
 const Toolbar = ({ editor }: { editor: any }) => {
@@ -85,6 +110,19 @@ const Toolbar = ({ editor }: { editor: any }) => {
     if (editor.isActive('heading', { level: 4 })) return 'heading-4';
     return 'paragraph';
   };
+  
+  const toggleBulletListWithStyle = (style: string | null) => {
+    if (!editor.isActive('bulletList')) {
+      editor.chain().focus().toggleBulletList().updateAttributes('bulletList', { 'data-list-style': style }).run();
+    } else {
+      const currentStyle = editor.getAttributes('bulletList')['data-list-style'];
+      if (currentStyle === style) {
+        editor.chain().focus().toggleBulletList().run();
+      } else {
+        editor.chain().focus().updateAttributes('bulletList', { 'data-list-style': style }).run();
+      }
+    }
+  };
 
   const toolbarButtons = [
     { command: () => editor.chain().focus().toggleBold().run(), icon: Bold, isActive: editor.isActive('bold'), label: "Negrito" },
@@ -97,7 +135,8 @@ const Toolbar = ({ editor }: { editor: any }) => {
     { command: () => editor.chain().focus().setTextAlign('right').run(), icon: AlignRight, isActive: editor.isActive({ textAlign: 'right' }), label: "Alinhar à Direita" },
     { command: () => editor.chain().focus().setTextAlign('justify').run(), icon: AlignJustify, isActive: editor.isActive({ textAlign: 'justify' }), label: "Justificar" },
     { type: 'divider' },
-    { command: () => editor.chain().focus().toggleBulletList().run(), icon: List, isActive: editor.isActive('bulletList'), label: "Lista" },
+    { command: () => toggleBulletListWithStyle(null), icon: List, isActive: editor.isActive('bulletList', { 'data-list-style': null }), label: "Lista (Pontos)" },
+    { command: () => toggleBulletListWithStyle('dash'), icon: ListMinus, isActive: editor.isActive('bulletList', { 'data-list-style': 'dash' }), label: "Lista (Traços)" },
     { command: () => editor.chain().focus().toggleOrderedList().run(), icon: ListOrdered, isActive: editor.isActive('orderedList'), label: "Lista Numerada" },
     { type: 'divider' },
     { command: setLink, icon: Link2, isActive: editor.isActive('link'), label: "Inserir Link" },
@@ -230,6 +269,7 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
+      ListStyle,
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -250,5 +290,3 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     </div>
   );
 }
-
-    

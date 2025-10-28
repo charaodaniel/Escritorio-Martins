@@ -67,4 +67,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .prose ul[data-list-style="dash"] > li::before {
+    content: "-";
+    font-weight: 600;
+  }
 }
