@@ -107,7 +107,10 @@ const Toolbar = ({ editor }: { editor: any }) => {
   
   const toggleBulletListWithStyle = (style: string | null) => {
     if (!editor.isActive('bulletList')) {
-      editor.chain().focus().toggleBulletList().updateAttributes('bulletList', { 'data-list-style': style }).run();
+      editor.chain().focus().toggleBulletList().run();
+      if (style) {
+        editor.chain().focus().updateAttributes('bulletList', { 'data-list-style': style }).run();
+      }
     } else {
       const currentStyle = editor.getAttributes('bulletList')['data-list-style'];
       if (currentStyle === style) {
@@ -247,11 +250,10 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        underline: false,
+        bulletList: false, // Disable default bullet list to use our custom one
         heading: {
           levels: [1, 2, 3, 4],
         },
-        bulletList: false, // We're using our custom one
       }),
       CustomBulletList,
       TextStyle,
@@ -285,3 +287,5 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     </div>
   );
 }
+
+    
