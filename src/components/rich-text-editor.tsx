@@ -106,20 +106,22 @@ const Toolbar = ({ editor }: { editor: any }) => {
   };
   
   const toggleBulletListWithStyle = (style: string | null) => {
+    const chain = editor.chain().focus();
+
     if (!editor.isActive('bulletList')) {
-      editor.chain().focus().toggleBulletList().run();
-      if (style) {
-        editor.chain().focus().updateAttributes('bulletList', { 'data-list-style': style }).run();
-      }
+        chain.toggleBulletList().run();
+        if (style) {
+            chain.updateAttributes('bulletList', { 'data-list-style': style }).run();
+        }
     } else {
-      const currentStyle = editor.getAttributes('bulletList')['data-list-style'];
-      if (currentStyle === style) {
-        editor.chain().focus().toggleBulletList().run();
-      } else {
-        editor.chain().focus().updateAttributes('bulletList', { 'data-list-style': style }).run();
-      }
+        const currentStyle = editor.getAttributes('bulletList')['data-list-style'];
+        if (currentStyle === style) {
+            chain.toggleBulletList().run();
+        } else {
+            chain.updateAttributes('bulletList', { 'data-list-style': style }).run();
+        }
     }
-  };
+};
 
   const toolbarButtons = [
     { command: () => editor.chain().focus().toggleBold().run(), icon: Bold, isActive: editor.isActive('bold'), label: "Negrito" },
@@ -132,7 +134,7 @@ const Toolbar = ({ editor }: { editor: any }) => {
     { command: () => editor.chain().focus().setTextAlign('right').run(), icon: AlignRight, isActive: editor.isActive({ textAlign: 'right' }), label: "Alinhar à Direita" },
     { command: () => editor.chain().focus().setTextAlign('justify').run(), icon: AlignJustify, isActive: editor.isActive({ textAlign: 'justify' }), label: "Justificar" },
     { type: 'divider' },
-    { command: () => toggleBulletListWithStyle(null), icon: List, isActive: editor.isActive('bulletList', { 'data-list-style': null }), label: "Lista (Pontos)" },
+    { command: () => toggleBulletListWithStyle(null), icon: List, isActive: editor.isActive('bulletList') && !editor.getAttributes('bulletList')['data-list-style'], label: "Lista (Pontos)" },
     { command: () => toggleBulletListWithStyle('dash'), icon: ListMinus, isActive: editor.isActive('bulletList', { 'data-list-style': 'dash' }), label: "Lista (Traços)" },
     { command: () => editor.chain().focus().toggleOrderedList().run(), icon: ListOrdered, isActive: editor.isActive('orderedList'), label: "Lista Numerada" },
     { type: 'divider' },
@@ -250,10 +252,7 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        bulletList: false, // Disable default bullet list to use our custom one
-        heading: {
-          levels: [1, 2, 3, 4],
-        },
+        bulletList: false, 
       }),
       CustomBulletList,
       TextStyle,
@@ -287,5 +286,3 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     </div>
   );
 }
-
-    
