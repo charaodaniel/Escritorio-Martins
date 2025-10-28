@@ -9,8 +9,6 @@ import FontFamily from '@tiptap/extension-font-family';
 import TextStyle from '@tiptap/extension-text-style';
 import Underline from '@tiptap/extension-underline';
 import { Color } from '@tiptap/extension-color';
-import BulletList from '@tiptap/extension-bullet-list';
-import ListItem from '@tiptap/extension-list-item';
 
 import {
   Bold,
@@ -33,7 +31,6 @@ import {
   Heading3,
   Heading4,
   Pilcrow,
-  ListMinus,
 } from "lucide-react";
 import { useCallback } from 'react';
 import { Button } from "./ui/button";
@@ -46,21 +43,6 @@ const COLOR_PALETTE = [
   '#E60000', '#FF9900', '#FFFF00', '#008A00', '#0066CC', '#9933FF',
   'hsl(var(--primary))', 'hsl(var(--accent))', 'hsl(var(--foreground))'
 ];
-
-const CustomBulletList = BulletList.extend({
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      class: {
-        default: null,
-        parseHTML: element => element.getAttribute('class'),
-        renderHTML: attributes => {
-          return { class: attributes.class };
-        },
-      },
-    };
-  },
-});
 
 const Toolbar = ({ editor }: { editor: any }) => {
   if (!editor) {
@@ -102,16 +84,6 @@ const Toolbar = ({ editor }: { editor: any }) => {
     if (editor.isActive('heading', { level: 4 })) return 'heading-4';
     return 'paragraph';
   };
-  
-  const toggleDashList = () => {
-    editor.chain().focus().toggleBulletList().run()
-    if (editor.isActive('bulletList')) {
-      editor.chain().focus().updateAttributes('bulletList', { class: 'list-dash' }).run();
-    }
-  }
-
-  const isDashListActive = editor.isActive('bulletList', { class: 'list-dash' });
-  const isDefaultListActive = editor.isActive('bulletList') && !isDashListActive;
 
   const toolbarButtons = [
     { command: () => editor.chain().focus().toggleBold().run(), icon: Bold, isActive: editor.isActive('bold'), label: "Negrito" },
@@ -124,8 +96,7 @@ const Toolbar = ({ editor }: { editor: any }) => {
     { command: () => editor.chain().focus().setTextAlign('right').run(), icon: AlignRight, isActive: editor.isActive({ textAlign: 'right' }), label: "Alinhar à Direita" },
     { command: () => editor.chain().focus().setTextAlign('justify').run(), icon: AlignJustify, isActive: editor.isActive({ textAlign: 'justify' }), label: "Justificar" },
     { type: 'divider' },
-    { command: () => editor.chain().focus().toggleBulletList().run(), icon: List, isActive: isDefaultListActive, label: "Lista (Pontos)" },
-    { command: toggleDashList, icon: ListMinus, isActive: isDashListActive, label: "Lista (Traços)" },
+    { command: () => editor.chain().focus().toggleBulletList().run(), icon: List, isActive: editor.isActive('bulletList'), label: "Lista (Pontos)" },
     { command: () => editor.chain().focus().toggleOrderedList().run(), icon: ListOrdered, isActive: editor.isActive('orderedList'), label: "Lista Numerada" },
     { type: 'divider' },
     { command: setLink, icon: Link2, isActive: editor.isActive('link'), label: "Inserir Link" },
@@ -242,11 +213,11 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        bulletList: false, // Desabilitamos o bulletList do StarterKit para usar o nosso customizado
-        listItem: false,
+        // Desativa o comportamento padrão do Tab para que possamos usá-lo para indentação
+        keymap: {
+          Tab: () => true,
+        },
       }),
-      CustomBulletList,
-      ListItem,
       TextStyle,
       FontFamily,
       Color,
@@ -270,6 +241,23 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
       },
     },
   });
+
+  // Adiciona a funcionalidade de Tab e Shift+Tab
+  if (editor) {
+    editor.setOptions({
+        editorProps: {
+            handleKeyDown: (view, event) => {
+                if (event.key === 'Tab') {
+                    if (event.shiftKey) {
+                        return editor.chain().focus().liftListItem('listItem').run() || editor.chain().focus().outdent().run();
+                    }
+                    return editor.chain().focus().sinkListItem('listItem').run() || editor.chain().focus().indent().run();
+                }
+                return false;
+            }
+        }
+    })
+  }
 
   return (
     <div className="border rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
