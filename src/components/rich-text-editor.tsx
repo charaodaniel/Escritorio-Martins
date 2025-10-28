@@ -55,15 +55,14 @@ const CustomBulletList = BulletList.extend({
         parseHTML: element => element.getAttribute('data-list-style'),
         renderHTML: attributes => {
           if (!attributes['data-list-style']) {
-            return {}
+            return {};
           }
-          return { 'data-list-style': attributes['data-list-style'] }
+          return { 'data-list-style': attributes['data-list-style'] };
         },
       },
-    }
+    };
   },
 });
-
 
 const Toolbar = ({ editor }: { editor: any }) => {
   if (!editor) {
@@ -252,7 +251,7 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
         heading: {
           levels: [1, 2, 3, 4],
         },
-        bulletList: false, // Desabilitar o padrão para usar o nosso
+        bulletList: false, // We're using our custom one
       }),
       CustomBulletList,
       TextStyle,
@@ -286,5 +285,3 @@ export default function RichTextEditor({ value, onChange, disabled }: RichTextEd
     </div>
   );
 }
-
-    
