@@ -106,20 +106,18 @@ const Toolbar = ({ editor }: { editor: any }) => {
   };
   
   const toggleBulletListWithStyle = (style: string | null) => {
-    if (!editor.isActive('bulletList')) {
-        // If the list is not active, turn it on and set the style in one chain.
-        editor.chain().focus().toggleBulletList().updateAttributes('bulletList', { 'data-list-style': style }).run();
+    const chain = editor.chain().focus();
+    const isListActive = editor.isActive('bulletList');
+    const currentStyle = editor.getAttributes('bulletList')['data-list-style'] || null;
+
+    if (isListActive && currentStyle === style) {
+        // If the list is active with the same style, turn it off.
+        chain.toggleBulletList().run();
     } else {
-        const currentStyle = editor.getAttributes('bulletList')['data-list-style'];
-        if (currentStyle === style || (currentStyle === null && style === null)) {
-            // If the same style button is clicked, turn off the list.
-            editor.chain().focus().toggleBulletList().run();
-        } else {
-            // If a different style button is clicked, just update the style.
-            editor.chain().focus().updateAttributes('bulletList', { 'data-list-style': style }).run();
-        }
+        // Otherwise, turn on the list and set/update the style.
+        chain.toggleBulletList().updateAttributes('bulletList', { 'data-list-style': style }).run();
     }
-};
+  };
 
   const toolbarButtons = [
     { command: () => editor.chain().focus().toggleBold().run(), icon: Bold, isActive: editor.isActive('bold'), label: "Negrito" },
@@ -132,7 +130,7 @@ const Toolbar = ({ editor }: { editor: any }) => {
     { command: () => editor.chain().focus().setTextAlign('right').run(), icon: AlignRight, isActive: editor.isActive({ textAlign: 'right' }), label: "Alinhar à Direita" },
     { command: () => editor.chain().focus().setTextAlign('justify').run(), icon: AlignJustify, isActive: editor.isActive({ textAlign: 'justify' }), label: "Justificar" },
     { type: 'divider' },
-    { command: () => toggleBulletListWithStyle(null), icon: List, isActive: editor.isActive('bulletList') && !editor.getAttributes('bulletList')['data-list-style'], label: "Lista (Pontos)" },
+    { command: () => toggleBulletListWithStyle(null), icon: List, isActive: editor.isActive('bulletList', { 'data-list-style': null }), label: "Lista (Pontos)" },
     { command: () => toggleBulletListWithStyle('dash'), icon: ListMinus, isActive: editor.isActive('bulletList', { 'data-list-style': 'dash' }), label: "Lista (Traços)" },
     { command: () => editor.chain().focus().toggleOrderedList().run(), icon: ListOrdered, isActive: editor.isActive('orderedList'), label: "Lista Numerada" },
     { type: 'divider' },
