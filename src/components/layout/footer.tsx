@@ -58,11 +58,6 @@ export default function Footer({ content }: FooterProps) {
                 </li>
               ))}
                <li>
-                  <Link href="/uteis" className="text-sm text-muted-foreground hover:text-accent transition-colors">
-                    Links Úteis
-                  </Link>
-                </li>
-               <li>
                   <Link href="/links" className="text-sm text-muted-foreground hover:text-accent transition-colors">
                     Nossos Links
                   </Link>
@@ -105,5 +100,3 @@ export default function Footer({ content }: FooterProps) {
     </footer>
   );
 }
-
-    

@@ -22,7 +22,6 @@ const navLinks = [
   { href: "/#attorneys", label: "Equipe" },
   { href: "/#testimonials", label: "Publicações" },
   { href: "/#contact", label: "Contato" },
-  { href: "/uteis", label: "Links Úteis" },
 ];
 
 type HeaderProps = {
@@ -118,5 +117,3 @@ export default function Header({ content }: HeaderProps) {
     </header>
   );
 }
-
-    
