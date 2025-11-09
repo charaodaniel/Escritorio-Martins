@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -6,12 +7,12 @@ import { useEffect, useState } from "react";
 import { ContentData } from "@/lib/content-loader";
 
 const navLinks = [
-  { href: "#practice-areas", label: "Áreas de Atuação" },
-  { href: "#why-us", label: "Diferenciais" },
-  { href: "#our-history", label: "Nossa História" },
-  { href: "#attorneys", label: "Equipe" },
-  { href: "#testimonials", label: "Publicações" },
-  { href: "#contact", label: "Contato" },
+  { href: "/#practice-areas", label: "Áreas de Atuação" },
+  { href: "/#why-us", label: "Diferenciais" },
+  { href: "/#our-history", label: "Nossa História" },
+  { href: "/#attorneys", label: "Equipe" },
+  { href: "/#testimonials", label: "Publicações" },
+  { href: "/#contact", label: "Contato" },
 ];
 
 type FooterProps = {
@@ -36,7 +37,7 @@ export default function Footer({ content }: FooterProps) {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           <div className="lg:col-span-2 flex flex-col gap-4">
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-2 font-headline text-2xl font-bold"
             >
               <Scale className="h-7 w-7 text-accent" />
@@ -56,6 +57,11 @@ export default function Footer({ content }: FooterProps) {
                   </Link>
                 </li>
               ))}
+               <li>
+                  <Link href="/uteis" className="text-sm text-muted-foreground hover:text-accent transition-colors">
+                    Links Úteis
+                  </Link>
+                </li>
                <li>
                   <Link href="/links" className="text-sm text-muted-foreground hover:text-accent transition-colors">
                     Nossos Links
@@ -99,3 +105,5 @@ export default function Footer({ content }: FooterProps) {
     </footer>
   );
 }
+
+    

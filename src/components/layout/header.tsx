@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -15,12 +16,13 @@ import { cn } from "@/lib/utils";
 import { ContentData } from "@/lib/content-loader";
 
 const navLinks = [
-  { href: "#practice-areas", label: "Áreas de Atuação" },
-  { href: "#why-us", label: "Diferenciais" },
-  { href: "#our-history", label: "Nossa História" },
-  { href: "#attorneys", label: "Equipe" },
-  { href: "#testimonials", label: "Publicações" },
-  { href: "#contact", label: "Contato" },
+  { href: "/#practice-areas", label: "Áreas de Atuação" },
+  { href: "/#why-us", label: "Diferenciais" },
+  { href: "/#our-history", label: "Nossa História" },
+  { href: "/#attorneys", label: "Equipe" },
+  { href: "/#testimonials", label: "Publicações" },
+  { href: "/#contact", label: "Contato" },
+  { href: "/uteis", label: "Links Úteis" },
 ];
 
 type HeaderProps = {
@@ -57,13 +59,13 @@ export default function Header({ content }: HeaderProps) {
     <header
       className={cn(
         "sticky top-0 z-50 w-full border-b transition-all duration-300",
-        isScrolled ? "border-border bg-background/95 backdrop-blur-sm" : "border-transparent bg-transparent",
-        isScrolled ? "text-foreground" : "text-white"
+        isScrolled ? "border-border bg-background/95 backdrop-blur-sm" : "border-transparent bg-background",
+        isScrolled ? "text-foreground" : "text-foreground"
       )}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link
-          href="#"
+          href="/"
           className="flex items-center gap-2 font-headline text-xl font-bold"
         >
           <Scale className="h-6 w-6 text-accent" />
@@ -80,7 +82,7 @@ export default function Header({ content }: HeaderProps) {
             </Button>
             <Sheet>
                 <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/10 focus-visible:bg-white/10">
+                <Button variant="ghost" size="icon" className="md:hidden hover:bg-accent/10 focus-visible:bg-accent/10">
                     <Menu className="h-6 w-6" />
                     <span className="sr-only">Alternar menu de navegação</span>
                 </Button>
@@ -88,7 +90,7 @@ export default function Header({ content }: HeaderProps) {
                 <SheetContent side="right" className="bg-background text-foreground">
                 <div className="flex flex-col gap-8 p-6">
                     <Link
-                        href="#"
+                        href="/"
                         className="flex items-center gap-2 font-headline text-xl font-bold text-accent"
                     >
                         <Scale className="h-6 w-6" />
@@ -116,3 +118,5 @@ export default function Header({ content }: HeaderProps) {
     </header>
   );
 }
+
+    

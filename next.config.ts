@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
@@ -45,9 +46,39 @@ const nextConfig: NextConfig = {
         hostname: 'scontent-*.cdninstagram.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'logodownload.org',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.gov.br',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.taiyampa.com.br',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gauchazh.clicrbs.com.br',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.detran.rs.gov.br',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.sefaz.rs.gov.br',
       }
     ],
   },
 };
 
 export default nextConfig;
+
+    

@@ -1,0 +1,175 @@
+
+[
+  {
+    "name": "Facebook",
+    "url": "https://www.facebook.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+  },
+  {
+    "name": "Twitter",
+    "url": "https://www.twitter.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg"
+  },
+  {
+    "name": "Outlook",
+    "url": "https://www.outlook.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/d/df/Microsoft_Office_Outlook_%282018%E2%80%93present%29.svg"
+  },
+  {
+    "name": "WhatsApp",
+    "url": "https://web.whatsapp.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+  },
+  {
+    "name": "YouTube",
+    "url": "https://www.youtube.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg"
+  },
+  {
+    "name": "Yahoo",
+    "url": "https://www.yahoo.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Yahoo%21_2019_logo.svg"
+  },
+  {
+    "name": "Gmail",
+    "url": "https://mail.google.com",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"
+  },
+  {
+    "name": "UOL",
+    "url": "https://www.uol.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2014/12/uol-logo-6.png"
+  },
+  {
+    "name": "Terra",
+    "url": "https://www.terra.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2015/02/terra-logo-3.png"
+  },
+  {
+    "name": "BOL",
+    "url": "https://www.bol.uol.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2019/08/bol-logo-1.png"
+  },
+  {
+    "name": "clicRBS",
+    "url": "https://www.clicrbs.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2019/07/clicrbs-logo.png"
+  },
+  {
+    "name": "ZH",
+    "url": "https://gauchazh.clicrbs.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2019/07/gauchazh-logo-0.png"
+  },
+  {
+    "name": "R7",
+    "url": "https://www.r7.com",
+    "logo": "https://logodownload.org/wp-content/uploads/2014/05/r7-logo-5.png"
+  },
+  {
+    "name": "G1",
+    "url": "https://g1.globo.com",
+    "logo": "https://logodownload.org/wp-content/uploads/2017/05/g1-logo-globo-4.png"
+  },
+  {
+    "name": "Globo",
+    "url": "https://www.globo.com",
+    "logo": "https://logodownload.org/wp-content/uploads/2020/11/globo-logo-4.png"
+  },
+  {
+    "name": "SBT",
+    "url": "https://www.sbt.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2015/12/sbt-logo-9.png"
+  },
+  {
+    "name": "Band",
+    "url": "https://www.band.uol.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2021/09/band-logo-5.png"
+  },
+  {
+    "name": "RedeTV!",
+    "url": "https://www.redetv.uol.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2015/02/redetv-logo.png"
+  },
+  {
+    "name": "Receita Federal",
+    "url": "https://www.gov.br/receitafederal",
+    "logo": "https://www.gov.br/receitafederal/pt-br/assuntos/noticias/2022/outubro/receita-federal-lanca-nova-marca/marca-receita-federal-vertical-fundo-branco.png"
+  },
+  {
+    "name": "Taiyampa",
+    "url": "https://www.taiyampa.com.br",
+    "logo": "https://www.taiyampa.com.br/wp-content/uploads/2023/11/logo_taiyampa_principal_2023.png"
+  },
+  {
+    "name": "Banrisul",
+    "url": "https://www.banrisul.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2016/09/banrisul-logo-1.png"
+  },
+  {
+    "name": "Caixa",
+    "url": "https://www.caixa.gov.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2014/02/caixa-logo-5.png"
+  },
+  {
+    "name": "Itaú",
+    "url": "https://www.itau.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2014/11/itau-logo-0.png"
+  },
+  {
+    "name Sicredi",
+    "url": "https://www.sicredi.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2017/09/sicredi-logo-1.png"
+  },
+  {
+    "name": "Banco do Brasil",
+    "url": "https://www.bb.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2020/10/banco-do-brasil-logo-4.png"
+  },
+  {
+    "name": "Bradesco",
+    "url": "https://banco.bradesco",
+    "logo": "https://logodownload.org/wp-content/uploads/2014/08/bradesco-logo-2-1.png"
+  },
+  {
+    "name": "Santander",
+    "url": "https://www.santander.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2014/09/santander-logo-1.png"
+  },
+  {
+    "name": "Jornal do Comércio",
+    "url": "https://www.jornaldocomercio.com",
+    "logo": "https://logodownload.org/wp-content/uploads/2021/04/jornal-do-comercio-logo-1.png"
+  },
+  {
+    "name": "Grêmio",
+    "url": "https://gremio.net",
+    "logo": "https://logodownload.org/wp-content/uploads/2016/10/gremio-logo-4-1.png"
+  },
+  {
+    "name": "Internacional",
+    "url": "https://www.internacional.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2015/05/Internacional-logo-escudo-shield-1.png"
+  },
+  {
+    "name": "Rádio Gaúcha",
+    "url": "https://gauchazh.clicrbs.com.br/radio-gaucha/",
+    "logo": "https://logodownload.org/wp-content/uploads/2019/07/radio-gaucha-logo-0.png"
+  },
+  {
+    "name": "Correios",
+    "url": "https://www.correios.com.br",
+    "logo": "https://logodownload.org/wp-content/uploads/2017/05/correios-logo-0-1.png"
+  },
+  {
+    "name": "Detran RS",
+    "url": "https://www.detran.rs.gov.br",
+    "logo": "https://www.detran.rs.gov.br/upload/20230221160352-20220302_detranrs-marca_h-negativo-rgb.png"
+  },
+  {
+    "name": "Receita Estadual",
+    "url": "https://www.sefaz.rs.gov.br/receita/receita-estadual",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Bras%C3%A3o_do_Rio_Grande_do_Sul.svg"
+  }
+]
+
+    
