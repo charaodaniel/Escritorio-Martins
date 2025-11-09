@@ -9,7 +9,7 @@ export default function ResultadosPage() {
 
     return (
          <>
-            <Script async src="https://cse.google.com/cse.js?cx=84751531899169668" />
+            <Script async src="https://cse.google.com/cse.js?cx=cda8cf135323a4c28" />
             <div className="flex min-h-screen flex-col bg-background">
                 <Header content={content.contactInfo} />
                  <main className="flex-1 py-12 sm:py-16">
@@ -22,5 +22,3 @@ export default function ResultadosPage() {
         </>
     )
 }
-
-    

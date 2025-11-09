@@ -74,11 +74,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'www.sefaz.rs.gov.br',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.tre-rs.jus.br',
       }
     ],
   },
 };
 
 export default nextConfig;
-
-    

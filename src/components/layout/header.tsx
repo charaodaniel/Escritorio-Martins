@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Scale } from "lucide-react";
+import { Menu, Scale, Link2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,7 @@ const navLinks = [
   { href: "/#our-history", label: "Nossa História" },
   { href: "/#attorneys", label: "Equipe" },
   { href: "/#testimonials", label: "Publicações" },
+  { href: "/uteis", label: "Links Úteis" },
   { href: "/#contact", label: "Contato" },
 ];
 
@@ -70,7 +71,7 @@ export default function Header({ content }: HeaderProps) {
           <Scale className="h-6 w-6 text-accent" />
           <span className="transition-colors">Vieira & Martins Advogados</span>
         </Link>
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 md:flex">
           {navLinks.map((link) => (
             <NavLink key={link.href} {...link} />
           ))}
