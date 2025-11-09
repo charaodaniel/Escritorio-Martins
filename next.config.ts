@@ -72,12 +72,16 @@ const nextConfig: NextConfig = {
         hostname: 'www.detran.rs.gov.br',
       },
       {
-        protocol: 'https',
+        protocol: 'https://',
         hostname: 'www.sefaz.rs.gov.br',
       },
       {
         protocol: 'https',
         hostname: 'www.tre-rs.jus.br',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.google.com',
       }
     ],
   },

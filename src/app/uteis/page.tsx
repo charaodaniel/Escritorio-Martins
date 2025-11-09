@@ -22,6 +22,16 @@ const GoogleSearch = () => {
 export default function UteisPage() {
     const content = loadContent();
     
+    const getFaviconUrl = (url: string) => {
+        try {
+            const domain = new URL(url).hostname;
+            return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+        } catch (error) {
+            // Retorna um placeholder ou ícone padrão em caso de URL inválida
+            return 'https://www.google.com/s2/favicons?domain=google.com&sz=64';
+        }
+    };
+
     return (
         <>
             <Script async src="https://cse.google.com/cse.js?cx=cda8cf135323a4c28" />
@@ -50,11 +60,12 @@ export default function UteisPage() {
                                             <CardContent className="p-4 flex flex-col items-center justify-center gap-3 h-full">
                                                 <div className="relative w-16 h-16">
                                                     <Image
-                                                        src={link.logo}
+                                                        src={getFaviconUrl(link.url)}
                                                         alt={`${link.name} logo`}
                                                         fill
                                                         className="object-contain"
                                                         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 10vw"
+                                                        unoptimized // Favicons podem não ter os headers corretos para otimização do Next/Image
                                                     />
                                                 </div>
                                                 <p className="text-sm text-center font-medium text-muted-foreground group-hover:text-primary transition-colors w-full">
