@@ -15,7 +15,7 @@ export const metadata = {
 
 const GoogleSearch = () => {
     return (
-      <div className="gcse-searchbox-only" data-resultsUrl="/uteis/resultados" data-newWindow="true" data-queryParameterName="search"></div>
+      <div className="gcse-searchbox-only" data-results-url="/uteis/resultados" data-new-window="true" data-query-parameter-name="search"></div>
     );
 };
 
