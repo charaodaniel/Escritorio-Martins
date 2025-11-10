@@ -22,7 +22,7 @@
   },
   {
     "name": "Yahoo",
-    "url": "https://www.yahoo.com.br"
+    "url": "https://br.yahoo.com"
   },
   {
     "name": "Gmail",
@@ -69,20 +69,16 @@
     "url": "https://www.band.uol.com.br"
   },
   {
-    "name": "RedeTV!",
-    "url": "https://www.redetv.uol.com.br"
-  },
-   {
     "name": "Record",
     "url": "https://www.recordtv.com.br/"
   },
   {
-    "name": "Receita Federal",
-    "url": "https://www.gov.br/receitafederal"
+    "name": "RedeTV!",
+    "url": "https://www.redetv.uol.com.br"
   },
   {
-    "name": "Taiyampa",
-    "url": "https://www.taiyampa.com.br"
+    "name": "Receita Federal",
+    "url": "https://www.gov.br/receitafederal"
   },
   {
     "name": "Banco do Brasil",
@@ -151,5 +147,109 @@
   {
     "name": "Governo RS",
     "url": "https://www.rs.gov.br"
+  },
+  {
+    "name": "Prefeitura de Manoel Viana",
+    "url": "https://www.manoelviana.rs.gov.br"
+  },
+  {
+    "name": "Câmara de Manoel Viana",
+    "url": "https://www.cmvmanoelviana.rs.gov.br"
+  },
+  {
+    "name": "IFFarroupilha Alegrete",
+    "url": "https://www.iffarroupilha.edu.br/alegrete"
+  },
+  {
+    "name": "Unipampa",
+    "url": "https://unipampa.edu.br"
+  },
+  {
+    "name": "UFSM",
+    "url": "https://www.ufsm.br"
+  },
+  {
+    "name": "UERGS",
+    "url": "https://www.uergs.edu.br"
+  },
+  {
+    "name": "URI",
+    "url": "https://www.uri.br"
+  },
+  {
+    "name": "Unopar",
+    "url": "https://www.unopar.com.br"
+  },
+  {
+    "name": "Previsão do Tempo",
+    "url": "https://jornaldotempo.uol.com.br/"
+  },
+  {
+    "name": "Rádios Online",
+    "url": "http://www.radiosaovivo.net"
+  },
+  {
+    "name": "Rádio Ibicuí FM",
+    "url": "http://www.ibicuifm.com"
+  },
+  {
+    "name": "Rádio Verdes Pampas",
+    "url": "http://www.verdespampas.com.br"
+  },
+  {
+    "name": "TRT4 - RS",
+    "url": "http://www.trt4.jus.br"
+  },
+  {
+    "name": "Secretaria da Educação RS",
+    "url": "http://www.educacao.rs.gov.br"
+  },
+  {
+    "name": "Previdência Social",
+    "url": "http://www.mpas.gov.br"
+  },
+  {
+    "name": "PGFN",
+    "url": "http://www.pgfn.fazenda.gov.br"
+  },
+  {
+    "name": "TCE RS",
+    "url": "http://www.tce.rs.gov.br"
+  },
+  {
+    "name": "Claro",
+    "url": "http://www.claro.com.br"
+  },
+  {
+    "name": "Oi",
+    "url": "http://www.oi.com.br"
+  },
+  {
+    "name": "TIM",
+    "url": "http://www.tim.com.br"
+  },
+  {
+    "name": "Vivo",
+    "url": "http://www.vivo.com.br"
+  },
+  {
+    "name": "Jornal Nova Pauta",
+    "url": "http://www.novapauta.com"
+  },
+  {
+    "name": "Expresso Ilustrado",
+    "url": "http://www.expressoilustrado.com.br"
+  },
+  {
+    "name": "Rafael Nemitz",
+    "url": "http://www.rafaelnemitz.com"
+  },
+  {
+    "name": "Alegrete Tudo",
+    "url": "http://alegretetudo.com.br"
+  },
+  {
+    "name": "Correio do Povo",
+    "url": "http://www.correiodopovo.com.br"
   }
 ]
