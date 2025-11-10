@@ -47,10 +47,10 @@ export default function UteisPage() {
                     <section className="py-12 sm:py-16">
                         <div className="container mx-auto px-4 md:px-6">
                             <div className="text-center max-w-3xl mx-auto">
-                                <h1 className="font-headline text-4xl font-bold tracking-tight text-primary sm:text-5xl">
+                                <h1 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl">
                                     Links Úteis
                                 </h1>
-                                <p className="mt-6 text-lg text-muted-foreground">
+                                <p className="mt-4 text-base text-muted-foreground">
                                     Acesse rapidamente sites e serviços importantes. Utilize a barra de pesquisa ou navegue pelos links abaixo.
                                 </p>
                             </div>
