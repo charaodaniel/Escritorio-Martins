@@ -7,6 +7,8 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { loadContent } from '@/lib/content-loader';
 import Script from 'next/script';
+import { Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 export const metadata = {
     title: "Links Úteis | Vieira & Martins Advogados",
@@ -15,12 +17,51 @@ export const metadata = {
 
 const GoogleSearch = () => {
     return (
-      <div 
-        className="gcse-searchbox-only" 
-        data-results-url="/uteis/resultados" 
-        data-new-window="true" 
-        data-query-parameter-name="search"
-      ></div>
+      <div className="relative w-full">
+        <div 
+          className="gcse-searchbox-only"
+          data-results-url="/uteis/resultados"
+          data-new-window="true"
+          data-query-parameter-name="search"
+        ></div>
+        <style jsx global>{`
+          .gsc-control-cse {
+            background-color: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+          }
+          .gsc-search-box-tools .gsc-search-box .gsc-input {
+            padding-left: 2.5rem !important; 
+            height: 40px !important;
+          }
+          form.gsc-search-box {
+            margin-bottom: 0 !important;
+          }
+          .gsc-input-box {
+            border: 1px solid hsl(var(--input)) !important;
+            background-color: hsl(var(--background)) !important;
+            border-radius: var(--radius) !important;
+            height: 40px !important;
+            display: flex;
+            align-items: center;
+          }
+          .gsc-search-button-v2 {
+            border-radius: var(--radius) !important;
+            background-color: hsl(var(--primary)) !important;
+            border-color: hsl(var(--primary)) !important;
+            width: 80px !important;
+            cursor: pointer !important;
+          }
+          .gsc-search-button-v2:hover {
+            background-color: hsl(var(--primary) / 0.9) !important;
+          }
+           .gsc-search-button-v2 svg {
+            width: 16px !important;
+            height: 16px !important;
+          }
+        `}</style>
+         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      </div>
     );
 };
 
@@ -29,7 +70,6 @@ const getFaviconUrl = (url: string) => {
         const domain = new URL(url).hostname;
         return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
     } catch (error) {
-        // Retorna um ícone padrão em caso de URL inválida
         return 'https://www.google.com/s2/favicons?domain=google.com&sz=64';
     }
 };
@@ -39,7 +79,6 @@ export default function UteisPage() {
 
     return (
         <>
-            {/* O script do Google Custom Search Engine é carregado aqui */}
             <Script async src="https://cse.google.com/cse.js?cx=cda8cf135323a4c28" />
             <div className="flex min-h-screen flex-col bg-background">
                 <Header content={content.contactInfo} />
@@ -71,7 +110,7 @@ export default function UteisPage() {
                                                         fill
                                                         className="object-contain"
                                                         sizes="64px"
-                                                        unoptimized // Favicons podem não ter os headers corretos para otimização do Next/Image
+                                                        unoptimized
                                                     />
                                                 </div>
                                                 <p className="text-sm text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
