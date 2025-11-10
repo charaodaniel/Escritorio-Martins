@@ -8,9 +8,6 @@ import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { loadContent } from '@/lib/content-loader';
 import Script from 'next/script';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-
 
 const GoogleSearch = () => {
     return (
@@ -26,11 +23,20 @@ const GoogleSearch = () => {
             background-color: transparent !important;
             border: none !important;
             padding: 0 !important;
+            width: 100% !important;
           }
           form.gsc-search-box {
+            display: flex !important;
+            gap: 0.5rem !important;
+            width: 100% !important;
             margin-bottom: 0 !important;
-            display: flex;
-            gap: 0.5rem;
+          }
+          table.gsc-search-box {
+            width: 100% !important;
+            margin-bottom: 0 !important;
+          }
+          td.gsc-input {
+             padding-right: 12px !important;
           }
           .gsc-input-box {
             flex-grow: 1;
@@ -39,28 +45,32 @@ const GoogleSearch = () => {
             border-radius: var(--radius) !important;
             height: 40px !important;
           }
-          table.gsc-search-box {
-            width: 100%;
+          input.gsc-input {
+            background-color: transparent !important;
+            color: hsl(var(--foreground)) !important;
+            font-family: inherit !important;
+            font-size: 0.875rem !important; /* text-sm */
+            height: 100% !important;
+            padding: 0 1rem !important;
           }
-          .gsc-search-box-tools .gsc-search-box .gsc-input {
-            padding-right: 1rem !important;
-            height: 40px !important;
-          }
-          .gsc-search-button-v2 {
+          .gsc-search-button-v2,
+          button.gsc-search-button-v2 {
             width: auto !important;
             height: 40px !important;
-            padding: 0 1rem !important;
+            padding: 0 1.5rem !important;
             border-radius: var(--radius) !important;
             background-color: hsl(var(--primary)) !important;
             border-color: hsl(var(--primary)) !important;
             cursor: pointer !important;
+            font-family: inherit !important;
+            color: hsl(var(--primary-foreground)) !important;
           }
-          .gsc-search-button-v2:hover {
+          .gsc-search-button-v2:hover,
+          button.gsc-search-button-v2:hover {
             background-color: hsl(var(--primary) / 0.9) !important;
+            border-color: hsl(var(--primary) / 0.9) !important;
           }
            .gsc-search-button-v2 svg {
-            width: 16px !important;
-            height: 16px !important;
             fill: hsl(var(--primary-foreground)) !important;
           }
         `}</style>
