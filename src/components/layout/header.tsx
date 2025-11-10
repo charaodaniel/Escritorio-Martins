@@ -21,7 +21,6 @@ const navLinks = [
   { href: "/#our-history", label: "Nossa História" },
   { href: "/#attorneys", label: "Equipe" },
   { href: "/#testimonials", label: "Publicações" },
-  { href: "/uteis", label: "Links Úteis" },
   { href: "/#contact", label: "Contato" },
 ];
 
