@@ -133,8 +133,16 @@
     "url": "https://www.tjrs.jus.br/novo/"
   },
   {
+    "name": "TRT4 - RS",
+    "url": "https://www.trt4.jus.br"
+  },
+  {
     "name": "TRE RS",
     "url": "https://www.tre-rs.jus.br"
+  },
+  {
+    "name": "TCE RS",
+    "url": "https://www.tce.rs.gov.br"
   },
   {
     "name": "Portal do Servidor RS",
@@ -181,75 +189,63 @@
     "url": "https://www.unopar.com.br"
   },
   {
-    "name": "Previsão do Tempo",
-    "url": "https://jornaldotempo.uol.com.br/"
-  },
-  {
-    "name": "Rádios Online",
-    "url": "http://www.radiosaovivo.net"
-  },
-  {
-    "name": "Rádio Ibicuí FM",
-    "url": "http://www.ibicuifm.com"
-  },
-  {
-    "name": "Rádio Verdes Pampas",
-    "url": "http://www.verdespampas.com.br"
-  },
-  {
-    "name": "TRT4 - RS",
-    "url": "http://www.trt4.jus.br"
-  },
-  {
-    "name": "Secretaria da Educação RS",
-    "url": "http://www.educacao.rs.gov.br"
-  },
-  {
     "name": "Previdência Social",
-    "url": "http://www.mpas.gov.br"
+    "url": "https://www.gov.br/inss"
   },
   {
     "name": "PGFN",
-    "url": "http://www.pgfn.fazenda.gov.br"
+    "url": "https://www.pgfn.gov.br"
   },
   {
-    "name": "TCE RS",
-    "url": "http://www.tce.rs.gov.br"
+    "name": "Secretaria da Educação RS",
+    "url": "https://educacao.rs.gov.br"
   },
   {
     "name": "Claro",
-    "url": "http://www.claro.com.br"
+    "url": "https://www.claro.com.br"
   },
   {
     "name": "Oi",
-    "url": "http://www.oi.com.br"
+    "url": "https://www.oi.com.br"
   },
   {
     "name": "TIM",
-    "url": "http://www.tim.com.br"
+    "url": "https://www.tim.com.br"
   },
   {
     "name": "Vivo",
-    "url": "http://www.vivo.com.br"
+    "url": "https://www.vivo.com.br"
   },
   {
     "name": "Jornal Nova Pauta",
-    "url": "http://www.novapauta.com"
+    "url": "https://www.novapauta.com"
   },
   {
     "name": "Expresso Ilustrado",
-    "url": "http://www.expressoilustrado.com.br"
+    "url": "https://www.expressoilustrado.com.br"
   },
   {
     "name": "Rafael Nemitz",
-    "url": "http://www.rafaelnemitz.com"
+    "url": "https://www.rafaelnemitz.com"
   },
   {
     "name": "Alegrete Tudo",
-    "url": "http://alegretetudo.com.br"
+    "url": "https://alegretetudo.com.br"
   },
   {
     "name": "Correio do Povo",
-    "url": "http://www.correiodopovo.com.br"
+    "url": "https://www.correiodopovo.com.br"
+  },
+  {
+    "name": "Previsão do Tempo",
+    "url": "https://weather.com/"
+  },
+  {
+    "name": "Rádio Ibicuí FM",
+    "url": "https://www.ibicuifm.com"
+  },
+  {
+    "name": "Rádio Verdes Pampas",
+    "url": "https://www.verdespampas.com.br"
   }
 ]

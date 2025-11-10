@@ -41,17 +41,17 @@ export default function UteisPage() {
                                 <Link href={link.url} key={link.name} target="_blank" rel="noopener noreferrer" className="block group">
                                     <Card className="h-full overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 bg-card">
                                         <CardContent className="p-4 flex flex-col items-center justify-center gap-3 h-full">
-                                            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-border/50 p-2 bg-white">
+                                            <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-border/50 p-1 bg-white">
                                                 <Image
                                                     src={getFaviconUrl(link.url)}
                                                     alt={`Logo do ${link.name}`}
                                                     fill
                                                     className="object-contain"
-                                                    sizes="64px"
+                                                    sizes="48px"
                                                     unoptimized // Favicons podem ter formatos variados, melhor não otimizar
                                                 />
                                             </div>
-                                            <p className="text-sm text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                                            <p className="text-xs text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
                                                 {link.name}
                                             </p>
                                         </CardContent>
