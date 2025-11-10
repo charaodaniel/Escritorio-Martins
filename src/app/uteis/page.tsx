@@ -1,4 +1,5 @@
 
+"use client";
 import Image from 'next/image';
 import Link from 'next/link';
 import links from '@/data/useful-links.json';
@@ -10,14 +11,10 @@ import Script from 'next/script';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
-export const metadata = {
-    title: "Links Úteis | Vieira & Martins Advogados",
-    description: "Uma coleção de links úteis para acesso rápido a serviços e informações importantes em Manoel Viana e região.",
-};
 
 const GoogleSearch = () => {
     return (
-      <div className="relative w-full">
+      <div className="w-full">
         <div 
           className="gcse-searchbox-only"
           data-results-url="/uteis/resultados"
@@ -30,26 +27,32 @@ const GoogleSearch = () => {
             border: none !important;
             padding: 0 !important;
           }
-          .gsc-search-box-tools .gsc-search-box .gsc-input {
-            padding-left: 2.5rem !important; 
-            height: 40px !important;
-          }
           form.gsc-search-box {
             margin-bottom: 0 !important;
+            display: flex;
+            gap: 0.5rem;
           }
           .gsc-input-box {
+            flex-grow: 1;
             border: 1px solid hsl(var(--input)) !important;
             background-color: hsl(var(--background)) !important;
             border-radius: var(--radius) !important;
             height: 40px !important;
-            display: flex;
-            align-items: center;
+          }
+          table.gsc-search-box {
+            width: 100%;
+          }
+          .gsc-search-box-tools .gsc-search-box .gsc-input {
+            padding-right: 1rem !important;
+            height: 40px !important;
           }
           .gsc-search-button-v2 {
+            width: auto !important;
+            height: 40px !important;
+            padding: 0 1rem !important;
             border-radius: var(--radius) !important;
             background-color: hsl(var(--primary)) !important;
             border-color: hsl(var(--primary)) !important;
-            width: 80px !important;
             cursor: pointer !important;
           }
           .gsc-search-button-v2:hover {
@@ -58,12 +61,13 @@ const GoogleSearch = () => {
            .gsc-search-button-v2 svg {
             width: 16px !important;
             height: 16px !important;
+            fill: hsl(var(--primary-foreground)) !important;
           }
         `}</style>
-         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
       </div>
     );
 };
+
 
 const getFaviconUrl = (url: string) => {
     try {
@@ -95,7 +99,8 @@ export default function UteisPage() {
                             </div>
 
                             <div className="max-w-2xl mx-auto my-8">
-                                <GoogleSearch />
+                               <div className='mb-2 text-sm font-medium'>Pesquisar:</div>
+                               <GoogleSearch />
                             </div>
 
                             <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
