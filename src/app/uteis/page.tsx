@@ -10,6 +10,7 @@ import { loadContent } from '@/lib/content-loader';
 import { Separator } from '@/components/ui/separator';
 
 const { categories } = data;
+const allLinks = categories.flatMap(category => category.links);
 
 const getFaviconUrl = (url: string) => {
     try {
@@ -34,38 +35,31 @@ export default function UteisPage() {
                                 Links Úteis
                             </h1>
                             <p className="mt-4 text-base text-muted-foreground">
-                                Acesse rapidamente sites e serviços importantes navegando pelas categorias abaixo.
+                                Acesse rapidamente sites e serviços importantes navegando pelos links abaixo.
                             </p>
                         </div>
                         
-                        <div className="space-y-12">
-                            {categories.map((category) => (
-                                <div key={category.title}>
-                                    <h2 className="font-headline text-2xl font-semibold text-primary mb-4">{category.title}</h2>
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                                        {category.links.map((link) => (
-                                            <Link href={link.url} key={link.name} target="_blank" rel="noopener noreferrer" className="block group">
-                                                <Card className="h-full overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 bg-card">
-                                                    <CardContent className="p-4 flex flex-col items-center justify-center gap-3 h-full">
-                                                        <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-border/50 p-1 bg-white">
-                                                            <Image
-                                                                src={getFaviconUrl(link.url)}
-                                                                alt={`Logo do ${link.name}`}
-                                                                fill
-                                                                className="object-contain"
-                                                                sizes="40px"
-                                                                unoptimized
-                                                            />
-                                                        </div>
-                                                        <p className="text-xs text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
-                                                            {link.name}
-                                                        </p>
-                                                    </CardContent>
-                                                </Card>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                            {allLinks.map((link) => (
+                                <Link href={link.url} key={link.name} target="_blank" rel="noopener noreferrer" className="block group">
+                                    <Card className="h-full overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 bg-card">
+                                        <CardContent className="p-4 flex flex-col items-center justify-center gap-3 h-full">
+                                            <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-border/50 p-1 bg-white">
+                                                <Image
+                                                    src={getFaviconUrl(link.url)}
+                                                    alt={`Logo do ${link.name}`}
+                                                    fill
+                                                    className="object-contain"
+                                                    sizes="40px"
+                                                    unoptimized
+                                                />
+                                            </div>
+                                            <p className="text-xs text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                                                {link.name}
+                                            </p>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
                             ))}
                         </div>
                     </div>
