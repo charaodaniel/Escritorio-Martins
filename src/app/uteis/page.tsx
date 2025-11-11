@@ -2,18 +2,20 @@
 "use client";
 import Image from 'next/image';
 import Link from 'next/link';
-import links from '@/data/useful-links.json';
+import data from '@/data/useful-links.json';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import { loadContent } from '@/lib/content-loader';
+import { Separator } from '@/components/ui/separator';
+
+const { categories } = data;
 
 const getFaviconUrl = (url: string) => {
     try {
         const domain = new URL(url).hostname;
         return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
     } catch (error) {
-        // Retorna um ícone genérico em caso de URL inválida no JSON
         return 'https://www.google.com/s2/favicons?domain=google.com&sz=64';
     }
 };
@@ -27,36 +29,43 @@ export default function UteisPage() {
             <main className="flex-1">
                 <section className="py-12 sm:py-16">
                     <div className="container mx-auto px-4 md:px-6">
-                        <div className="text-center max-w-3xl mx-auto">
+                        <div className="text-center max-w-3xl mx-auto mb-12">
                             <h1 className="font-headline text-3xl font-bold tracking-tight text-primary sm:text-4xl">
                                 Links Úteis
                             </h1>
                             <p className="mt-4 text-base text-muted-foreground">
-                                Acesse rapidamente sites e serviços importantes navegando pelos links abaixo.
+                                Acesse rapidamente sites e serviços importantes navegando pelas categorias abaixo.
                             </p>
                         </div>
-
-                        <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                            {links.map((link) => (
-                                <Link href={link.url} key={link.name} target="_blank" rel="noopener noreferrer" className="block group">
-                                    <Card className="h-full overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 bg-card">
-                                        <CardContent className="p-4 flex flex-col items-center justify-center gap-3 h-full">
-                                            <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-border/50 p-1 bg-white">
-                                                <Image
-                                                    src={getFaviconUrl(link.url)}
-                                                    alt={`Logo do ${link.name}`}
-                                                    fill
-                                                    className="object-contain"
-                                                    sizes="48px"
-                                                    unoptimized // Favicons podem ter formatos variados, melhor não otimizar
-                                                />
-                                            </div>
-                                            <p className="text-xs text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
-                                                {link.name}
-                                            </p>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
+                        
+                        <div className="space-y-12">
+                            {categories.map((category) => (
+                                <div key={category.title}>
+                                    <h2 className="font-headline text-2xl font-semibold text-primary mb-4">{category.title}</h2>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                                        {category.links.map((link) => (
+                                            <Link href={link.url} key={link.name} target="_blank" rel="noopener noreferrer" className="block group">
+                                                <Card className="h-full overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 bg-card">
+                                                    <CardContent className="p-4 flex flex-col items-center justify-center gap-3 h-full">
+                                                        <div className="relative w-10 h-10 rounded-lg overflow-hidden border border-border/50 p-1 bg-white">
+                                                            <Image
+                                                                src={getFaviconUrl(link.url)}
+                                                                alt={`Logo do ${link.name}`}
+                                                                fill
+                                                                className="object-contain"
+                                                                sizes="40px"
+                                                                unoptimized
+                                                            />
+                                                        </div>
+                                                        <p className="text-xs text-center font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                                                            {link.name}
+                                                        </p>
+                                                    </CardContent>
+                                                </Card>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>

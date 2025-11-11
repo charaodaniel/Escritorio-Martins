@@ -1,251 +1,111 @@
-
-[
-  {
-    "name": "Facebook",
-    "url": "https://www.facebook.com"
-  },
-  {
-    "name": "Twitter / X",
-    "url": "https://www.twitter.com"
-  },
-  {
-    "name": "Outlook / Hotmail",
-    "url": "https://www.outlook.com"
-  },
-  {
-    "name": "WhatsApp",
-    "url": "https://web.whatsapp.com"
-  },
-  {
-    "name": "YouTube",
-    "url": "https://www.youtube.com"
-  },
-  {
-    "name": "Yahoo",
-    "url": "https://br.yahoo.com"
-  },
-  {
-    "name": "Gmail",
-    "url": "https://mail.google.com"
-  },
-  {
-    "name": "UOL",
-    "url": "https://www.uol.com.br"
-  },
-  {
-    "name": "Terra",
-    "url": "https://www.terra.com.br"
-  },
-  {
-    "name": "BOL",
-    "url": "https://www.bol.uol.com.br"
-  },
-  {
-    "name": "clicRBS",
-    "url": "https://www.clicrbs.com.br"
-  },
-  {
-    "name": "GZH",
-    "url": "https://gauchazh.clicrbs.com.br"
-  },
-  {
-    "name": "R7",
-    "url": "https://www.r7.com"
-  },
-  {
-    "name": "G1",
-    "url": "https://g1.globo.com"
-  },
-  {
-    "name": "Globo",
-    "url": "https://www.globo.com"
-  },
-  {
-    "name": "SBT",
-    "url": "https://www.sbt.com.br"
-  },
-  {
-    "name": "Band",
-    "url": "https://www.band.uol.com.br"
-  },
-  {
-    "name": "Record",
-    "url": "https://www.recordtv.com.br/"
-  },
-  {
-    "name": "RedeTV!",
-    "url": "https://www.redetv.uol.com.br"
-  },
-  {
-    "name": "Receita Federal",
-    "url": "https://www.gov.br/receitafederal"
-  },
-  {
-    "name": "Banco do Brasil",
-    "url": "https://www.bb.com.br"
-  },
-  {
-    "name": "Banrisul",
-    "url": "https://www.banrisul.com.br"
-  },
-  {
-    "name": "Bradesco",
-    "url": "https://banco.bradesco"
-  },
-  {
-    "name": "Caixa",
-    "url": "https://www.caixa.gov.br"
-  },
-  {
-    "name": "Itaú",
-    "url": "https://www.itau.com.br"
-  },
-  {
-    "name": "Santander",
-    "url": "https://www.santander.com.br"
-  },
-  {
-    "name": "Sicredi",
-    "url": "https://www.sicredi.com.br"
-  },
-  {
-    "name": "Grêmio",
-    "url": "https://gremio.net"
-  },
-  {
-    "name": "Internacional",
-    "url": "https://www.internacional.com.br"
-  },
-  {
-    "name": "Correios",
-    "url": "https://www.correios.com.br"
-  },
-  {
-    "name": "Detran RS",
-    "url": "https://www.detran.rs.gov.br"
-  },
-  {
-    "name": "Receita Estadual RS",
-    "url": "https://www.sefaz.rs.gov.br/receita/receita-estadual"
-  },
-  {
-    "name": "TJ RS",
-    "url": "https://www.tjrs.jus.br/novo/"
-  },
-  {
-    "name": "TRT4 - RS",
-    "url": "https://www.trt4.jus.br"
-  },
-  {
-    "name": "TRE RS",
-    "url": "https://www.tre-rs.jus.br"
-  },
-  {
-    "name": "TCE RS",
-    "url": "https://www.tce.rs.gov.br"
-  },
-  {
-    "name": "Portal do Servidor RS",
-    "url": "https://servidor.rpe.rs.gov.br"
-  },
-  {
-    "name": "Governo Federal",
-    "url": "https://www.gov.br"
-  },
-  {
-    "name": "Governo RS",
-    "url": "https://www.rs.gov.br"
-  },
-  {
-    "name": "Prefeitura de Manoel Viana",
-    "url": "https://www.manoelviana.rs.gov.br"
-  },
-  {
-    "name": "Câmara de Manoel Viana",
-    "url": "https://www.cmvmanoelviana.rs.gov.br"
-  },
-  {
-    "name": "IFFarroupilha Alegrete",
-    "url": "https://www.iffarroupilha.edu.br/alegrete"
-  },
-  {
-    "name": "Unipampa",
-    "url": "https://unipampa.edu.br"
-  },
-  {
-    "name": "UFSM",
-    "url": "https://www.ufsm.br"
-  },
-  {
-    "name": "UERGS",
-    "url": "https://www.uergs.edu.br"
-  },
-  {
-    "name": "URI",
-    "url": "https://www.uri.br"
-  },
-  {
-    "name": "Unopar",
-    "url": "https://www.unopar.com.br"
-  },
-  {
-    "name": "Previdência Social",
-    "url": "https://www.gov.br/inss"
-  },
-  {
-    "name": "PGFN",
-    "url": "https://www.pgfn.gov.br"
-  },
-  {
-    "name": "Secretaria da Educação RS",
-    "url": "https://educacao.rs.gov.br"
-  },
-  {
-    "name": "Claro",
-    "url": "https://www.claro.com.br"
-  },
-  {
-    "name": "Oi",
-    "url": "https://www.oi.com.br"
-  },
-  {
-    "name": "TIM",
-    "url": "https://www.tim.com.br"
-  },
-  {
-    "name": "Vivo",
-    "url": "https://www.vivo.com.br"
-  },
-  {
-    "name": "Jornal Nova Pauta",
-    "url": "https://www.novapauta.com"
-  },
-  {
-    "name": "Expresso Ilustrado",
-    "url": "https://www.expressoilustrado.com.br"
-  },
-  {
-    "name": "Rafael Nemitz",
-    "url": "https://www.rafaelnemitz.com"
-  },
-  {
-    "name": "Alegrete Tudo",
-    "url": "https://alegretetudo.com.br"
-  },
-  {
-    "name": "Correio do Povo",
-    "url": "https://www.correiodopovo.com.br"
-  },
-  {
-    "name": "Previsão do Tempo",
-    "url": "https://weather.com/"
-  },
-  {
-    "name": "Rádio Ibicuí FM",
-    "url": "https://www.ibicuifm.com"
-  },
-  {
-    "name": "Rádio Verdes Pampas",
-    "url": "https://www.verdespampas.com.br"
-  }
-]
+{
+  "categories": [
+    {
+      "title": "Tribunais e Justiça",
+      "links": [
+        { "name": "TJ RS", "url": "https://www.tjrs.jus.br/novo/" },
+        { "name": "TRT4 - RS", "url": "https://www.trt4.jus.br" },
+        { "name": "TRE RS", "url": "https://www.tre-rs.jus.br" },
+        { "name": "TCE RS", "url": "https://www.tce.rs.gov.br" },
+        { "name": "TRF4", "url": "https://www.trf4.jus.br" },
+        { "name": "STJ", "url": "https://www.stj.jus.br" },
+        { "name": "STF", "url": "https://portal.stf.jus.br" },
+        { "name": "TST", "url": "https://www.tst.jus.br" }
+      ]
+    },
+    {
+      "title": "Governo e Órgãos Públicos",
+      "links": [
+        { "name": "Governo Federal", "url": "https://www.gov.br" },
+        { "name": "Governo RS", "url": "https://www.rs.gov.br" },
+        { "name": "Receita Federal", "url": "https://www.gov.br/receitafederal" },
+        { "name": "PGFN", "url": "https://www.pgfn.gov.br" },
+        { "name": "Previdência Social", "url": "https://www.gov.br/inss" }
+      ]
+    },
+    {
+      "title": "Serviços Públicos (RS)",
+      "links": [
+        { "name": "Detran RS", "url": "https://www.detran.rs.gov.br" },
+        { "name": "Receita Estadual RS", "url": "https://www.sefaz.rs.gov.br/receita/receita-estadual" },
+        { "name": "Portal do Servidor RS", "url": "https://servidor.rpe.rs.gov.br" },
+        { "name": "Secretaria da Educação RS", "url": "https://educacao.rs.gov.br" }
+      ]
+    },
+    {
+      "title": "Prefeituras e Câmaras",
+      "links": [
+        { "name": "Prefeitura de Manoel Viana", "url": "https://www.manoelviana.rs.gov.br" },
+        { "name": "Câmara de Manoel Viana", "url": "https://www.cmvmanoelviana.rs.gov.br" }
+      ]
+    },
+    {
+      "title": "Bancos",
+      "links": [
+        { "name": "Banco do Brasil", "url": "https://www.bb.com.br" },
+        { "name": "Banrisul", "url": "https://www.banrisul.com.br" },
+        { "name": "Bradesco", "url": "https://banco.bradesco" },
+        { "name": "Caixa", "url": "https://www.caixa.gov.br" },
+        { "name": "Itaú", "url": "https://www.itau.com.br" },
+        { "name": "Santander", "url": "https://www.santander.com.br" },
+        { "name": "Sicredi", "url": "https://www.sicredi.com.br" }
+      ]
+    },
+    {
+      "title": "Notícias e Mídia",
+      "links": [
+        { "name": "clicRBS", "url": "https://www.clicrbs.com.br" },
+        { "name": "GZH", "url": "https://gauchazh.clicrbs.com.br" },
+        { "name": "UOL", "url": "https://www.uol.com.br" },
+        { "name": "Terra", "url": "https://www.terra.com.br" },
+        { "name": "G1", "url": "https://g1.globo.com" },
+        { "name": "R7", "url": "https://www.r7.com" },
+        { "name": "Correio do Povo", "url": "https://www.correiodopovo.com.br" }
+      ]
+    },
+    {
+      "title": "Mídia Local e Regional",
+      "links": [
+        { "name": "Jornal Nova Pauta", "url": "https://www.novapauta.com" },
+        { "name": "Expresso Ilustrado", "url": "https://www.expressoilustrado.com.br" },
+        { "name": "Rafael Nemitz", "url": "https://www.rafaelnemitz.com" },
+        { "name": "Alegrete Tudo", "url": "https://alegretetudo.com.br" },
+        { "name": "Rádio Ibicuí FM", "url": "https://www.ibicuifm.com" },
+        { "name": "Rádio Verdes Pampas", "url": "https://www.verdespampas.com.br" }
+      ]
+    },
+    {
+      "title": "Redes Sociais e E-mail",
+      "links": [
+        { "name": "Facebook", "url": "https://www.facebook.com" },
+        { "name": "Twitter / X", "url": "https://www.twitter.com" },
+        { "name": "WhatsApp", "url": "https://web.whatsapp.com" },
+        { "name": "Gmail", "url": "https://mail.google.com" },
+        { "name": "Outlook / Hotmail", "url": "https://www.outlook.com" },
+        { "name": "YouTube", "url": "https://www.youtube.com" }
+      ]
+    },
+    {
+      "title": "Educação",
+      "links": [
+        { "name": "IFFarroupilha Alegrete", "url": "https://www.iffarroupilha.edu.br/alegrete" },
+        { "name": "Unipampa", "url": "https://unipampa.edu.br" },
+        { "name": "UFSM", "url": "https://www.ufsm.br" },
+        { "name": "UERGS", "url": "https://www.uergs.edu.br" },
+        { "name": "URI", "url": "https://www.uri.br" },
+        { "name": "Unopar", "url": "https://www.unopar.com.br" }
+      ]
+    },
+    {
+      "title": "Operadoras e Serviços",
+      "links": [
+        { "name": "Correios", "url": "https://www.correios.com.br" },
+        { "name": "Previsão do Tempo", "url": "https://weather.com/" },
+        { "name": "Claro", "url": "https://www.claro.com.br" },
+        { "name": "Oi", "url": "https://www.oi.com.br" },
+        { "name": "TIM", "url": "https://www.tim.com.br" },
+        { "name": "Vivo", "url": "https://www.vivo.com.br" }
+      ]
+    }
+  ]
+}
