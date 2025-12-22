@@ -2,9 +2,16 @@
 
 Este é o projeto do site institucional para o escritório **Vieira & Martins Advogados**, um projeto full-stack desenvolvido com o auxílio do Firebase Studio.
 
-O objetivo do site é apresentar o escritório, suas áreas de atuação, equipe e diferenciais, além de facilitar o contato com novos clientes através de um design moderno e responsivo. O projeto inclui um painel administrativo completo para gerenciamento de todo o conteúdo do site sem a necessidade de um banco de dados externo.
+O objetivo do site é apresentar o escritório, suas áreas de atuação, equipe e diferenciais, além de facilitar o contato com novos clientes através de um design moderno e responsivo. O projeto inclui um painel administrativo completo para gerenciamento de todo o conteúdo do site, uma página de links para redes sociais e uma seção de links úteis para a comunidade jurídica.
 
-## ✨ Tecnologias Utilizadas
+## ✨ Funcionalidades
+
+- **Site Institucional Completo:** Apresenta seções para áreas de atuação, história do escritório, equipe de advogados e informações de contato.
+- **Painel Administrativo:** Uma área segura em `/admin` que permite gerenciar todo o conteúdo do site sem a necessidade de um banco de dados externo. As alterações são salvas diretamente no repositório do GitHub.
+- **Página de Links (`/links`):** Uma página otimizada para dispositivos móveis que agrega todos os links importantes do escritório, ideal para ser usada em perfis de redes sociais.
+- **Página de Links Úteis (`/uteis`):** Um portal com links para tribunais, órgãos governamentais e outros serviços relevantes para advogados e clientes.
+
+## 🚀 Tecnologias Utilizadas
 
 - **Next.js**: Framework React para renderização no servidor (SSR) e funcionalidades de back-end.
 - **React**: Biblioteca para construção de interfaces de usuário dinâmicas.
@@ -12,8 +19,10 @@ O objetivo do site é apresentar o escritório, suas áreas de atuação, equipe
 - **Tailwind CSS**: Framework CSS utility-first para estilização rápida e responsiva.
 - **ShadCN/UI**: Coleção de componentes de UI reutilizáveis e acessíveis.
 - **Lucide React**: Biblioteca de ícones.
+- **Zod**: Para validação de esquemas de dados.
+- **date-fns**: Para manipulação de datas.
 
-## 🚀 Executando o Projeto Localmente
+## ⚙️ Executando o Projeto Localmente
 
 Para iniciar o ambiente de desenvolvimento, siga os passos abaixo:
 
@@ -33,11 +42,11 @@ Em modo de desenvolvimento, todas as alterações salvas no painel (conteúdo, u
 
 ## 🔐 Painel de Edição e Autenticação
 
-O projeto possui um painel administrativo (`/admin`) para gerenciar o conteúdo do site. O acesso é protegido por autenticação básica.
+O projeto possui um painel administrativo (`/admin`) para gerenciar o conteúdo do site. O acesso é protegido por autenticação.
 
 - **Credenciais de Acesso:** As credenciais (usuário e senha) são gerenciadas no arquivo `src/data/users.json`. Você pode adicionar, editar ou remover usuários diretamente nesse arquivo ou através do próprio painel administrativo.
 
-## ⚙️ Deploy e Configuração para Produção (Vercel)
+## ☁️ Deploy e Configuração para Produção (Vercel)
 
 Quando o projeto é hospedado em um serviço como a Vercel, o painel administrativo pode ser configurado para salvar as alterações diretamente no seu repositório do GitHub. Isso aciona um novo deploy automaticamente, atualizando o site em produção.
 
