@@ -28,6 +28,9 @@ export default function Testimonials({ content }: TestimonialsProps) {
     return null;
   }
 
+  // Inverte a ordem dos posts para mostrar os últimos adicionados primeiro
+  const reversedPosts = [...content.instagram.posts].reverse();
+
   return (
     <section id="testimonials" className="py-20 sm:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -45,14 +48,14 @@ export default function Testimonials({ content }: TestimonialsProps) {
               plugins={[instagramPlugin.current]}
               opts={{
                   align: "start",
-                  loop: true,
+                  loop: true, // Efeito de volta infinita
               }}
               className="w-full max-w-5xl mx-auto"
               onMouseEnter={instagramPlugin.current.stop}
               onMouseLeave={instagramPlugin.current.reset}
             >
             <CarouselContent>
-                {content.instagram.posts.map((post, index) => (
+                {reversedPosts.map((post, index) => (
                   <CarouselItem key={index} className="sm:basis-1/2 md:basis-1/2 lg:basis-1/3 flex justify-center">
                     <div className="p-2 w-full max-w-sm">
                       <InstagramPostEmbed postUrl={post.postUrl} />
