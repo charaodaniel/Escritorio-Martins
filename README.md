@@ -1,5 +1,6 @@
 # Site Institucional - Vieira & Martins Advogados
 
+
 Este é o projeto do site institucional para o escritório **Vieira & Martins Advogados**, um projeto full-stack desenvolvido com o auxílio do Firebase Studio.
 
 O objetivo do site é apresentar o escritório, suas áreas de atuação, equipe e diferenciais, além de facilitar o contato com novos clientes através de um design moderno e responsivo. O projeto inclui um painel administrativo completo para gerenciamento de todo o conteúdo do site, uma página de links para redes sociais e uma seção de links úteis para a comunidade jurídica.
