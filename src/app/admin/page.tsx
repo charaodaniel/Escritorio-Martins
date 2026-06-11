@@ -21,7 +21,7 @@ import { useEffect, useState, useRef } from "react";
 import type { ContentData } from "@/lib/content-loader";
 import type { User } from "@/lib/users-loader";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut } from "lucide-react";
+import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut, Save } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -283,7 +283,7 @@ export default function AdminPage() {
             title: "Usuários Atualizados!",
             description: "A lista de usuários foi salva com sucesso.",
         });
-        await fetchUsers(); // Re-fetch users to update the list
+        await fetchUsers();
     } catch (error: any) {
         toast({
             variant: "destructive",
@@ -296,28 +296,52 @@ export default function AdminPage() {
   };
 
   const handleAddUser = async (values: z.infer<typeof newUserSchema>) => {
-      const currentUsersResponse = await fetch('/api/get-users');
-      if (!currentUsersResponse.ok) {
-          toast({ variant: "destructive", title: "Erro", description: "Não foi possível verificar usuários existentes." });
-          return;
-      }
-      const currentUsers = await currentUsersResponse.json();
+      try {
+          const currentUsersResponse = await fetch('/api/get-users');
+          if (!currentUsersResponse.ok) {
+              toast({ variant: "destructive", title: "Erro", description: "Não foi possível verificar usuários existentes." });
+              return;
+          }
+          const currentUsers = await currentUsersResponse.json();
 
-      if (currentUsers.find((u: User) => u.username === values.username)) {
-          newUserForm.setError("username", { message: "Este nome de usuário já existe." });
-          return;
-      }
+          if (currentUsers.find((u: User) => u.username === values.username)) {
+              newUserForm.setError("username", { message: "Este nome de usuário já existe." });
+              return;
+          }
 
-      const allUsersResponse = await (await fetch('/api/get-all-users-for-update')).json();
-      const newUsers = [...allUsersResponse, values];
-      await handleSaveUsers(newUsers);
-      newUserForm.reset();
+          const getAllResponse = await fetch('/api/get-all-users-for-update');
+          if (!getAllResponse.ok) {
+              throw new Error("Falha ao obter lista completa de usuários para atualização.");
+          }
+          const allUsersResponse = await getAllResponse.json();
+          const newUsers = [...allUsersResponse, values];
+          await handleSaveUsers(newUsers);
+          newUserForm.reset();
+      } catch (error: any) {
+          toast({
+              variant: "destructive",
+              title: "Erro ao Adicionar",
+              description: error.message || "Não foi possível adicionar o usuário.",
+          });
+      }
   };
 
   const handleRemoveUser = async (usernameToRemove: string) => {
-      const allUsersResponse = await (await fetch('/api/get-all-users-for-update')).json();
-      const updatedUsers = allUsersResponse.filter((u: User) => u.username !== usernameToRemove);
-      await handleSaveUsers(updatedUsers);
+      try {
+          const getAllResponse = await fetch('/api/get-all-users-for-update');
+          if (!getAllResponse.ok) {
+              throw new Error("Falha ao obter lista de usuários.");
+          }
+          const allUsersResponse = await getAllResponse.json();
+          const updatedUsers = allUsersResponse.filter((u: User) => u.username !== usernameToRemove);
+          await handleSaveUsers(updatedUsers);
+      } catch (error: any) {
+          toast({
+              variant: "destructive",
+              title: "Erro ao Remover",
+              description: error.message || "Não foi possível remover o usuário.",
+          });
+      }
   };
   
   const handleLogout = async () => {
@@ -372,14 +396,14 @@ export default function AdminPage() {
         </div>
         <p className="text-muted-foreground mb-8">Altere o conteúdo do site aqui. As mudanças serão refletidas após o deploy automático.</p>
         
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
-              
-              {/* Seção Hero */}
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="text-xl font-headline text-primary">Seção Principal (Hero)</AccordionTrigger>
-                <AccordionContent className="space-y-6 pt-4">
+        <Accordion type="single" collapsible defaultValue="item-1" className="w-full mb-10">
+          
+          {/* Seção Hero */}
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-xl font-headline text-primary">Seção Principal (Hero)</AccordionTrigger>
+            <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="hero.title"
@@ -406,18 +430,25 @@ export default function AdminPage() {
                       </FormItem>
                     )}
                   />
-                </AccordionContent>
-              </AccordionItem>
+                  <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Save className="mr-2 h-4 w-4" /> Salvar Seção Hero
+                  </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-              {/* Seção Áreas de Atuação */}
-              <AccordionItem value="item-2">
-                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Áreas de Atuação</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                        <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                 </div>
-                <AccordionContent className="space-y-6 pt-4">
+          {/* Seção Áreas de Atuação */}
+          <AccordionItem value="item-2">
+             <div className="flex w-full items-center justify-between">
+                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Áreas de Atuação</AccordionTrigger>
+                <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
+                </div>
+             </div>
+            <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="practiceAreas.title"
@@ -467,18 +498,25 @@ export default function AdminPage() {
                         />
                       </div>
                    ))}
-                </AccordionContent>
-              </AccordionItem>
+                   <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Save className="mr-2 h-4 w-4" /> Salvar Áreas de Atuação
+                  </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-              {/* Seção Diferenciais */}
-              <AccordionItem value="item-3">
-                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Diferenciais</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                      <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                 </div>
-                 <AccordionContent className="space-y-6 pt-4">
+          {/* Seção Diferenciais */}
+          <AccordionItem value="item-3">
+             <div className="flex w-full items-center justify-between">
+                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Diferenciais</AccordionTrigger>
+                <div className="py-4 pr-4 pl-2">
+                  <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
+                </div>
+             </div>
+             <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="whyUs.title"
@@ -528,18 +566,25 @@ export default function AdminPage() {
                         />
                       </div>
                    ))}
-                </AccordionContent>
-              </AccordionItem>
+                   <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Save className="mr-2 h-4 w-4" /> Salvar Diferenciais
+                  </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-               {/* Seção Nossa História */}
-              <AccordionItem value="item-4">
-                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Nossa História</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                        <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                 </div>
-                <AccordionContent className="space-y-6 pt-4">
+           {/* Seção Nossa História */}
+          <AccordionItem value="item-4">
+             <div className="flex w-full items-center justify-between">
+                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Nossa História</AccordionTrigger>
+                <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
+                </div>
+             </div>
+            <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="ourHistory.title"
@@ -562,18 +607,25 @@ export default function AdminPage() {
                       </FormItem>
                     )}
                   />
-                </AccordionContent>
-              </AccordionItem>
+                  <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Save className="mr-2 h-4 w-4" /> Salvar Nossa História
+                  </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-              {/* Seção Equipe */}
-              <AccordionItem value="item-5">
-                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Equipe</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                        <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                 </div>
-                <AccordionContent className="space-y-6 pt-4">
+          {/* Seção Equipe */}
+          <AccordionItem value="item-5">
+             <div className="flex w-full items-center justify-between">
+                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Equipe</AccordionTrigger>
+                <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
+                </div>
+             </div>
+            <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="attorneys.title"
@@ -720,18 +772,25 @@ export default function AdminPage() {
                       <PlusCircle className="mr-2 h-4 w-4" />
                       Adicionar Membro
                     </Button>
-                </AccordionContent>
-              </AccordionItem>
+                    <Button type="submit" disabled={isSubmitting} className="w-full mt-4">
+                      <Save className="mr-2 h-4 w-4" /> Salvar Seção Equipe
+                    </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-             {/* Seção Publicações */}
-              <AccordionItem value="item-6">
-                 <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Publicações</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                        <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
-                    </div>
-                 </div>
-                <AccordionContent className="space-y-6 pt-4">
+         {/* Seção Publicações */}
+          <AccordionItem value="item-6">
+             <div className="flex w-full items-center justify-between">
+                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Publicações</AccordionTrigger>
+                <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
+                </div>
+             </div>
+            <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="testimonials.title"
@@ -802,18 +861,25 @@ export default function AdminPage() {
                         Adicionar Publicação do Instagram
                     </Button>
                   </div>
-                </AccordionContent>
-              </AccordionItem>
+                  <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Save className="mr-2 h-4 w-4" /> Salvar Publicações
+                  </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-               {/* Seção Contato */}
-              <AccordionItem value="item-7">
-                <div className="flex w-full items-center justify-between">
-                    <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Informações de Contato</AccordionTrigger>
-                    <div className="py-4 pr-4 pl-2">
-                      <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
-                    </div>
+           {/* Seção Contato */}
+          <AccordionItem value="item-7">
+            <div className="flex w-full items-center justify-between">
+                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Informações de Contato</AccordionTrigger>
+                <div className="py-4 pr-4 pl-2">
+                  <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
                 </div>
-                <AccordionContent className="space-y-6 pt-4">
+            </div>
+            <AccordionContent className="space-y-6 pt-4">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="contactInfo.address"
@@ -904,97 +970,96 @@ export default function AdminPage() {
                       </FormItem>
                     )}
                   />
-                </AccordionContent>
-              </AccordionItem>
+                  <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Save className="mr-2 h-4 w-4" /> Salvar Informações de Contato
+                  </Button>
+                </form>
+              </Form>
+            </AccordionContent>
+          </AccordionItem>
 
-              {/* Seção Gerenciamento de Usuários */}
-              <AccordionItem value="item-8">
-                <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
-                <AccordionContent className="space-y-6 pt-4">
-                  
-                  {/* Lista de Usuários */}
-                  <div className="p-4 border rounded-md bg-background">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Usuários Cadastrados</h3>
-                    <div className="space-y-2">
-                        {users.map(user => (
-                            <div key={user.username} className="flex items-center justify-between p-2 rounded-md bg-muted/50">
-                                <span className="text-sm font-medium">{user.username}</span>
-                                {users.length > 1 ? (
-                                <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                        <Button variant="destructive" size="icon" className="h-7 w-7" disabled={isSubmitting}>
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-                                            <AlertDialogDescription>
-                                                Esta ação não pode ser desfeita. Isso removerá permanentemente o usuário <span className="font-bold">{user.username}</span>.
-                                            </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                            <AlertDialogAction onClick={() => handleRemoveUser(user.username)}>Remover</AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                                ) : (
-                                   <Button variant="destructive" size="icon" className="h-7 w-7" disabled={true} title="Não é possível remover o último usuário.">
-                                     <Trash2 className="h-4 w-4" />
-                                   </Button>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                  </div>
+          {/* Seção Gerenciamento de Usuários */}
+          <AccordionItem value="item-8">
+            <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
+            <AccordionContent className="space-y-6 pt-4">
+              
+              {/* Lista de Usuários */}
+              <div className="p-4 border rounded-md bg-background">
+                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Usuários Cadastrados</h3>
+                <div className="space-y-2">
+                    {users.map(user => (
+                        <div key={user.username} className="flex items-center justify-between p-2 rounded-md bg-muted/50">
+                            <span className="text-sm font-medium">{user.username}</span>
+                            {users.length > 1 ? (
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button variant="destructive" size="icon" className="h-7 w-7" disabled={isSubmitting}>
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            Esta ação não pode ser desfeita. Isso removerá permanentemente o usuário <span className="font-bold">{user.username}</span>.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                        <AlertDialogAction onClick={() => handleRemoveUser(user.username)}>Remover</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                            ) : (
+                               <Button variant="destructive" size="icon" className="h-7 w-7" disabled={true} title="Não é possível remover o último usuário.">
+                                 <Trash2 className="h-4 w-4" />
+                               </Button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+              </div>
 
-                  {/* Adicionar Novo Usuário */}
-                  <div className="p-4 border rounded-md bg-background">
-                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Usuário</h3>
-                    <Form {...newUserForm}>
-                      <form onSubmit={newUserForm.handleSubmit(handleAddUser)} className="space-y-4">
-                        <FormField
-                          control={newUserForm.control}
-                          name="username"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Nome de Usuário</FormLabel>
-                              <FormControl>
-                                <Input {...field} disabled={isSubmitting} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={newUserForm.control}
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Senha</FormLabel>
-                              <FormControl>
-                                <Input type="password" {...field} disabled={isSubmitting} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <Button type="submit" variant="outline" disabled={isSubmitting}>
-                           <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Usuário
-                        </Button>
-                      </form>
-                    </Form>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-
-            <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting || isUploading !== null}>
-              {isSubmitting ? "Salvando..." : "Salvar Alterações de Conteúdo"}
-            </Button>
-          </form>
-        </Form>
+              {/* Adicionar Novo Usuário */}
+              <div className="p-4 border rounded-md bg-background">
+                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Usuário</h3>
+                <Form {...newUserForm}>
+                  <form onSubmit={newUserForm.handleSubmit(handleAddUser)} className="space-y-4">
+                    <FormField
+                      control={newUserForm.control}
+                      name="username"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nome de Usuário</FormLabel>
+                          <FormControl>
+                            <Input {...field} disabled={isSubmitting} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={newUserForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha</FormLabel>
+                          <FormControl>
+                            <Input type="password" {...field} disabled={isSubmitting} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" variant="outline" disabled={isSubmitting}>
+                       <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Usuário
+                    </Button>
+                  </form>
+                </Form>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   );
