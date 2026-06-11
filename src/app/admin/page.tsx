@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,7 +22,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { PlusCircle, Trash2, Upload, Instagram, Image as ImageIcon, Users, UserPlus, LogOut, Save } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import RichTextEditor from "@/components/rich-text-editor";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 
 const heroSchema = z.object({
@@ -46,9 +44,7 @@ const attorneyMemberSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório."),
   title: z.string().min(1, "Cargo é obrigatório."),
   bio: z.string().min(1, "Bio é obrigatória."),
-  imageUrl: z.string().refine(value => value.startsWith('/') || value.startsWith('http'), {
-    message: "Deve ser um URL válido ou um caminho local (ex: /foto.jpg)."
-  }),
+  imageUrl: z.string().min(1, "URL da imagem é obrigatória."),
   bioFormat: z.enum(['default', 'justify', 'pre-line']).default('default'),
 });
 
@@ -149,9 +145,7 @@ export default function AdminPage() {
   async function fetchUsers() {
     try {
       const response = await fetch('/api/get-users');
-      if (!response.ok) {
-        throw new Error('Falha ao carregar usuários.');
-      }
+      if (!response.ok) throw new Error('Falha ao carregar usuários.');
       const userList = await response.json();
       setUsers(userList);
     } catch (error) {
@@ -162,9 +156,7 @@ export default function AdminPage() {
   async function fetchContent() {
       try {
         const response = await fetch('/api/get-content');
-        if (!response.ok) {
-          throw new Error('Falha ao carregar conteúdo.');
-        }
+        if (!response.ok) throw new Error('Falha ao carregar conteúdo.');
         const content = await response.json();
         setInitialData(content);
         form.reset(content);
@@ -201,7 +193,6 @@ export default function AdminPage() {
         title: "Conteúdo Salvo com Sucesso!",
         description: "As alterações foram enviadas e o site será atualizado em breve.",
       });
-
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -227,16 +218,11 @@ export default function AdminPage() {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Falha no upload da imagem.');
-      }
+      if (!response.ok) throw new Error('Falha no upload da imagem.');
 
       const { filePath } = await response.json();
       form.setValue(`attorneys.members.${index}.imageUrl`, filePath);
-      toast({
-        title: 'Upload Concluído',
-        description: `Imagem carregada com sucesso.`,
-      });
+      toast({ title: 'Upload Concluído', description: `Imagem carregada com sucesso.` });
     } catch (error: any) {
       toast({
         variant: 'destructive',
@@ -245,91 +231,10 @@ export default function AdminPage() {
       });
     } finally {
       setIsUploading(null);
-      if (event.target) {
-        event.target.value = '';
-      }
+      if (event.target) event.target.value = '';
     }
   };
 
-  const handleSaveUsers = async (updatedUsers: User[]) => {
-    setIsSubmitting(true);
-    try {
-        const response = await fetch("/api/save-users", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedUsers),
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Falha ao salvar os usuários.");
-        }
-
-        toast({
-            title: "Usuários Atualizados!",
-            description: "A lista de usuários foi salva com sucesso.",
-        });
-        await fetchUsers();
-    } catch (error: any) {
-        toast({
-            variant: "destructive",
-            title: "Erro ao Salvar Usuários",
-            description: error.message || "Não foi possível salvar as alterações.",
-        });
-    } finally {
-        setIsSubmitting(false);
-    }
-  };
-
-  const handleAddUser = async (values: z.infer<typeof newUserSchema>) => {
-      try {
-          const currentUsersResponse = await fetch('/api/get-users');
-          if (!currentUsersResponse.ok) {
-              toast({ variant: "destructive", title: "Erro", description: "Não foi possível verificar usuários existentes." });
-              return;
-          }
-          const currentUsers = await currentUsersResponse.json();
-
-          if (currentUsers.find((u: User) => u.username === values.username)) {
-              newUserForm.setError("username", { message: "Este nome de usuário já existe." });
-              return;
-          }
-
-          const getAllResponse = await fetch('/api/get-all-users-for-update');
-          if (!getAllResponse.ok) {
-              throw new Error("Falha ao obter lista completa de usuários.");
-          }
-          const allUsersResponse = await getAllResponse.json();
-          const newUsers = [...allUsersResponse, values];
-          await handleSaveUsers(newUsers);
-          newUserForm.reset();
-      } catch (error: any) {
-          toast({
-              variant: "destructive",
-              title: "Erro ao Adicionar",
-              description: error.message || "Não foi possível adicionar o usuário.",
-          });
-      }
-  };
-
-  const handleRemoveUser = async (usernameToRemove: string) => {
-      try {
-          const getAllResponse = await fetch('/api/get-all-users-for-update');
-          if (!getAllResponse.ok) {
-              throw new Error("Falha ao obter lista de usuários.");
-          }
-          const allUsersResponse = await getAllResponse.json();
-          const updatedUsers = allUsersResponse.filter((u: User) => u.username !== usernameToRemove);
-          await handleSaveUsers(updatedUsers);
-      } catch (error: any) {
-          toast({
-              variant: "destructive",
-              title: "Erro ao Remover",
-              description: error.message || "Não foi possível remover o usuário.",
-          });
-      }
-  };
-  
   const handleLogout = async () => {
     try {
       await fetch('/api/auth-required', {
@@ -341,11 +246,7 @@ export default function AdminPage() {
     }
   };
 
-  if (!initialData) {
-    return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
-  }
-  
-  const SectionToggle = ({ name, isSubmitting }: { name: any, isSubmitting: boolean }) => (
+  const SectionToggle = ({ name }: { name: any }) => (
     <FormField
       control={form.control}
       name={name}
@@ -366,6 +267,10 @@ export default function AdminPage() {
     />
   );
 
+  if (!initialData) {
+    return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
+  }
+
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
       <div className="max-w-4xl mx-auto">
@@ -378,15 +283,14 @@ export default function AdminPage() {
         </div>
         <p className="text-muted-foreground mb-8">Gerencie o conteúdo do seu site aqui.</p>
         
-        {/* Provedor de Contexto do Formulário Principal */}
         <Form {...form}>
-          <Accordion type="single" collapsible defaultValue="item-1" className="w-full mb-10">
-            
-            {/* Seção Hero */}
-            <AccordionItem value="item-1">
-              <AccordionTrigger className="text-xl font-headline text-primary">Seção Principal (Hero)</AccordionTrigger>
-              <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+            <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
+              
+              {/* Hero */}
+              <AccordionItem value="item-1">
+                <AccordionTrigger className="text-xl font-headline text-primary">Seção Principal (Hero)</AccordionTrigger>
+                <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
                     name="hero.title"
@@ -409,529 +313,322 @@ export default function AdminPage() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Seção Hero
-                  </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
+                </AccordionContent>
+              </AccordionItem>
 
-            {/* Seção Áreas de Atuação */}
-            <AccordionItem value="item-2">
-               <div className="flex w-full items-center justify-between">
-                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Áreas de Atuação</AccordionTrigger>
+              {/* Áreas de Atuação */}
+              <AccordionItem value="item-2">
+                <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline text-left">Áreas de Atuação</AccordionTrigger>
                   <div className="py-4 pr-4 pl-2">
-                      <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
+                    <SectionToggle name="practiceAreas.enabled" />
                   </div>
-               </div>
-              <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                </div>
+                <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
                     name="practiceAreas.title"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Título da Seção</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Título da Seção</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
                     )}
                   />
-                   <FormField
+                  <FormField
                     control={form.control}
                     name="practiceAreas.subtitle"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Subtítulo da Seção</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
                     )}
                   />
-                  <h3 className="font-semibold mt-4">Áreas</h3>
-                   {form.getValues().practiceAreas.areas.map((_, index) => (
-                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background">
-                         <FormField
-                            control={form.control}
-                            name={`practiceAreas.areas.${index}.title`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Título da Área {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
+                  <div className="space-y-4 pt-4">
+                    {form.getValues().practiceAreas.areas.map((_, index) => (
+                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background/50">
+                        <FormField
+                          control={form.control}
+                          name={`practiceAreas.areas.${index}.title`}
+                          render={({ field }) => (
+                            <FormItem><FormLabel>Título da Área {index + 1}</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                          )}
                         />
-                         <FormField
-                            control={form.control}
-                            name={`practiceAreas.areas.${index}.description`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Descrição da Área {index + 1}</FormLabel>
-                                <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
+                        <FormField
+                          control={form.control}
+                          name={`practiceAreas.areas.${index}.description`}
+                          render={({ field }) => (
+                            <FormItem><FormLabel>Descrição</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
+                          )}
                         />
                       </div>
-                   ))}
-                   <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Áreas de Atuação
-                  </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Seção Diferenciais */}
-            <AccordionItem value="item-3">
-               <div className="flex w-full items-center justify-between">
-                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Diferenciais</AccordionTrigger>
-                  <div className="py-4 pr-4 pl-2">
-                    <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
+                    ))}
                   </div>
-               </div>
-               <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Diferenciais */}
+              <AccordionItem value="item-3">
+                <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline text-left">Diferenciais</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="whyUs.enabled" />
+                  </div>
+                </div>
+                <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
                     name="whyUs.title"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Título da Seção</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Título da Seção</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
                     )}
                   />
-                   <FormField
+                  <FormField
                     control={form.control}
                     name="whyUs.subtitle"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Subtítulo da Seção</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
                     )}
                   />
-                  <h3 className="font-semibold mt-4">Diferenciais</h3>
-                   {form.getValues().whyUs.features.map((_, index) => (
-                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background">
-                         <FormField
-                            control={form.control}
-                            name={`whyUs.features.${index}.title`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Título do Diferencial {index + 1}</FormLabel>
-                                <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
+                  <div className="space-y-4 pt-4">
+                    {form.getValues().whyUs.features.map((_, index) => (
+                      <div key={index} className="p-4 border rounded-md space-y-4 bg-background/50">
+                        <FormField
+                          control={form.control}
+                          name={`whyUs.features.${index}.title`}
+                          render={({ field }) => (
+                            <FormItem><FormLabel>Diferencial {index + 1}</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                          )}
                         />
-                         <FormField
-                            control={form.control}
-                            name={`whyUs.features.${index}.description`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Descrição do Diferencial {index + 1}</FormLabel>
-                                <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
+                        <FormField
+                          control={form.control}
+                          name={`whyUs.features.${index}.description`}
+                          render={({ field }) => (
+                            <FormItem><FormLabel>Descrição</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
+                          )}
                         />
                       </div>
-                   ))}
-                   <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Diferenciais
-                  </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
-
-             {/* Seção Nossa História */}
-            <AccordionItem value="item-4">
-               <div className="flex w-full items-center justify-between">
-                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Nossa História</AccordionTrigger>
-                  <div className="py-4 pr-4 pl-2">
-                      <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
+                    ))}
                   </div>
-               </div>
-              <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Nossa História */}
+              <AccordionItem value="item-4">
+                <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline text-left">Nossa História</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="ourHistory.enabled" />
+                  </div>
+                </div>
+                <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
                     name="ourHistory.title"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Título da Seção</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Título</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
                     )}
                   />
-                   <FormField
+                  <FormField
                     control={form.control}
                     name="ourHistory.content"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Conteúdo</FormLabel>
-                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Conteúdo</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
                     )}
                   />
-                  <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Nossa História
-                  </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
+                </AccordionContent>
+              </AccordionItem>
 
-            {/* Seção Equipe */}
-            <AccordionItem value="item-5">
-               <div className="flex w-full items-center justify-between">
-                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Equipe</AccordionTrigger>
+              {/* Equipe */}
+              <AccordionItem value="item-5">
+                <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline text-left">Equipe</AccordionTrigger>
                   <div className="py-4 pr-4 pl-2">
-                      <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
+                    <SectionToggle name="attorneys.enabled" />
                   </div>
-               </div>
-              <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                </div>
+                <AccordionContent className="space-y-6 pt-4">
                   <FormField
                     control={form.control}
                     name="attorneys.title"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Título da Seção</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Título da Seção</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
                     )}
                   />
-                   <FormField
+                  <FormField
                     control={form.control}
                     name="attorneys.subtitle"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
+                      <FormItem><FormLabel>Subtítulo</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
                     )}
                   />
-                  <h3 className="font-semibold mt-4">Membros da Equipe</h3>
-                   {attorneyFields.map((item, index) => {
-                     const imageUrl = form.watch(`attorneys.members.${index}.imageUrl`);
-                     return (
-                      <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background relative">
-                          <Button
-                            type="button"
-                            variant="destructive"
-                            size="icon"
-                            className="absolute top-4 right-4 h-7 w-7"
-                            onClick={() => removeAttorney(index)}
-                            disabled={isSubmitting}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                          <div className="flex flex-col sm:flex-row items-start gap-4">
-                            <div className="flex-shrink-0">
-                                <FormLabel>Pré-visualização</FormLabel>
-                                <div className="mt-2 w-28 h-28 rounded-full bg-muted flex items-center justify-center overflow-hidden border">
-                                    {imageUrl ? (
-                                        <Image src={imageUrl} alt={`Preview`} width={112} height={112} className="object-cover w-full h-full" />
-                                    ) : (
-                                        <ImageIcon className="w-12 h-12 text-muted-foreground" />
-                                    )}
-                                </div>
-                            </div>
-                            <div className="flex-grow space-y-4 w-full">
-                                <FormField
-                                    control={form.control}
-                                    name={`attorneys.members.${index}.name`}
-                                    render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Nome do Membro</FormLabel>
-                                        <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name={`attorneys.members.${index}.title`}
-                                    render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Cargo</FormLabel>
-                                        <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                    )}
-                                />
-                            </div>
+                  <div className="space-y-6 pt-4">
+                    {attorneyFields.map((item, index) => (
+                      <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background relative shadow-sm">
+                        <Button type="button" variant="destructive" size="icon" className="absolute top-4 right-4 h-7 w-7 z-10" onClick={() => removeAttorney(index)}><Trash2 className="h-4 w-4" /></Button>
+                        <div className="flex flex-col sm:flex-row gap-6">
+                          <div className="w-32 h-32 bg-muted rounded-lg overflow-hidden border flex-shrink-0">
+                            {form.watch(`attorneys.members.${index}.imageUrl`) ? (
+                              <Image src={form.watch(`attorneys.members.${index}.imageUrl`)} alt="Preview" width={128} height={128} className="object-cover h-full w-full" />
+                            ) : (
+                              <div className="flex items-center justify-center h-full"><ImageIcon className="w-10 h-10 text-muted-foreground" /></div>
+                            )}
                           </div>
-                         <FormField
-                            control={form.control}
-                            name={`attorneys.members.${index}.bio`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Bio do Membro</FormLabel>
-                                <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting || isUploading === index} /></FormControl>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name={`attorneys.members.${index}.imageUrl`}
-                            render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>URL da Imagem</FormLabel>
-                                 <div className="flex items-center gap-2">
-                                  <FormControl>
-                                    <Input {...field} disabled={isSubmitting || isUploading === index} />
-                                  </FormControl>
-                                  <Button
-                                    type="button"
-                                    variant="outline"
-                                    size="icon"
-                                    disabled={isSubmitting || isUploading === index}
-                                    onClick={() => fileInputRefs.current[index]?.click()}
-                                  >
-                                    {isUploading === index ? '...' : <Upload className="h-4 w-4" />}
-                                  </Button>
-                                  <input
-                                    type="file"
-                                    ref={(el) => (fileInputRefs.current[index] = el)}
-                                    className="hidden"
-                                    accept="image/*"
-                                    onChange={(e) => handleFileChange(e, index)}
-                                  />
-                                </div>
-                                <FormMessage />
-                            </FormItem>
-                            )}
-                        />
+                          <div className="flex-1 space-y-4">
+                            <FormField control={form.control} name={`attorneys.members.${index}.name`} render={({ field }) => (
+                              <FormItem><FormLabel>Nome</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                            )} />
+                            <FormField control={form.control} name={`attorneys.members.${index}.title`} render={({ field }) => (
+                              <FormItem><FormLabel>Cargo/Título</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                            )} />
+                          </div>
+                        </div>
+                        <FormField control={form.control} name={`attorneys.members.${index}.bio`} render={({ field }) => (
+                          <FormItem><FormLabel>Bio/Perfil</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
+                        )} />
+                        <FormField control={form.control} name={`attorneys.members.${index}.imageUrl`} render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Foto do Advogado</FormLabel>
+                            <div className="flex gap-2">
+                              <FormControl><Input {...field} placeholder="URL da imagem ou upload ->" /></FormControl>
+                              <Button type="button" variant="outline" size="icon" onClick={() => fileInputRefs.current[index]?.click()} disabled={isUploading === index}>
+                                <Upload className={isUploading === index ? "animate-spin" : "h-4 w-4"} />
+                              </Button>
+                              <input type="file" ref={(el) => (fileInputRefs.current[index] = el)} className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, index)} />
+                            </div>
+                          </FormItem>
+                        )} />
                       </div>
-                   )})}
-                   <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className="mt-2"
-                      onClick={() => appendAttorney({ 
-                        id: `new-${Date.now()}`,
-                        name: "", 
-                        title: "", 
-                        bio: "", 
-                        imageUrl: "",
-                        bioFormat: "default"
-                      })}
-                      disabled={isSubmitting}
-                    >
-                      <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Membro
-                    </Button>
-                    <Button type="submit" disabled={isSubmitting} className="w-full mt-4">
-                      <Save className="mr-2 h-4 w-4" /> Salvar Equipe
-                    </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
-
-           {/* Seção Publicações */}
-            <AccordionItem value="item-6">
-               <div className="flex w-full items-center justify-between">
-                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Publicações</AccordionTrigger>
-                  <div className="py-4 pr-4 pl-2">
-                      <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
+                    ))}
+                    <Button type="button" variant="outline" className="w-full" onClick={() => appendAttorney({ id: `new-${Date.now()}`, name: "", title: "", bio: "", imageUrl: "", bioFormat: "default" })}><PlusCircle className="mr-2 h-4 w-4" /> Adicionar Advogado</Button>
                   </div>
-               </div>
-              <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="testimonials.title"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Título da Seção</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                   <FormField
-                    control={form.control}
-                    name="testimonials.subtitle"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subtítulo da Seção</FormLabel>
-                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="space-y-4 pt-4 p-4 border rounded-md bg-background/50">
-                    <div className="flex justify-between items-center">
-                        <h3 className="font-semibold text-lg flex items-center gap-2"><Instagram className="h-5 w-5" /> Instagram</h3>
-                        <SectionToggle name="testimonials.instagram.enabled" isSubmitting={isSubmitting} />
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* Publicações (Instagram) */}
+              <AccordionItem value="item-6">
+                <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline text-left">Publicações (Instagram)</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="testimonials.enabled" />
+                  </div>
+                </div>
+                <AccordionContent className="space-y-6 pt-4">
+                  <FormField control={form.control} name="testimonials.title" render={({ field }) => (
+                    <FormItem><FormLabel>Título</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                  )} />
+                  <FormField control={form.control} name="testimonials.subtitle" render={({ field }) => (
+                    <FormItem><FormLabel>Subtítulo</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
+                  )} />
+                  <div className="space-y-4 pt-4">
+                    <div className="flex justify-between items-center mb-2 px-2">
+                      <h3 className="font-semibold flex items-center gap-2"><Instagram className="h-5 w-5" /> Feed do Instagram</h3>
+                      <SectionToggle name="testimonials.instagram.enabled" />
                     </div>
                     {instagramPostFields.map((item, index) => (
-                        <div key={item.id} className="p-4 border rounded-md space-y-4 bg-background/50 relative">
-                            <Button
-                                type="button"
-                                variant="destructive"
-                                size="icon"
-                                className="absolute top-4 right-4 h-7 w-7"
-                                onClick={() => removeInstagramPost(index)}
-                                disabled={isSubmitting}
-                            >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
-                            <FormField
-                                control={form.control}
-                                name={`testimonials.instagram.posts.${index}.postUrl`}
-                                render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Link da Publicação {index + 1}</FormLabel>
-                                    <FormControl>
-                                      <Input {...field} disabled={isSubmitting} placeholder='https://www.instagram.com/p/...' />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                                )}
-                            />
-                        </div>
+                      <div key={item.id} className="relative p-4 border rounded-md bg-muted/30">
+                        <Button type="button" variant="destructive" size="icon" className="absolute top-2 right-2 h-6 w-6" onClick={() => removeInstagramPost(index)}><Trash2 className="h-3 w-3" /></Button>
+                        <FormField control={form.control} name={`testimonials.instagram.posts.${index}.postUrl`} render={({ field }) => (
+                          <FormItem><FormLabel className="text-xs">Link do Post/Reel</FormLabel><FormControl><Input {...field} placeholder="https://www.instagram.com/p/..." /></FormControl></FormItem>
+                        )} />
+                      </div>
                     ))}
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => appendInstagramPost({ postUrl: "" })}
-                        disabled={isSubmitting}
-                    >
-                        <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Post
-                    </Button>
+                    <Button type="button" variant="outline" size="sm" className="w-full" onClick={() => appendInstagramPost({ postUrl: "" })}><PlusCircle className="mr-2 h-4 w-4" /> Adicionar Post</Button>
                   </div>
-                  <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Publicações
-                  </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
+                </AccordionContent>
+              </AccordionItem>
 
-             {/* Seção Contato */}
-            <AccordionItem value="item-7">
-              <div className="flex w-full items-center justify-between">
-                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Contato</AccordionTrigger>
+              {/* Informações de Contato */}
+              <AccordionItem value="item-7">
+                <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline text-left">Informações de Contato</AccordionTrigger>
                   <div className="py-4 pr-4 pl-2">
-                    <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
+                    <SectionToggle name="contact.enabled" />
                   </div>
-              </div>
-              <AccordionContent className="space-y-6 pt-4">
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="contactInfo.address"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Endereço</FormLabel>
-                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="contactInfo.email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>E-mail</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="contactInfo.phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Telefone (Exibição)</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="contactInfo.whatsapp"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>WhatsApp (Apenas Números)</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Contato
-                  </Button>
-                </form>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+                </div>
+                <AccordionContent className="space-y-6 pt-4">
+                  <FormField control={form.control} name="contactInfo.address" render={({ field }) => (
+                    <FormItem><FormLabel>Endereço Físico</FormLabel><FormControl><RichTextEditor value={field.value} onChange={field.onChange} /></FormControl></FormItem>
+                  )} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="contactInfo.email" render={({ field }) => (
+                      <FormItem><FormLabel>E-mail</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                    )} />
+                    <FormField control={form.control} name="contactInfo.phone" render={({ field }) => (
+                      <FormItem><FormLabel>Telefone (Exibição)</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                    )} />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="contactInfo.whatsapp" render={({ field }) => (
+                      <FormItem><FormLabel>WhatsApp (Apenas Números)</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                    )} />
+                    <FormField control={form.control} name="contactInfo.whatsappLink" render={({ field }) => (
+                      <FormItem><FormLabel>Link Direto WhatsApp</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                    )} />
+                  </div>
+                  <FormField control={form.control} name="contactInfo.openingHours" render={({ field }) => (
+                    <FormItem><FormLabel>Horário de Atendimento</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                  )} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="contactInfo.facebookUrl" render={({ field }) => (
+                      <FormItem><FormLabel>Link Facebook</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                    )} />
+                    <FormField control={form.control} name="contactInfo.instagramUrl" render={({ field }) => (
+                      <FormItem><FormLabel>Link Instagram</FormLabel><FormControl><Input {...field} /></FormControl></FormItem>
+                    )} />
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+            </Accordion>
+
+            <Button type="submit" disabled={isSubmitting} className="w-full h-14 text-lg font-bold shadow-lg">
+              {isSubmitting ? "Salvando Alterações..." : <><Save className="mr-2 h-6 w-6" /> Salvar Tudo e Atualizar Site</>}
+            </Button>
+          </form>
         </Form>
 
-        {/* Gerenciamento de Usuários (Contexto Separado) */}
-        <div className="mt-12 space-y-8">
-            <h2 className="text-2xl font-bold font-headline text-primary">Gerenciamento de Usuários</h2>
-            
-            <div className="p-4 border rounded-md bg-background">
-                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Usuários Cadastrados</h3>
+        {/* Gerenciamento de Usuários */}
+        <div className="mt-20 pt-10 border-t space-y-8">
+            <h2 className="text-2xl font-bold font-headline text-primary flex items-center gap-2"><Users className="h-6 w-6" /> Gerenciamento de Acesso</h2>
+            <div className="p-6 border rounded-xl bg-card shadow-sm">
+                <h3 className="font-semibold mb-4">Administradores Ativos</h3>
                 <div className="space-y-2">
                     {users.map(user => (
-                        <div key={user.username} className="flex items-center justify-between p-2 rounded-md bg-muted/50">
-                            <span className="text-sm font-medium">{user.username}</span>
+                        <div key={user.username} className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border">
+                            <span className="font-medium">{user.username}</span>
                             {users.length > 1 && (
-                                <Button variant="destructive" size="icon" className="h-7 w-7" onClick={() => handleRemoveUser(user.username)} disabled={isSubmitting}>
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
+                                <Button variant="destructive" size="icon" className="h-8 w-8" onClick={async () => {
+                                  if (confirm(`Tem certeza que deseja remover o acesso de ${user.username}?`)) {
+                                    const all = await fetch('/api/get-all-users-for-update').then(r => r.json());
+                                    const filtered = all.filter((u: any) => u.username !== user.username);
+                                    await fetch('/api/save-users', { method: 'POST', body: JSON.stringify(filtered) });
+                                    fetchUsers();
+                                    toast({ title: "Usuário removido." });
+                                  }
+                                }}><Trash2 className="h-4 w-4" /></Button>
                             )}
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="p-4 border rounded-md bg-background">
-                <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Usuário</h3>
+            <div className="p-6 border rounded-xl bg-card shadow-sm">
+                <h3 className="font-semibold mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Acesso</h3>
                 <Form {...newUserForm}>
-                  <form onSubmit={newUserForm.handleSubmit(handleAddUser)} className="space-y-4">
-                    <FormField
-                      control={newUserForm.control}
-                      name="username"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Nome de Usuário</FormLabel>
-                          <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={newUserForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Senha</FormLabel>
-                          <FormControl><Input type="password" {...field} disabled={isSubmitting} /></FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" variant="outline" disabled={isSubmitting}>
-                       <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Usuário
-                    </Button>
+                  <form onSubmit={newUserForm.handleSubmit(async (v) => {
+                    const all = await fetch('/api/get-all-users-for-update').then(r => r.json());
+                    if (all.find((u: any) => u.username === v.username)) {
+                      newUserForm.setError('username', { message: 'Este usuário já existe.' });
+                      return;
+                    }
+                    await fetch('/api/save-users', { method: 'POST', body: JSON.stringify([...all, v]) });
+                    newUserForm.reset();
+                    fetchUsers();
+                    toast({ title: "Novo administrador criado com sucesso!" });
+                  })} className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
+                    <FormField control={newUserForm.control} name="username" render={({ field }) => (
+                      <FormItem><FormLabel>Nome de Usuário</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <FormField control={newUserForm.control} name="password" render={({ field }) => (
+                      <FormItem><FormLabel>Senha</FormLabel><FormControl><Input type="password" {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                    <Button type="submit" variant="outline" className="sm:col-span-2"><PlusCircle className="mr-2 h-4 w-4" /> Criar Novo Administrador</Button>
                   </form>
                 </Form>
             </div>
