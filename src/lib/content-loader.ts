@@ -4,8 +4,7 @@ import contentData from '@/data/content.json';
 export type ContentData = typeof contentData;
 
 export function loadContent(): ContentData {
-  // Em um ambiente Next.js moderno, importar o JSON diretamente é a forma mais
-  // eficiente e segura de carregar dados estáticos. O Next.js gerencia o
-  // cache e o recarregamento em desenvolvimento automaticamente.
+  // Importar o JSON diretamente é a forma mais eficiente e segura de carregar 
+  // dados estáticos no Next.js, funcionando tanto no servidor quanto no cliente.
   return contentData;
 }

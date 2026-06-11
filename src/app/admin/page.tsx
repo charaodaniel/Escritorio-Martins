@@ -1,4 +1,3 @@
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -115,7 +114,6 @@ const newUserSchema = z.object({
   password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres."),
 });
 
-
 export default function AdminPage() {
   const { toast } = useToast();
   const router = useRouter();
@@ -158,15 +156,10 @@ export default function AdminPage() {
       setUsers(userList);
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
-      toast({
-        variant: "destructive",
-        title: "Erro ao Carregar Usuários",
-        description: "Não foi possível carregar a lista de usuários.",
-      });
     }
   }
 
-  async function fetchContent(showToast = false) {
+  async function fetchContent() {
       try {
         const response = await fetch('/api/get-content');
         if (!response.ok) {
@@ -175,12 +168,6 @@ export default function AdminPage() {
         const content = await response.json();
         setInitialData(content);
         form.reset(content);
-        if (showToast) {
-            toast({
-                title: "Conteúdo Atualizado",
-                description: "O painel foi sincronizado com os dados mais recentes."
-            });
-        }
       } catch (error) {
         console.error("Erro ao buscar conteúdo:", error);
         toast({
@@ -195,7 +182,6 @@ export default function AdminPage() {
     fetchContent();
     fetchUsers();
   }, []);
-
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
@@ -249,7 +235,7 @@ export default function AdminPage() {
       form.setValue(`attorneys.members.${index}.imageUrl`, filePath);
       toast({
         title: 'Upload Concluído',
-        description: `Imagem carregada e caminho salvo como: ${filePath}`,
+        description: `Imagem carregada com sucesso.`,
       });
     } catch (error: any) {
       toast({
@@ -311,7 +297,7 @@ export default function AdminPage() {
 
           const getAllResponse = await fetch('/api/get-all-users-for-update');
           if (!getAllResponse.ok) {
-              throw new Error("Falha ao obter lista completa de usuários para atualização.");
+              throw new Error("Falha ao obter lista completa de usuários.");
           }
           const allUsersResponse = await getAllResponse.json();
           const newUsers = [...allUsersResponse, values];
@@ -347,13 +333,10 @@ export default function AdminPage() {
   const handleLogout = async () => {
     try {
       await fetch('/api/auth-required', {
-        headers: {
-          'Authorization': 'Basic ' + btoa('logout:logout')
-        }
+        headers: { 'Authorization': 'Basic ' + btoa('logout:logout') }
       });
       router.push('/');
     } catch (error) {
-      console.error('Logout failed:', error);
       router.push('/');
     }
   };
@@ -362,7 +345,7 @@ export default function AdminPage() {
     return <div className="flex justify-center items-center h-screen">Carregando painel...</div>;
   }
   
-  const SectionToggle = ({ name, isSubmitting }: { name: `practiceAreas.enabled` | `whyUs.enabled` | `ourHistory.enabled` | `attorneys.enabled` | `testimonials.enabled` | `contact.enabled` | 'testimonials.instagram.enabled', isSubmitting: boolean }) => (
+  const SectionToggle = ({ name, isSubmitting }: { name: any, isSubmitting: boolean }) => (
     <FormField
       control={form.control}
       name={name}
@@ -383,26 +366,26 @@ export default function AdminPage() {
     />
   );
 
-
   return (
     <div className="container mx-auto py-10 px-4 md:px-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-2">
-            <h1 className="text-3xl font-bold font-headline text-primary">Painel de Edição de Conteúdo</h1>
+            <h1 className="text-3xl font-bold font-headline text-primary">Painel de Edição</h1>
             <Button variant="ghost" size="sm" onClick={handleLogout}>
                 <LogOut className="mr-2 h-4 w-4" />
                 Sair
             </Button>
         </div>
-        <p className="text-muted-foreground mb-8">Altere o conteúdo do site aqui. As mudanças serão refletidas após o deploy automático.</p>
+        <p className="text-muted-foreground mb-8">Gerencie o conteúdo do seu site aqui.</p>
         
-        <Accordion type="single" collapsible defaultValue="item-1" className="w-full mb-10">
-          
-          {/* Seção Hero */}
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="text-xl font-headline text-primary">Seção Principal (Hero)</AccordionTrigger>
-            <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+        {/* Provedor de Contexto do Formulário Principal */}
+        <Form {...form}>
+          <Accordion type="single" collapsible defaultValue="item-1" className="w-full mb-10">
+            
+            {/* Seção Hero */}
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="text-xl font-headline text-primary">Seção Principal (Hero)</AccordionTrigger>
+              <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -410,9 +393,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Título Principal</FormLabel>
-                        <FormControl>
-                          <Input {...field} disabled={isSubmitting} />
-                        </FormControl>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -423,9 +404,7 @@ export default function AdminPage() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Subtítulo</FormLabel>
-                        <FormControl>
-                          <RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} />
-                        </FormControl>
+                        <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -434,20 +413,18 @@ export default function AdminPage() {
                     <Save className="mr-2 h-4 w-4" /> Salvar Seção Hero
                   </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Seção Áreas de Atuação */}
-          <AccordionItem value="item-2">
-             <div className="flex w-full items-center justify-between">
-                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Áreas de Atuação</AccordionTrigger>
-                <div className="py-4 pr-4 pl-2">
-                    <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
-                </div>
-             </div>
-            <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+            {/* Seção Áreas de Atuação */}
+            <AccordionItem value="item-2">
+               <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Áreas de Atuação</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                      <SectionToggle name="practiceAreas.enabled" isSubmitting={isSubmitting} />
+                  </div>
+               </div>
+              <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -502,20 +479,18 @@ export default function AdminPage() {
                     <Save className="mr-2 h-4 w-4" /> Salvar Áreas de Atuação
                   </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Seção Diferenciais */}
-          <AccordionItem value="item-3">
-             <div className="flex w-full items-center justify-between">
-                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Diferenciais</AccordionTrigger>
-                <div className="py-4 pr-4 pl-2">
-                  <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
-                </div>
-             </div>
-             <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+            {/* Seção Diferenciais */}
+            <AccordionItem value="item-3">
+               <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Diferenciais</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="whyUs.enabled" isSubmitting={isSubmitting} />
+                  </div>
+               </div>
+               <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -570,20 +545,18 @@ export default function AdminPage() {
                     <Save className="mr-2 h-4 w-4" /> Salvar Diferenciais
                   </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
 
-           {/* Seção Nossa História */}
-          <AccordionItem value="item-4">
-             <div className="flex w-full items-center justify-between">
-                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Nossa História</AccordionTrigger>
-                <div className="py-4 pr-4 pl-2">
-                    <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
-                </div>
-             </div>
-            <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+             {/* Seção Nossa História */}
+            <AccordionItem value="item-4">
+               <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Nossa História</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                      <SectionToggle name="ourHistory.enabled" isSubmitting={isSubmitting} />
+                  </div>
+               </div>
+              <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -611,20 +584,18 @@ export default function AdminPage() {
                     <Save className="mr-2 h-4 w-4" /> Salvar Nossa História
                   </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
 
-          {/* Seção Equipe */}
-          <AccordionItem value="item-5">
-             <div className="flex w-full items-center justify-between">
-                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Equipe</AccordionTrigger>
-                <div className="py-4 pr-4 pl-2">
-                    <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
-                </div>
-             </div>
-            <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+            {/* Seção Equipe */}
+            <AccordionItem value="item-5">
+               <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Equipe</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                      <SectionToggle name="attorneys.enabled" isSubmitting={isSubmitting} />
+                  </div>
+               </div>
+              <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -662,20 +633,13 @@ export default function AdminPage() {
                             disabled={isSubmitting}
                           >
                             <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Remover Membro</span>
                           </Button>
                           <div className="flex flex-col sm:flex-row items-start gap-4">
                             <div className="flex-shrink-0">
                                 <FormLabel>Pré-visualização</FormLabel>
                                 <div className="mt-2 w-28 h-28 rounded-full bg-muted flex items-center justify-center overflow-hidden border">
                                     {imageUrl ? (
-                                        <Image
-                                            src={imageUrl}
-                                            alt={`Preview ${index + 1}`}
-                                            width={112}
-                                            height={112}
-                                            className="object-cover w-full h-full"
-                                        />
+                                        <Image src={imageUrl} alt={`Preview`} width={112} height={112} className="object-cover w-full h-full" />
                                     ) : (
                                         <ImageIcon className="w-12 h-12 text-muted-foreground" />
                                     )}
@@ -687,7 +651,7 @@ export default function AdminPage() {
                                     name={`attorneys.members.${index}.name`}
                                     render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Nome do Membro {index + 1}</FormLabel>
+                                        <FormLabel>Nome do Membro</FormLabel>
                                         <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -698,7 +662,7 @@ export default function AdminPage() {
                                     name={`attorneys.members.${index}.title`}
                                     render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Cargo do Membro {index + 1}</FormLabel>
+                                        <FormLabel>Cargo</FormLabel>
                                         <FormControl><Input {...field} disabled={isSubmitting || isUploading === index} /></FormControl>
                                         <FormMessage />
                                     </FormItem>
@@ -711,7 +675,7 @@ export default function AdminPage() {
                             name={`attorneys.members.${index}.bio`}
                             render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Bio do Membro {index + 1}</FormLabel>
+                                <FormLabel>Bio do Membro</FormLabel>
                                 <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting || isUploading === index} /></FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -722,7 +686,7 @@ export default function AdminPage() {
                             name={`attorneys.members.${index}.imageUrl`}
                             render={({ field }) => (
                             <FormItem>
-                                <FormLabel>URL da Imagem {index + 1}</FormLabel>
+                                <FormLabel>URL da Imagem</FormLabel>
                                  <div className="flex items-center gap-2">
                                   <FormControl>
                                     <Input {...field} disabled={isSubmitting || isUploading === index} />
@@ -740,14 +704,10 @@ export default function AdminPage() {
                                     type="file"
                                     ref={(el) => (fileInputRefs.current[index] = el)}
                                     className="hidden"
-                                    accept="image/png, image/jpeg, image/webp"
+                                    accept="image/*"
                                     onChange={(e) => handleFileChange(e, index)}
-                                    disabled={isSubmitting || isUploading === index}
                                   />
                                 </div>
-                                <FormDescription>
-                                  {isUploading === index ? 'Carregando imagem...' : 'Caminho local (ex: /minha-foto.jpg) ou URL completa.'}
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                             )}
@@ -769,27 +729,24 @@ export default function AdminPage() {
                       })}
                       disabled={isSubmitting}
                     >
-                      <PlusCircle className="mr-2 h-4 w-4" />
-                      Adicionar Membro
+                      <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Membro
                     </Button>
                     <Button type="submit" disabled={isSubmitting} className="w-full mt-4">
-                      <Save className="mr-2 h-4 w-4" /> Salvar Seção Equipe
+                      <Save className="mr-2 h-4 w-4" /> Salvar Equipe
                     </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
 
-         {/* Seção Publicações */}
-          <AccordionItem value="item-6">
-             <div className="flex w-full items-center justify-between">
-                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Publicações</AccordionTrigger>
-                <div className="py-4 pr-4 pl-2">
-                    <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
-                </div>
-             </div>
-            <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+           {/* Seção Publicações */}
+            <AccordionItem value="item-6">
+               <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Publicações</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                      <SectionToggle name="testimonials.enabled" isSubmitting={isSubmitting} />
+                  </div>
+               </div>
+              <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
@@ -814,7 +771,6 @@ export default function AdminPage() {
                     )}
                   />
                   
-                  {/* Instagram Posts */}
                   <div className="space-y-4 pt-4 p-4 border rounded-md bg-background/50">
                     <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-lg flex items-center gap-2"><Instagram className="h-5 w-5" /> Instagram</h3>
@@ -831,7 +787,6 @@ export default function AdminPage() {
                                 disabled={isSubmitting}
                             >
                                 <Trash2 className="h-4 w-4" />
-                                <span className="sr-only">Remover Publicação</span>
                             </Button>
                             <FormField
                                 control={form.control}
@@ -840,9 +795,8 @@ export default function AdminPage() {
                                 <FormItem>
                                     <FormLabel>Link da Publicação {index + 1}</FormLabel>
                                     <FormControl>
-                                      <Input {...field} disabled={isSubmitting} placeholder='Cole o link da publicação do Instagram aqui...' />
+                                      <Input {...field} disabled={isSubmitting} placeholder='https://www.instagram.com/p/...' />
                                     </FormControl>
-                                    <FormDescription>Copie o link da publicação (pelo botão de compartilhar ou pela barra de endereço) e cole aqui.</FormDescription>
                                     <FormMessage />
                                 </FormItem>
                                 )}
@@ -853,39 +807,35 @@ export default function AdminPage() {
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="mt-2"
                         onClick={() => appendInstagramPost({ postUrl: "" })}
                         disabled={isSubmitting}
                     >
-                        <PlusCircle className="mr-2 h-4 w-4" />
-                        Adicionar Publicação do Instagram
+                        <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Post
                     </Button>
                   </div>
                   <Button type="submit" disabled={isSubmitting} className="w-full">
                     <Save className="mr-2 h-4 w-4" /> Salvar Publicações
                   </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
 
-           {/* Seção Contato */}
-          <AccordionItem value="item-7">
-            <div className="flex w-full items-center justify-between">
-                <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Informações de Contato</AccordionTrigger>
-                <div className="py-4 pr-4 pl-2">
-                  <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
-                </div>
-            </div>
-            <AccordionContent className="space-y-6 pt-4">
-              <Form {...form}>
+             {/* Seção Contato */}
+            <AccordionItem value="item-7">
+              <div className="flex w-full items-center justify-between">
+                  <AccordionTrigger className="text-xl font-headline text-primary flex-1 hover:no-underline">Contato</AccordionTrigger>
+                  <div className="py-4 pr-4 pl-2">
+                    <SectionToggle name="contact.enabled" isSubmitting={isSubmitting} />
+                  </div>
+              </div>
+              <AccordionContent className="space-y-6 pt-4">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <FormField
                     control={form.control}
                     name="contactInfo.address"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Endereço Completo</FormLabel>
+                        <FormLabel>Endereço</FormLabel>
                         <FormControl><RichTextEditor value={field.value} onChange={field.onChange} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
@@ -907,8 +857,8 @@ export default function AdminPage() {
                     name="contactInfo.phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Telefone para Exibição</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} placeholder="+55 (55) 99999-9999" /></FormControl>
+                        <FormLabel>Telefone (Exibição)</FormLabel>
+                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -918,110 +868,42 @@ export default function AdminPage() {
                     name="contactInfo.whatsapp"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Número do WhatsApp</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} placeholder="5555999999999" /></FormControl>
-                        <FormDescription>Apenas números, com código do país e DDD. Usado para gerar o link.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                   <FormField
-                    control={form.control}
-                    name="contactInfo.whatsappLink"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Link do WhatsApp</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} placeholder="https://wa.me/5555..."/></FormControl>
-                        <FormDescription>Gerado automaticamente, mas pode ser personalizado.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="contactInfo.openingHours"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Horário de Funcionamento</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                   <FormField
-                    control={form.control}
-                    name="contactInfo.instagramUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>URL do Perfil no Instagram</FormLabel>
-                        <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="contactInfo.facebookUrl"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>URL do Perfil no Facebook</FormLabel>
+                        <FormLabel>WhatsApp (Apenas Números)</FormLabel>
                         <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                   <Button type="submit" disabled={isSubmitting} className="w-full">
-                    <Save className="mr-2 h-4 w-4" /> Salvar Informações de Contato
+                    <Save className="mr-2 h-4 w-4" /> Salvar Contato
                   </Button>
                 </form>
-              </Form>
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </Form>
 
-          {/* Seção Gerenciamento de Usuários */}
-          <AccordionItem value="item-8">
-            <AccordionTrigger className="text-xl font-headline text-primary">Gerenciamento de Usuários</AccordionTrigger>
-            <AccordionContent className="space-y-6 pt-4">
-              
-              {/* Lista de Usuários */}
-              <div className="p-4 border rounded-md bg-background">
+        {/* Gerenciamento de Usuários (Contexto Separado) */}
+        <div className="mt-12 space-y-8">
+            <h2 className="text-2xl font-bold font-headline text-primary">Gerenciamento de Usuários</h2>
+            
+            <div className="p-4 border rounded-md bg-background">
                 <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Usuários Cadastrados</h3>
                 <div className="space-y-2">
                     {users.map(user => (
                         <div key={user.username} className="flex items-center justify-between p-2 rounded-md bg-muted/50">
                             <span className="text-sm font-medium">{user.username}</span>
-                            {users.length > 1 ? (
-                            <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                    <Button variant="destructive" size="icon" className="h-7 w-7" disabled={isSubmitting}>
-                                        <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            Esta ação não pode ser desfeita. Isso removerá permanentemente o usuário <span className="font-bold">{user.username}</span>.
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                        <AlertDialogAction onClick={() => handleRemoveUser(user.username)}>Remover</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
-                            ) : (
-                               <Button variant="destructive" size="icon" className="h-7 w-7" disabled={true} title="Não é possível remover o último usuário.">
-                                 <Trash2 className="h-4 w-4" />
-                               </Button>
+                            {users.length > 1 && (
+                                <Button variant="destructive" size="icon" className="h-7 w-7" onClick={() => handleRemoveUser(user.username)} disabled={isSubmitting}>
+                                    <Trash2 className="h-4 w-4" />
+                                </Button>
                             )}
                         </div>
                     ))}
                 </div>
-              </div>
+            </div>
 
-              {/* Adicionar Novo Usuário */}
-              <div className="p-4 border rounded-md bg-background">
+            <div className="p-4 border rounded-md bg-background">
                 <h3 className="font-semibold text-lg mb-4 flex items-center gap-2"><UserPlus className="h-5 w-5" /> Adicionar Novo Usuário</h3>
                 <Form {...newUserForm}>
                   <form onSubmit={newUserForm.handleSubmit(handleAddUser)} className="space-y-4">
@@ -1031,9 +913,7 @@ export default function AdminPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Nome de Usuário</FormLabel>
-                          <FormControl>
-                            <Input {...field} disabled={isSubmitting} />
-                          </FormControl>
+                          <FormControl><Input {...field} disabled={isSubmitting} /></FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -1044,9 +924,7 @@ export default function AdminPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Senha</FormLabel>
-                          <FormControl>
-                            <Input type="password" {...field} disabled={isSubmitting} />
-                          </FormControl>
+                          <FormControl><Input type="password" {...field} disabled={isSubmitting} /></FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -1056,10 +934,8 @@ export default function AdminPage() {
                     </Button>
                   </form>
                 </Form>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+            </div>
+        </div>
       </div>
     </div>
   );
